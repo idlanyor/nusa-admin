@@ -14,7 +14,9 @@ export interface NuTableSort {
 
 const props = withDefaults(
   defineProps<{
+    /** Column definitions: key, label, sortable, align, width, format. */
     columns: NuTableColumn<T>[]
+    /** Row objects (in server mode: just the current page). */
     rows: T[]
     /** Property used as the row key (required for `selectable`). Falls back to the row index. */
     rowKey?: string

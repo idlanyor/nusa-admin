@@ -8,14 +8,19 @@
   ],
   "scripts": {
     "dev": "bun --filter demo dev",
-    "build": "bun run build:lib && bun run build:demo",
+    "build": "bun run meta && bun run build:lib && bun run build:demo && bun run build:docs && bun run build:mcp",
     "build:lib": "bun --filter nusa-admin build",
     "build:demo": "bun --filter demo build",
     "preview": "bun --filter demo preview",
     "typecheck": "bun --filter '*' typecheck",
-    "test": "bun --filter nusa-admin test",
+    "test": "bun --filter nusa-admin test && bun --filter nusa-admin-mcp test && bun --filter create-nusa-admin test",
     "test:e2e": "playwright test",
-    "check": "bun run typecheck && bun run test && bun run build && bun run test:e2e"
+    "check": "bun run typecheck && bun run meta:check && bun run test && bun run build && bun run test:e2e",
+    "meta": "bun scripts/gen-meta.ts",
+    "dev:docs": "bun --filter docs dev",
+    "build:docs": "bun --filter docs build",
+    "build:mcp": "bun --filter nusa-admin-mcp build",
+    "meta:check": "bun run meta && git diff --exit-code -- packages/ui/meta skills"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",
@@ -26,6 +31,7 @@
     "typescript": "^6",
     "vite": "^8.3.8",
     "vitest": "^5.1.0",
+    "vue-component-meta": "^3.3.14",
     "vue-tsc": "^3.3.14"
   },
   "dependencies": {

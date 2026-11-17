@@ -29,9 +29,10 @@ test.describe('viewer role', () => {
 
 test('command palette opens with Ctrl+K and navigates', async ({ page }) => {
   await page.goto('/')
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible()
   await page.keyboard.press('Control+k')
   const dialog = page.getByRole('dialog', { name: 'Command palette' })
-  await expect(dialog).toBeVisible()
+  await expect(dialog.getByRole('combobox')).toBeFocused()
   await page.keyboard.type('editable')
   await page.keyboard.press('Enter')
   await expect(page).toHaveURL(/\/tables\/editable$/)
@@ -40,7 +41,9 @@ test('command palette opens with Ctrl+K and navigates', async ({ page }) => {
 
 test('command palette falls back to full-text search', async ({ page }) => {
   await page.goto('/')
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible() // shell (and its hotkey) loaded
   await page.keyboard.press('Control+k')
+  await expect(page.getByRole('combobox')).toBeFocused()
   await page.keyboard.type('sinar')
   await page.getByRole('option', { name: /Search everything for “sinar”/ }).click()
   await expect(page).toHaveURL(/\/search\?q=sinar$/)

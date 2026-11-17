@@ -1,0 +1,4586 @@
+{
+  "package": "nusa-admin",
+  "version": "0.1.0",
+  "components": [
+    {
+      "name": "NuLayout",
+      "group": "Layout",
+      "file": "packages/ui/src/components/NuLayout.vue",
+      "description": "App shell: sidebar (or top nav), navbar, content and footer, with every AdminLTE layout option as a prop.",
+      "props": [
+        {
+          "name": "menu",
+          "type": "NuMenuItem[]",
+          "required": true,
+          "description": "Menu definition (NuMenuItem[]); the same array drives sidebar, top nav and command palette."
+        },
+        {
+          "name": "brand",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"Nusa Admin\"",
+          "description": "Product name shown next to the logo."
+        },
+        {
+          "name": "logo",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Logo image URL; defaults to the first letter of `brand`."
+        },
+        {
+          "name": "brandTo",
+          "type": "string | J | W | undefined",
+          "required": false,
+          "default": "\"/\"",
+          "description": ""
+        },
+        {
+          "name": "sidebarVariant",
+          "type": "NuSidebarVariant | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "layout",
+          "type": "\"sidebar\" | \"top-nav\" | undefined",
+          "required": false,
+          "default": "undefined",
+          "description": "`top-nav` puts the menu in the navbar on desktop (the sidebar remains the mobile drawer)."
+        },
+        {
+          "name": "boxed",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "undefined",
+          "description": ""
+        },
+        {
+          "name": "fixedNavbar",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "undefined",
+          "description": ""
+        },
+        {
+          "name": "fixedSidebar",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "undefined",
+          "description": ""
+        },
+        {
+          "name": "fixedFooter",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "undefined",
+          "description": ""
+        },
+        {
+          "name": "rtl",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "undefined",
+          "description": "Right-to-left layout (sets `dir` on <html> while this layout is mounted)."
+        },
+        {
+          "name": "sidebarSearch",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Filter box at the top of the sidebar menu."
+        },
+        {
+          "name": "themeToggle",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "true",
+          "description": ""
+        },
+        {
+          "name": "fullscreenToggle",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "customizer",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Show the floating theme customizer button."
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "brand",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "sidebar-top",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "sidebar-footer",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "navbar-start",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "navbar-end",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "navbar-user",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "footer",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "",
+          "code": "<NuLayout :menu=\"menu\" brand=\"My App\" sidebar-search fullscreen-toggle>\n  <template #navbar-end><!-- notifications, language… --></template>\n  <template #navbar-user><!-- account dropdown --></template>\n  <RouterView />\n  <template #footer>© My App</template>\n</NuLayout>"
+        }
+      ]
+    },
+    {
+      "name": "NuSidebar",
+      "group": "Layout",
+      "file": "packages/ui/src/components/NuSidebar.vue",
+      "description": "Sidebar with brand, optional menu search, nested menu and footer. Used by NuLayout.",
+      "props": [
+        {
+          "name": "menu",
+          "type": "NuMenuItem[]",
+          "required": true,
+          "description": "Menu definition (NuMenuItem[]); the same array drives sidebar, top nav and command palette."
+        },
+        {
+          "name": "variant",
+          "type": "NuSidebarVariant | undefined",
+          "required": false,
+          "default": "\"dark\"",
+          "description": "Visual style."
+        },
+        {
+          "name": "searchable",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Show a search box."
+        },
+        {
+          "name": "searchPlaceholder",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "brand",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "before",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "footer",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "",
+          "code": "<!-- Usually rendered by NuLayout; standalone: -->\n<NuSidebar :menu=\"menu\" variant=\"light\" searchable />"
+        }
+      ]
+    },
+    {
+      "name": "NuSidebarMenuItem",
+      "group": "Layout",
+      "file": "packages/ui/src/components/NuMenuItem.vue",
+      "description": "One recursive sidebar menu entry. Rarely used directly; NuSidebar renders the menu array.",
+      "props": [
+        {
+          "name": "item",
+          "type": "NuMenuItem",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "depth",
+          "type": "number | undefined",
+          "required": false,
+          "default": "0",
+          "description": ""
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": []
+    },
+    {
+      "name": "NuTopNav",
+      "group": "Layout",
+      "file": "packages/ui/src/components/NuTopNav.vue",
+      "description": "Horizontal menu for the top-nav layout; section headers become dropdowns, overflow goes into \"More\".",
+      "props": [
+        {
+          "name": "menu",
+          "type": "NuMenuItem[]",
+          "required": true,
+          "description": "Menu definition (NuMenuItem[]); the same array drives sidebar, top nav and command palette."
+        },
+        {
+          "name": "moreLabel",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "",
+          "code": "<!-- NuLayout renders this when layout=\"top-nav\" -->\n<NuLayout :menu=\"menu\" layout=\"top-nav\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuNavbar",
+      "group": "Layout",
+      "file": "packages/ui/src/components/NuNavbar.vue",
+      "description": "Top bar with sidebar toggle, slots for search/notifications/user, theme and fullscreen toggles.",
+      "props": [
+        {
+          "name": "themeToggle",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "true",
+          "description": ""
+        },
+        {
+          "name": "fullscreenToggle",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "brand",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "start",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "end",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "user",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "",
+          "code": "<!-- Usually rendered by NuLayout; standalone: -->\n<NuNavbar fullscreen-toggle>\n  <template #end><NuIconButton :icon=\"Bell\" label=\"Notifications\" :badge=\"3\" /></template>\n</NuNavbar>"
+        }
+      ]
+    },
+    {
+      "name": "NuPageHeader",
+      "group": "Layout",
+      "file": "packages/ui/src/components/NuPageHeader.vue",
+      "description": "Page title with optional subtitle, breadcrumb and action buttons (default slot).",
+      "props": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "description": "Title text."
+        },
+        {
+          "name": "subtitle",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Secondary text under the title."
+        },
+        {
+          "name": "breadcrumb",
+          "type": "NuBreadcrumbItem[] | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Widgets.vue",
+          "route": "/widgets",
+          "code": "<NuPageHeader title=\"Widgets\" subtitle=\"Ready-made blocks for dashboards.\" :breadcrumb=\"[{ label: 'Home', to: '/' }, { label: 'Widgets' }]\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/forms/Editors.vue",
+          "route": "/forms/editors",
+          "code": "<NuPageHeader title=\"Editors\" :breadcrumb=\"[{ label: 'Home', to: '/' }, { label: 'Forms' }, { label: 'Editors' }]\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuBreadcrumb",
+      "group": "Layout",
+      "file": "packages/ui/src/components/NuBreadcrumb.vue",
+      "description": "Breadcrumb trail from an array of { label, to }.",
+      "props": [
+        {
+          "name": "items",
+          "type": "NuBreadcrumbItem[]",
+          "required": true,
+          "description": "Items to render."
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/ui/Navigation.vue",
+          "route": "/ui/navigation",
+          "code": "<NuBreadcrumb :items=\"[{ label: 'Home', to: '/' }, { label: 'Library', to: '/' }, { label: 'Data' }]\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuCustomizer",
+      "group": "Layout",
+      "file": "packages/ui/src/components/NuCustomizer.vue",
+      "description": "Control panel drawer for theme, brand color, sidebar style and layout options (saved per browser).",
+      "props": [
+        {
+          "name": "colors",
+          "type": "{ name: string; value: string | null; }[] | undefined",
+          "required": false,
+          "default": "[\n    { name: \"Indigo\", value: null },\n    { name: \"Blue\", value: \"#2563eb\" },\n    { name: \"Teal\", value: \"#0d9488\" },\n    { name: \"Emerald\", value: \"#059669\" },\n    { name: \"Rose\", value: \"#e11d48\" },\n    { name: \"Orange\", value: \"#ea580c\" },\n    { name: \"Violet\", value: \"#7c3aed\" },\n]",
+          "description": "Brand color choices; `null` value = token default."
+        },
+        {
+          "name": "hideTrigger",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Hide the floating button and drive `v-model` yourself."
+        },
+        {
+          "name": "modelValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: boolean]",
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/layouts/AdminShell.vue",
+          "code": "<NuCustomizer v-model=\"controlPanel\" hide-trigger>\n  <section>\n    <h4>Shortcuts</h4>\n    <NuButton size=\"sm\" variant=\"soft\" to=\"/layout/options\" @click=\"controlPanel = false\">All layout options</NuButton>\n  </section>\n</NuCustomizer>"
+        }
+      ]
+    },
+    {
+      "name": "NuCommandPalette",
+      "group": "Layout",
+      "file": "packages/ui/src/components/NuCommandPalette.vue",
+      "description": "Ctrl/Cmd+K palette listing every menu page plus custom commands, with an optional fallback command.",
+      "props": [
+        {
+          "name": "menu",
+          "type": "NuMenuItem[] | undefined",
+          "required": false,
+          "default": "[]",
+          "description": "Menu definition (NuMenuItem[]); the same array drives sidebar, top nav and command palette."
+        },
+        {
+          "name": "commands",
+          "type": "NuCommand[] | undefined",
+          "required": false,
+          "default": "[]",
+          "description": ""
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Placeholder text."
+        },
+        {
+          "name": "hotkey",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "true",
+          "description": "Listen for Ctrl/⌘+K globally."
+        },
+        {
+          "name": "fallback",
+          "type": "((query: string) => NuCommand | null) | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: boolean]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/layouts/AdminShell.vue",
+          "code": "<NuCommandPalette v-model=\"palette\" :menu=\"menu\" :commands=\"commands\" :fallback=\"searchFallback\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuAuthLayout",
+      "group": "Layout",
+      "file": "packages/ui/src/components/NuAuthLayout.vue",
+      "description": "Centered card (or split screen) for sign-in, register and similar pages.",
+      "props": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "description": "Title text."
+        },
+        {
+          "name": "subtitle",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Secondary text under the title."
+        },
+        {
+          "name": "brand",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"Nusa Admin\"",
+          "description": ""
+        },
+        {
+          "name": "logo",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "variant",
+          "type": "\"split\" | \"card\" | undefined",
+          "required": false,
+          "default": "\"card\"",
+          "description": "`split` adds a branded panel beside the form on wide screens."
+        },
+        {
+          "name": "asideTitle",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Headline and text for the split panel (or use the `aside` slot)."
+        },
+        {
+          "name": "asideText",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "aside",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "brand",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "footer",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/auth/LockScreen.vue",
+          "route": "/auth/lock",
+          "code": "<NuAuthLayout title=\"Session locked\" subtitle=\"Enter your password to pick up where you left off.\">\n  <div class=\"nu-cluster\" style=\"margin-bottom: 12px\">\n    <NuAvatar :name=\"user?.name ?? 'Guest'\" :size=\"40\" />\n    <div>\n      <div class=\"nu-fw-600\">{{ user?.name ?? 'Guest' }}</div>\n      <div class=\"nu-text-sm nu-text-muted\">{{ user?.email }}</div>\n    </div>\n  </div>\n  <form class=\"nu-stack\" style=\"--nu-gap: 12px\" @submit.prevent=\"router.push(user ? '/' : '/auth/login')\">\n    <NuInput v-model=\"password\" label=\"Password\" type=\"password\" autocomplete=\"current-password\" required>\n      <template #prefix><Lock /></template>\n    </NuInput>\n    <NuButton type=\"submit\" size=\"lg\" block>Unlock</NuButton>\n  </form>\n  <template #footer>Not you? <RouterLink to=\"/auth/login\">Sign in as someone else</RouterLink></template>\n</NuAuthLayout>"
+        },
+        {
+          "file": "apps/demo/src/pages/auth/ForgotPassword.vue",
+          "route": "/auth/forgot-password",
+          "code": "<NuAuthLayout title=\"Reset password\" subtitle=\"We'll email you a link to choose a new password.\">\n  <NuAlert v-if=\"sent\" color=\"success\" title=\"Check your inbox\">If an account exists for {{ email }}, a reset link is on its way.</NuAlert>\n  <form v-else class=\"nu-stack\" style=\"--nu-gap: 12px\" @submit.prevent=\"sent = true\">\n    <NuInput v-model=\"email\" label=\"Email\" type=\"email\" autocomplete=\"email\" required>\n      <template #prefix><Mail /></template>\n    </NuInput>\n    <NuButton type=\"submit\" size=\"lg\" block>Send reset link</NuButton>\n  </form>\n  <template #footer><RouterLink to=\"/auth/login\">Back to sign in</RouterLink></template>\n</NuAuthLayout>"
+        }
+      ]
+    },
+    {
+      "name": "NuErrorPage",
+      "group": "Layout",
+      "file": "packages/ui/src/components/NuErrorPage.vue",
+      "description": "Full-page error/empty state with a big code, title, description and actions.",
+      "props": [
+        {
+          "name": "code",
+          "type": "string | number | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "description": "Title text."
+        },
+        {
+          "name": "description",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Secondary text."
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "icon",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/errors/Forbidden.vue",
+          "route": "/errors/403",
+          "code": "<NuErrorPage code=\"403\" title=\"You don't have access to this page\" :description=\"`Signed in as ${user?.name ?? 'guest'} (${user ? roleLabel[user.role] : 'no role'}). Ask an administrator for access, or sign in with another account.`\">\n  <template #icon><ShieldAlert /></template>\n  <NuButton to=\"/\">Back to dashboard</NuButton>\n  <NuButton variant=\"outline\" color=\"secondary\" to=\"/auth/login\">Switch account</NuButton>\n</NuErrorPage>"
+        },
+        {
+          "file": "apps/demo/src/pages/errors/Maintenance.vue",
+          "route": "/errors/maintenance",
+          "code": "<NuErrorPage title=\"We'll be right back\" description=\"Scheduled maintenance is in progress. It should take about 30 minutes.\">\n  <template #icon><Wrench /></template>\n  <NuButton variant=\"outline\" color=\"secondary\" to=\"/\">Back to dashboard</NuButton>\n</NuErrorPage>"
+        }
+      ]
+    },
+    {
+      "name": "NuRouteProgress",
+      "group": "Layout",
+      "file": "packages/ui/src/components/NuRouteProgress.vue",
+      "description": "Thin progress bar at the top during route changes. Mount once in App.vue.",
+      "props": [
+        {
+          "name": "delay",
+          "type": "number | undefined",
+          "required": false,
+          "default": "120",
+          "description": ""
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/App.vue",
+          "code": "<NuRouteProgress />"
+        }
+      ]
+    },
+    {
+      "name": "NuCard",
+      "group": "Content",
+      "file": "packages/ui/src/components/NuCard.vue",
+      "description": "Card with title, tools (collapse, maximize, refresh, remove), accent or solid header, footer and loading overlay.",
+      "props": [
+        {
+          "name": "title",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Title text."
+        },
+        {
+          "name": "subtitle",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Secondary text under the title."
+        },
+        {
+          "name": "accent",
+          "type": "NuColor | undefined",
+          "required": false,
+          "description": "Colored top border, like AdminLTE's `card-outline`."
+        },
+        {
+          "name": "collapsible",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "defaultCollapsed",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "flush",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Remove body padding (tables, lists, charts that bleed to the edge)."
+        },
+        {
+          "name": "loading",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Show a loading state."
+        },
+        {
+          "name": "solid",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Fill the header with the accent color (AdminLTE `card-primary`)."
+        },
+        {
+          "name": "refreshable",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Show a refresh tool; handle `@refresh` (e.g. set `loading`)."
+        },
+        {
+          "name": "maximizable",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Show a tool that expands the card to fill the screen."
+        },
+        {
+          "name": "removable",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Show a tool that removes the card."
+        }
+      ],
+      "events": [
+        {
+          "name": "refresh",
+          "type": "[]",
+          "description": ""
+        },
+        {
+          "name": "remove",
+          "type": "[]",
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "header",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "tools",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "footer",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Widgets.vue",
+          "route": "/widgets",
+          "code": "<NuCard title=\"Outline card\" accent=\"primary\" collapsible removable>Colored top border. Collapse or remove it with the tools.</NuCard>"
+        },
+        {
+          "file": "apps/demo/src/pages/forms/Editors.vue",
+          "route": "/forms/editors",
+          "code": "<NuCard title=\"Rich text (NuEditor)\" subtitle=\"contenteditable with a toolbar; v-model is HTML\">\n  <NuEditor v-model=\"html\" placeholder=\"Start writing…\" min-height=\"220px\" hint=\"Sanitize the HTML on the server before showing it to other users.\" />\n</NuCard>"
+        }
+      ]
+    },
+    {
+      "name": "NuStatCard",
+      "group": "Content",
+      "file": "packages/ui/src/components/NuStatCard.vue",
+      "description": "KPI tile: label, value, icon, delta vs a period, optional sparkline in the default slot.",
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "value",
+          "type": "string | number",
+          "required": true,
+          "description": "Current value."
+        },
+        {
+          "name": "icon",
+          "type": "Component | undefined",
+          "required": false,
+          "description": "Icon component (any Vue component, e.g. from lucide-vue-next)."
+        },
+        {
+          "name": "color",
+          "type": "NuColor | undefined",
+          "required": false,
+          "default": "\"primary\"",
+          "description": "Theme color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'."
+        },
+        {
+          "name": "variant",
+          "type": "\"solid\" | \"soft\" | undefined",
+          "required": false,
+          "default": "\"soft\"",
+          "description": "`solid` fills the tile with the color (AdminLTE \"small-box\" look)."
+        },
+        {
+          "name": "delta",
+          "type": "number | undefined",
+          "required": false,
+          "description": "Signed change in percent, e.g. 12.5 or -3.2."
+        },
+        {
+          "name": "deltaLabel",
+          "type": "string | undefined",
+          "required": false,
+          "description": "What the delta compares against, e.g. \"vs last month\"."
+        },
+        {
+          "name": "invertDelta",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Set when a decrease is the good direction (costs, churn, errors)."
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Widgets.vue",
+          "route": "/widgets",
+          "code": "<NuStatCard label=\"Sales\" value=\"$24,310\" :icon=\"CircleDollarSign\" color=\"success\" :delta=\"3.2\" delta-label=\"vs last month\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/ui/DataDisplay.vue",
+          "route": "/ui/data-display",
+          "code": "<NuStatCard label=\"Soft stat\" value=\"1,284\" :icon=\"ShoppingCart\" :delta=\"4.1\" delta-label=\"vs last month\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuSmallBox",
+      "group": "Content",
+      "file": "packages/ui/src/components/NuSmallBox.vue",
+      "description": "AdminLTE \"small box\": solid tile with a big number, faded icon and a \"More info\" footer link.",
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "value",
+          "type": "string | number",
+          "required": true,
+          "description": "Current value."
+        },
+        {
+          "name": "icon",
+          "type": "Component | undefined",
+          "required": false,
+          "description": "Icon component (any Vue component, e.g. from lucide-vue-next)."
+        },
+        {
+          "name": "color",
+          "type": "NuColor | undefined",
+          "required": false,
+          "default": "\"primary\"",
+          "description": "Theme color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'."
+        },
+        {
+          "name": "to",
+          "type": "string | J | W | undefined",
+          "required": false,
+          "description": "Router location; renders a RouterLink."
+        },
+        {
+          "name": "href",
+          "type": "string | undefined",
+          "required": false,
+          "description": "URL; renders an <a>."
+        },
+        {
+          "name": "linkLabel",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Widgets.vue",
+          "route": "/widgets",
+          "code": "<NuSmallBox label=\"New orders\" value=\"150\" :icon=\"ShoppingBag\" color=\"info\" to=\"/tables/data\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuInfoBox",
+      "group": "Content",
+      "file": "packages/ui/src/components/NuInfoBox.vue",
+      "description": "AdminLTE \"info box\": colored icon block beside a label, value and optional progress.",
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "value",
+          "type": "string | number",
+          "required": true,
+          "description": "Current value."
+        },
+        {
+          "name": "icon",
+          "type": "Component | undefined",
+          "required": false,
+          "description": "Icon component (any Vue component, e.g. from lucide-vue-next)."
+        },
+        {
+          "name": "color",
+          "type": "NuColor | undefined",
+          "required": false,
+          "default": "\"primary\"",
+          "description": "Theme color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'."
+        },
+        {
+          "name": "progress",
+          "type": "number | undefined",
+          "required": false,
+          "description": "0–100; shows a thin bar under the value."
+        },
+        {
+          "name": "description",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Secondary text."
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Widgets.vue",
+          "route": "/widgets",
+          "code": "<NuInfoBox label=\"Messages\" value=\"1,410\" :icon=\"MessageSquare\" color=\"info\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/ui/DataDisplay.vue",
+          "route": "/ui/data-display",
+          "code": "<NuInfoBox label=\"Revenue\" value=\"$84,600\" :icon=\"CircleDollarSign\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuUserCard",
+      "group": "Content",
+      "file": "packages/ui/src/components/NuUserCard.vue",
+      "description": "Profile widget with colored cover, avatar, name, role and a row of stats.",
+      "props": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "Name (used for initials, alt text or labels)."
+        },
+        {
+          "name": "role",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "avatar",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "NuColor | undefined",
+          "required": false,
+          "default": "\"primary\"",
+          "description": "Theme color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'."
+        },
+        {
+          "name": "stats",
+          "type": "{ label: string; value: string | number; }[] | undefined",
+          "required": false,
+          "default": "[]",
+          "description": ""
+        },
+        {
+          "name": "align",
+          "type": "\"center\" | \"left\" | undefined",
+          "required": false,
+          "default": "\"center\"",
+          "description": "`left` puts the avatar beside the name in the cover."
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Widgets.vue",
+          "route": "/widgets",
+          "code": "<NuUserCard name=\"Ayu Lestari\" role=\"Product designer\" color=\"info\" :stats=\"[{ label: 'Sales', value: '3,200' }, { label: 'Followers', value: '13,000' }, { label: 'Products', value: 35 }]\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuTimeline",
+      "group": "Content",
+      "file": "packages/ui/src/components/NuTimeline.vue",
+      "description": "Vertical timeline of events with icons/colors; items with `label` render as date separators. The `item` slot adds content under each event.",
+      "props": [
+        {
+          "name": "items",
+          "type": "NuTimelineItem[]",
+          "required": true,
+          "description": "Items to render."
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "item",
+          "type": "{ item: NuTimelineItem; index: number; }",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Ecommerce.vue",
+          "route": "/ecommerce",
+          "code": "<NuTimeline\n  :items=\"[\n    { title: 'Great light, sturdy base — Ayu', time: '★★★★★', description: 'The warm setting is perfect for reading.', color: 'success' },\n    { title: 'Good, but the cable is short — Budi', time: '★★★★', description: 'Bought an extension; otherwise excellent.', color: 'info' },\n    { title: 'Arrived scratched — Citra', time: '★★★', description: 'Support replaced it within a week.', color: 'warning' },\n  ]\"\n/>"
+        },
+        {
+          "file": "apps/demo/src/pages/apps/Calendar.vue",
+          "route": "/apps/calendar",
+          "code": "<NuTimeline v-if=\"dayEvents.length\" :items=\"dayEvents.map((e) => ({ title: e.title, color: e.color }))\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuTable",
+      "group": "Content",
+      "file": "packages/ui/src/components/NuTable.vue",
+      "description": "Data table: search, sort, pagination, cell slots, row selection with bulk actions, CSV export, server mode. Each column can be customised with a `cell-<key>` slot receiving `{ row, value }`.",
+      "props": [
+        {
+          "name": "columns",
+          "type": "NuTableColumn<T>[]",
+          "required": true,
+          "description": "Column definitions: key, label, sortable, align, width, format."
+        },
+        {
+          "name": "rows",
+          "type": "T[]",
+          "required": true,
+          "description": "Row objects (in server mode: just the current page)."
+        },
+        {
+          "name": "rowKey",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Property used as the row key (required for `selectable`). Falls back to the row index."
+        },
+        {
+          "name": "searchable",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Show a search box."
+        },
+        {
+          "name": "searchPlaceholder",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "pageSize",
+          "type": "number | undefined",
+          "required": false,
+          "default": "10",
+          "description": "Rows per page; 0 disables pagination."
+        },
+        {
+          "name": "striped",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Zebra-striped rows."
+        },
+        {
+          "name": "hover",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "true",
+          "description": "Highlight rows on hover."
+        },
+        {
+          "name": "dense",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Tighter rows."
+        },
+        {
+          "name": "emptyText",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "selectable",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Checkbox column; bind the chosen row keys with `v-model:selected`."
+        },
+        {
+          "name": "exportable",
+          "type": "string | boolean | undefined",
+          "required": false,
+          "description": "\"Export CSV\" button. Pass a string to set the file name. Exports every filtered row, sorted."
+        },
+        {
+          "name": "manual",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Server mode: the table doesn't search, sort or paginate `rows` itself. Bind `v-model:search`, `v-model:sort` and `v-model:page`, load the page yourself and pass `total`."
+        },
+        {
+          "name": "total",
+          "type": "number | undefined",
+          "required": false,
+          "description": "Total row count in server mode."
+        },
+        {
+          "name": "loading",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Show a loading state."
+        },
+        {
+          "name": "page",
+          "type": "number | undefined",
+          "required": false,
+          "default": "1",
+          "description": ""
+        },
+        {
+          "name": "search",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"\"",
+          "description": ""
+        },
+        {
+          "name": "sort",
+          "type": "NuTableSort | null | undefined",
+          "required": false,
+          "default": "null",
+          "description": ""
+        },
+        {
+          "name": "selected",
+          "type": "(string | number)[] | undefined",
+          "required": false,
+          "default": "[]",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "update:page",
+          "type": "[value: number]",
+          "description": ""
+        },
+        {
+          "name": "update:search",
+          "type": "[value: string]",
+          "description": ""
+        },
+        {
+          "name": "update:sort",
+          "type": "[value: NuTableSort | null]",
+          "description": ""
+        },
+        {
+          "name": "update:selected",
+          "type": "[value: (string | number)[]]",
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "bulk",
+          "type": "{ selected: (string | number)[]; clear: () => never[]; }",
+          "description": ""
+        },
+        {
+          "name": "toolbar",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "empty",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Dashboard2.vue",
+          "route": "/dashboard-2",
+          "code": "<NuTable :columns=\"columns\" :rows=\"orders.slice(0, 7)\" row-key=\"id\" :page-size=\"0\">\n  <template #cell-status=\"{ row }\"><NuBadge :color=\"statusColor[row.status as Order['status']]\">{{ row.status }}</NuBadge></template>\n</NuTable>"
+        },
+        {
+          "file": "apps/demo/src/pages/Dashboard.vue",
+          "route": "/",
+          "code": "<NuTable :columns=\"columns\" :rows=\"orders.slice(0, 6)\" row-key=\"id\" :page-size=\"0\">\n  <template #cell-customer=\"{ row }\">\n    <div class=\"nu-cluster\">\n      <NuAvatar :name=\"row.customer\" :size=\"28\" />\n      <span>{{ row.customer }}</span>\n    </div>\n  </template>\n  <template #cell-status=\"{ row }\">\n    <NuBadge :color=\"statusColor[row.status as Order['status']]\" dot>{{ row.status }}</NuBadge>\n  </template>\n</NuTable>"
+        }
+      ]
+    },
+    {
+      "name": "NuPagination",
+      "group": "Content",
+      "file": "packages/ui/src/components/NuPagination.vue",
+      "description": "Page buttons with ellipses; v-model is the page number.",
+      "props": [
+        {
+          "name": "total",
+          "type": "number",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "pageSize",
+          "type": "number | undefined",
+          "required": false,
+          "default": "10",
+          "description": ""
+        },
+        {
+          "name": "siblings",
+          "type": "number | undefined",
+          "required": false,
+          "default": "1",
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "number | undefined",
+          "required": false,
+          "default": "1",
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: number]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Contacts.vue",
+          "route": "/contacts",
+          "code": "<NuPagination v-model=\"page\" :total=\"filtered.length\" :page-size=\"PAGE\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/ui/Navigation.vue",
+          "route": "/ui/navigation",
+          "code": "<NuPagination v-model=\"page\" :total=\"200\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuList",
+      "group": "Content",
+      "file": "packages/ui/src/components/NuList.vue",
+      "description": "Bordered list container for NuListItem rows.",
+      "props": [
+        {
+          "name": "bordered",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/apps/Compose.vue",
+          "route": "/apps/mailbox/compose",
+          "code": "<NuList>\n  <NuListItem :icon=\"Inbox\" title=\"Inbox\" to=\"/apps/mailbox\" />\n  <NuListItem :icon=\"Send\" title=\"Sent\" to=\"/apps/mailbox\" />\n  <NuListItem :icon=\"FileText\" title=\"Drafts\" to=\"/apps/mailbox\" />\n  <NuListItem :icon=\"Trash2\" title=\"Trash\" to=\"/apps/mailbox\" />\n</NuList>"
+        },
+        {
+          "file": "apps/demo/src/pages/apps/Mailbox.vue",
+          "route": "/apps/mailbox",
+          "code": "<NuList>\n  <NuListItem v-for=\"f in folders\" :key=\"f.key\" :icon=\"f.icon\" :title=\"f.label\" clickable :active=\"folder === f.key\" @click=\"folder = f.key; checked = []\">\n    <template v-if=\"count(f.key)\" #end><NuBadge :color=\"f.key === 'inbox' ? 'primary' : 'secondary'\">{{ count(f.key) }}</NuBadge></template>\n  </NuListItem>\n</NuList>"
+        }
+      ]
+    },
+    {
+      "name": "NuListItem",
+      "group": "Content",
+      "file": "packages/ui/src/components/NuListItem.vue",
+      "description": "List row with icon/start slot, title, subtitle and end slot; renders as link or button when needed.",
+      "props": [
+        {
+          "name": "title",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Title text."
+        },
+        {
+          "name": "subtitle",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Secondary text under the title."
+        },
+        {
+          "name": "icon",
+          "type": "Component | undefined",
+          "required": false,
+          "description": "Icon component (any Vue component, e.g. from lucide-vue-next)."
+        },
+        {
+          "name": "to",
+          "type": "string | J | W | undefined",
+          "required": false,
+          "description": "Router location; renders a RouterLink."
+        },
+        {
+          "name": "href",
+          "type": "string | undefined",
+          "required": false,
+          "description": "URL; renders an <a>."
+        },
+        {
+          "name": "clickable",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Render as a button (emits native click)."
+        },
+        {
+          "name": "active",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "start",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "end",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/apps/Compose.vue",
+          "route": "/apps/mailbox/compose",
+          "code": "<NuListItem :icon=\"Inbox\" title=\"Inbox\" to=\"/apps/mailbox\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/apps/Mailbox.vue",
+          "route": "/apps/mailbox",
+          "code": "<NuListItem v-for=\"f in folders\" :key=\"f.key\" :icon=\"f.icon\" :title=\"f.label\" clickable :active=\"folder === f.key\" @click=\"folder = f.key; checked = []\">\n  <template v-if=\"count(f.key)\" #end><NuBadge :color=\"f.key === 'inbox' ? 'primary' : 'secondary'\">{{ count(f.key) }}</NuBadge></template>\n</NuListItem>"
+        }
+      ]
+    },
+    {
+      "name": "NuDescriptions",
+      "group": "Content",
+      "file": "packages/ui/src/components/NuDescriptions.vue",
+      "description": "Label/value pairs (definition list) in 1–3 columns, with per-item slots. Each item’s value can be replaced with a slot named after its `key`.",
+      "props": [
+        {
+          "name": "items",
+          "type": "NuDescriptionItem[]",
+          "required": true,
+          "description": "Items to render."
+        },
+        {
+          "name": "columns",
+          "type": "1 | 2 | 3 | undefined",
+          "required": false,
+          "default": "1",
+          "description": ""
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Wizard.vue",
+          "route": "/forms/wizard",
+          "code": "<NuDescriptions\n  :columns=\"2\"\n  :items=\"[\n    { label: 'Name', value: form.name },\n    { label: 'Email', value: form.email },\n    { label: 'Company', value: form.company },\n    { label: 'Team size', value: form.size },\n    { label: 'Plan', value: form.plan },\n    { label: 'Billing', value: form.yearly ? 'Yearly' : 'Monthly' },\n  ]\"\n/>"
+        },
+        {
+          "file": "apps/demo/src/pages/Profile.vue",
+          "route": "/profile",
+          "code": "<NuDescriptions\n  :items=\"[\n    { label: 'Email', value: form.email },\n    { label: 'Location', value: form.city },\n    { label: 'Joined', value: '12 March 2024' },\n    { label: 'Role', key: 'role' },\n  ]\"\n>\n  <template #role><NuBadge>Administrator</NuBadge></template>\n</NuDescriptions>"
+        }
+      ]
+    },
+    {
+      "name": "NuCalendar",
+      "group": "Content",
+      "file": "packages/ui/src/components/NuCalendar.vue",
+      "description": "Month calendar with events, selection and range highlighting; `compact` for a small picker grid.",
+      "props": [
+        {
+          "name": "events",
+          "type": "NuCalendarEvent[] | undefined",
+          "required": false,
+          "default": "[]",
+          "description": ""
+        },
+        {
+          "name": "weekStart",
+          "type": "0 | 1 | undefined",
+          "required": false,
+          "default": "1",
+          "description": "0 = Sunday, 1 = Monday."
+        },
+        {
+          "name": "locale",
+          "type": "string | undefined",
+          "required": false,
+          "description": "BCP 47 locale for dates; defaults to the active useLocale() language."
+        },
+        {
+          "name": "compact",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "range",
+          "type": "[string, string] | null | undefined",
+          "required": false,
+          "description": "Highlight an inclusive date range, [start, end] as YYYY-MM-DD."
+        },
+        {
+          "name": "modelValue",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Selected day, YYYY-MM-DD."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: string | undefined]",
+          "description": ""
+        },
+        {
+          "name": "select",
+          "type": "[date: string]",
+          "description": ""
+        },
+        {
+          "name": "event-click",
+          "type": "[event: NuCalendarEvent]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [
+        {
+          "name": "showMonth",
+          "type": "(date: string) => void",
+          "description": ""
+        }
+      ],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/apps/Calendar.vue",
+          "route": "/apps/calendar",
+          "code": "<NuCalendar v-model=\"selected\" :events=\"events\" @event-click=\"toast.info(`${$event.title} · ${$event.date}`)\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/ui/DataDisplay.vue",
+          "route": "/ui/data-display",
+          "code": "<NuCalendar\n  v-model=\"day\"\n  compact\n  :events=\"[\n    { date: new Date().toISOString().slice(0, 10), title: 'Today' },\n    { date: new Date(Date.now() + 2 * 864e5).toISOString().slice(0, 10), title: 'Review', color: 'success' },\n  ]\"\n/>"
+        }
+      ]
+    },
+    {
+      "name": "NuAccordion",
+      "group": "Content",
+      "file": "packages/ui/src/components/NuAccordion.vue",
+      "description": "Collapsible sections; one open at a time unless `multiple`. An item’s body can be replaced with a slot named after its `key`.",
+      "props": [
+        {
+          "name": "items",
+          "type": "NuAccordionItem[]",
+          "required": true,
+          "description": "Items to render."
+        },
+        {
+          "name": "multiple",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Allow several values."
+        },
+        {
+          "name": "defaultOpen",
+          "type": "string[] | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Faq.vue",
+          "route": "/faq",
+          "code": "<NuAccordion :items=\"g.items\" multiple />"
+        },
+        {
+          "file": "apps/demo/src/pages/ui/Navigation.vue",
+          "route": "/ui/navigation",
+          "code": "<NuAccordion\n  style=\"border: 0\"\n  :default-open=\"['a']\"\n  :items=\"[\n    { key: 'a', title: 'Is the kit tied to a CSS framework?', content: 'No. Styles are plain CSS driven by custom properties.' },\n    { key: 'b', title: 'Can several panels be open at once?', content: 'Yes — pass the multiple prop.' },\n    { key: 'c', title: 'Can I put rich content inside?', content: 'Use a slot named after the item key.' },\n  ]\"\n/>"
+        }
+      ]
+    },
+    {
+      "name": "NuTabs",
+      "group": "Content",
+      "file": "packages/ui/src/components/NuTabs.vue",
+      "description": "Tabs (line or pills); each tab is a named slot matching its key. Each tab’s panel is the slot named after its `key`.",
+      "props": [
+        {
+          "name": "tabs",
+          "type": "NuTab[]",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "variant",
+          "type": "\"line\" | \"pills\" | undefined",
+          "required": false,
+          "description": "Visual style."
+        },
+        {
+          "name": "modelValue",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: string | undefined]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Ecommerce.vue",
+          "route": "/ecommerce",
+          "code": "<NuTabs v-model=\"tab\" :tabs=\"[{ key: 'description', label: 'Description' }, { key: 'specs', label: 'Specifications' }, { key: 'reviews', label: 'Reviews (3)' }]\">\n  <template #description>\n    <p>Designed for long evenings at the desk: flicker-free light, five brightness levels and a memory function that restores your last setting.</p>\n  </template>\n  <template #specs>\n    <table class=\"st st--striped\" style=\"max-width: 520px\">\n      <tbody>\n        <tr><td>Power</td><td>10 W LED, USB-C 5 V / 2 A</td></tr>\n        <tr><td>Color temperature</td><td>2700–6500 K</td></tr>\n        <tr><td>Height</td><td>42 cm (arm extended 58 cm)</td></tr>\n        <tr><td>Warranty</td><td>2 years</td></tr>\n      </tbody>\n    </table>\n  </template>\n  <template #reviews>\n    <NuTimeline\n      :items=\"[\n        { title: 'Great light, sturdy base — Ayu', time: '★★★★★', description: 'The warm setting is perfect for reading.', color: 'success' },\n        { title: 'Good, but the cable is short — Budi', time: '★★★★', description: 'Bought an extension; otherwise excellent.', color: 'info' },\n        { title: 'Arrived scratched — Citra', time: '★★★', description: 'Support replaced it within a week.', color: 'warning' },\n      ]\"\n    />\n  </template>\n</NuTabs>"
+        },
+        {
+          "file": "apps/demo/src/pages/ui/Navigation.vue",
+          "route": "/ui/navigation",
+          "code": "<NuTabs v-model=\"tab\" :tabs=\"tabs\">\n  <template #profile>Profile settings. Each tab is a named slot matching its <code>key</code>.</template>\n  <template #billing>Billing details and invoices.</template>\n  <template #notifications>Choose what you want to be notified about.</template>\n</NuTabs>"
+        }
+      ]
+    },
+    {
+      "name": "NuSteps",
+      "group": "Content",
+      "file": "packages/ui/src/components/NuSteps.vue",
+      "description": "Step indicator for wizards; v-model is the current step index.",
+      "props": [
+        {
+          "name": "steps",
+          "type": "NuStep[]",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "clickable",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "vertical",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "number | undefined",
+          "required": false,
+          "default": "0",
+          "description": "Zero-based index of the current step."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: number]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Wizard.vue",
+          "route": "/forms/wizard",
+          "code": "<NuSteps :model-value=\"step\" :steps=\"steps\" style=\"flex: 1\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/ui/Navigation.vue",
+          "route": "/ui/navigation",
+          "code": "<NuSteps v-model=\"step\" :steps=\"steps\" clickable />"
+        }
+      ]
+    },
+    {
+      "name": "NuDivider",
+      "group": "Content",
+      "file": "packages/ui/src/components/NuDivider.vue",
+      "description": "Horizontal rule with an optional centered label.",
+      "props": [
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/ui/General.vue",
+          "route": "/ui/general",
+          "code": "<NuDivider label=\"Sizes &amp; states\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/auth/Login.vue",
+          "route": "/auth/login",
+          "code": "<NuDivider label=\"or\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuCallout",
+      "group": "Content",
+      "file": "packages/ui/src/components/NuCallout.vue",
+      "description": "Bordered note with a colored left edge and optional title.",
+      "props": [
+        {
+          "name": "color",
+          "type": "NuColor | undefined",
+          "required": false,
+          "default": "\"info\"",
+          "description": "Theme color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'."
+        },
+        {
+          "name": "title",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Title text."
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Widgets.vue",
+          "route": "/widgets",
+          "code": "<NuCallout color=\"danger\" title=\"I am a danger callout!\">There is a problem that we need to fix. A wonderful serenity has taken possession of my entire soul.</NuCallout>"
+        }
+      ]
+    },
+    {
+      "name": "NuRibbon",
+      "group": "Content",
+      "file": "packages/ui/src/components/NuRibbon.vue",
+      "description": "Corner ribbon for a card or any positioned box.",
+      "props": [
+        {
+          "name": "text",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "NuColor | undefined",
+          "required": false,
+          "default": "\"primary\"",
+          "description": "Theme color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'."
+        },
+        {
+          "name": "size",
+          "type": "\"md\" | \"lg\" | undefined",
+          "required": false,
+          "default": "\"md\"",
+          "description": "Size: 'sm' | 'md' | 'lg'."
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Widgets.vue",
+          "route": "/widgets",
+          "code": "<NuRibbon text=\"New\" color=\"danger\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/ui/Ribbons.vue",
+          "route": "/ui/ribbons",
+          "code": "<NuRibbon :text=\"['New', 'Sale', 'Hot', '-20%', 'Info', 'Beta'][i]!\" :color=\"c\" :size=\"i % 2 ? 'lg' : 'md'\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuDirectChat",
+      "group": "Apps",
+      "file": "packages/ui/src/components/NuDirectChat.vue",
+      "description": "Chat message list with avatars and a send box; emits `send`.",
+      "props": [
+        {
+          "name": "messages",
+          "type": "NuChatMessage[]",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "height",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"320px\"",
+          "description": ""
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Placeholder text."
+        },
+        {
+          "name": "avatars",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "true",
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "send",
+          "type": "[text: string]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Widgets.vue",
+          "route": "/widgets",
+          "code": "<NuDirectChat :messages=\"chat\" height=\"260px\" @send=\"(text) => chat.push({ from: 'Ayu Lestari', text, me: true, time: 'now' })\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/Dashboard2.vue",
+          "route": "/dashboard-2",
+          "code": "<NuDirectChat :messages=\"chat\" height=\"250px\" @send=\"send\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuTodoList",
+      "group": "Apps",
+      "file": "packages/ui/src/components/NuTodoList.vue",
+      "description": "Checklist with drag (and keyboard) reordering, due badges, delete and an add box.",
+      "props": [
+        {
+          "name": "addable",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "addPlaceholder",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "sortable",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "true",
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "NuTodo[] | undefined",
+          "required": false,
+          "default": "[]",
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "add",
+          "type": "[text: string]",
+          "description": ""
+        },
+        {
+          "name": "update:modelValue",
+          "type": "[value: NuTodo[]]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Widgets.vue",
+          "route": "/widgets",
+          "code": "<NuTodoList v-model=\"todos\" addable />"
+        }
+      ]
+    },
+    {
+      "name": "NuAlert",
+      "group": "Feedback",
+      "file": "packages/ui/src/components/NuAlert.vue",
+      "description": "Inline alert with icon, title and optional dismiss.",
+      "props": [
+        {
+          "name": "color",
+          "type": "NuColor | undefined",
+          "required": false,
+          "default": "\"info\"",
+          "description": "Theme color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'."
+        },
+        {
+          "name": "title",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Title text."
+        },
+        {
+          "name": "dismissible",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "dismiss",
+          "type": "[]",
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "icon",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/layout/Example.vue",
+          "code": "<NuAlert color=\"info\">{{ meta.note }} This page forces the option through route meta; other pages keep your saved settings.</NuAlert>"
+        },
+        {
+          "file": "apps/demo/src/pages/layout/Options.vue",
+          "route": "/layout/options",
+          "code": "<NuAlert color=\"info\" title=\"Per page or per app\">\n  These switches change the saved default. A page can force its own layout by passing props to <code>NuLayout</code> — the example pages in the menu do that through route meta.\n</NuAlert>"
+        }
+      ]
+    },
+    {
+      "name": "NuBadge",
+      "group": "Feedback",
+      "file": "packages/ui/src/components/NuBadge.vue",
+      "description": "Small label in soft, solid or outline style, optional dot or pill shape.",
+      "props": [
+        {
+          "name": "color",
+          "type": "NuColor | undefined",
+          "required": false,
+          "default": "\"primary\"",
+          "description": "Theme color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'."
+        },
+        {
+          "name": "variant",
+          "type": "\"solid\" | \"soft\" | \"outline\" | undefined",
+          "required": false,
+          "default": "\"soft\"",
+          "description": "Visual style."
+        },
+        {
+          "name": "pill",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Fully rounded shape."
+        },
+        {
+          "name": "dot",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Show a status dot."
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Invoice.vue",
+          "route": "/invoice",
+          "code": "<NuBadge color=\"success\" dot>Paid</NuBadge>"
+        },
+        {
+          "file": "apps/demo/src/pages/Ecommerce.vue",
+          "route": "/ecommerce",
+          "code": "<NuBadge color=\"success\">In stock</NuBadge>"
+        }
+      ]
+    },
+    {
+      "name": "NuProgress",
+      "group": "Feedback",
+      "file": "packages/ui/src/components/NuProgress.vue",
+      "description": "Horizontal progress bar with optional label and value.",
+      "props": [
+        {
+          "name": "value",
+          "type": "number",
+          "required": true,
+          "description": "Current value."
+        },
+        {
+          "name": "max",
+          "type": "number | undefined",
+          "required": false,
+          "default": "100",
+          "description": "Maximum value."
+        },
+        {
+          "name": "color",
+          "type": "NuColor | undefined",
+          "required": false,
+          "default": "\"primary\"",
+          "description": "Theme color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'."
+        },
+        {
+          "name": "height",
+          "type": "number | undefined",
+          "required": false,
+          "default": "8",
+          "description": "Height (CSS length or pixels)."
+        },
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "showValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "labelHidden",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Profile.vue",
+          "route": "/profile",
+          "code": "<NuProgress label=\"Interface design\" :value=\"92\" show-value />"
+        },
+        {
+          "file": "apps/demo/src/pages/ui/General.vue",
+          "route": "/ui/general",
+          "code": "<NuProgress label=\"Primary\" :value=\"72\" show-value />"
+        }
+      ]
+    },
+    {
+      "name": "NuProgressRing",
+      "group": "Feedback",
+      "file": "packages/ui/src/components/NuProgressRing.vue",
+      "description": "Circular progress with the percentage (or slot) in the middle.",
+      "props": [
+        {
+          "name": "value",
+          "type": "number",
+          "required": true,
+          "description": "Current value."
+        },
+        {
+          "name": "max",
+          "type": "number | undefined",
+          "required": false,
+          "default": "100",
+          "description": "Maximum value."
+        },
+        {
+          "name": "size",
+          "type": "number | undefined",
+          "required": false,
+          "default": "64",
+          "description": "Size: 'sm' | 'md' | 'lg'."
+        },
+        {
+          "name": "thickness",
+          "type": "number | undefined",
+          "required": false,
+          "default": "6",
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "NuColor | undefined",
+          "required": false,
+          "default": "\"primary\"",
+          "description": "Theme color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'."
+        },
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/ui/General.vue",
+          "route": "/ui/general",
+          "code": "<NuProgressRing :value=\"72\" label=\"Primary\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuSpinner",
+      "group": "Feedback",
+      "file": "packages/ui/src/components/NuSpinner.vue",
+      "description": "Loading spinner.",
+      "props": [
+        {
+          "name": "size",
+          "type": "number | undefined",
+          "required": false,
+          "default": "20",
+          "description": "Size: 'sm' | 'md' | 'lg'."
+        },
+        {
+          "name": "color",
+          "type": "NuColor | undefined",
+          "required": false,
+          "default": "\"primary\"",
+          "description": "Theme color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'."
+        },
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/ui/General.vue",
+          "route": "/ui/general",
+          "code": "<NuSpinner :size=\"14\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuSkeleton",
+      "group": "Feedback",
+      "file": "packages/ui/src/components/NuSkeleton.vue",
+      "description": "Shimmering placeholder lines or circle while content loads.",
+      "props": [
+        {
+          "name": "width",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"100%\"",
+          "description": "Width (CSS length)."
+        },
+        {
+          "name": "height",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"12px\"",
+          "description": ""
+        },
+        {
+          "name": "lines",
+          "type": "number | undefined",
+          "required": false,
+          "default": "1",
+          "description": ""
+        },
+        {
+          "name": "circle",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/ui/Feedback.vue",
+          "route": "/ui/feedback",
+          "code": "<NuSkeleton circle height=\"40px\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuEmpty",
+      "group": "Feedback",
+      "file": "packages/ui/src/components/NuEmpty.vue",
+      "description": "Empty state with icon, title, description and actions.",
+      "props": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "description": "Title text."
+        },
+        {
+          "name": "description",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Secondary text."
+        },
+        {
+          "name": "icon",
+          "type": "Component | undefined",
+          "required": false,
+          "description": "Icon component (any Vue component, e.g. from lucide-vue-next)."
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Wizard.vue",
+          "route": "/forms/wizard",
+          "code": "<NuEmpty v-else title=\"All set\" :description=\"`${form.company} was created on the ${form.plan} plan.`\" :icon=\"PartyPopper\">\n  <NuButton size=\"sm\" variant=\"outline\" color=\"secondary\" @click=\"step = 0\">Start over</NuButton>\n</NuEmpty>"
+        },
+        {
+          "file": "apps/demo/src/pages/Faq.vue",
+          "route": "/faq",
+          "code": "<NuEmpty title=\"No matching questions\" description=\"Try a different search term.\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuTooltip",
+      "group": "Feedback",
+      "file": "packages/ui/src/components/NuTooltip.vue",
+      "description": "CSS tooltip on hover/focus of the wrapped element.",
+      "props": [
+        {
+          "name": "text",
+          "type": "string",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "placement",
+          "type": "\"left\" | \"right\" | \"top\" | \"bottom\" | undefined",
+          "required": false,
+          "default": "\"top\"",
+          "description": ""
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/ui/Feedback.vue",
+          "route": "/ui/feedback",
+          "code": "<NuTooltip text=\"Tooltip on top\"><NuButton variant=\"outline\" color=\"secondary\">Top</NuButton></NuTooltip>"
+        }
+      ]
+    },
+    {
+      "name": "NuModal",
+      "group": "Feedback",
+      "file": "packages/ui/src/components/NuModal.vue",
+      "description": "Dialog with focus trap, scroll lock, Escape/backdrop close and a footer slot.",
+      "props": [
+        {
+          "name": "title",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Title text."
+        },
+        {
+          "name": "size",
+          "type": "\"md\" | \"lg\" | \"sm\" | undefined",
+          "required": false,
+          "default": "\"md\"",
+          "description": "Size: 'sm' | 'md' | 'lg'."
+        },
+        {
+          "name": "persistent",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: boolean]",
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "header",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "{ close: () => void; }",
+          "description": ""
+        },
+        {
+          "name": "footer",
+          "type": "{ close: () => void; }",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/apps/Calendar.vue",
+          "route": "/apps/calendar",
+          "code": "<NuModal v-model=\"modal\" title=\"New event\" size=\"sm\">\n  <form id=\"event-form\" class=\"nu-stack\" style=\"--nu-gap: 10px\" @submit.prevent=\"save\">\n    <NuInput v-model=\"draft.title\" label=\"Title\" required />\n    <NuInput v-model=\"draft.date\" label=\"Date\" type=\"date\" required />\n    <NuSelect\n      v-model=\"draft.color\"\n      label=\"Color\"\n      :options=\"['primary', 'success', 'warning', 'danger', 'info', 'secondary'].map((c) => ({ label: c, value: c }))\"\n    />\n  </form>\n  <template #footer=\"{ close }\">\n    <NuButton variant=\"ghost\" color=\"secondary\" @click=\"close\">Cancel</NuButton>\n    <NuButton type=\"submit\" form=\"event-form\">Add</NuButton>\n  </template>\n</NuModal>"
+        },
+        {
+          "file": "apps/demo/src/pages/apps/Mailbox.vue",
+          "route": "/apps/mailbox",
+          "code": "<NuModal v-model=\"compose\" title=\"New message\">\n  <form id=\"compose-form\" class=\"nu-stack\" style=\"--nu-gap: 10px\" @submit.prevent=\"send\">\n    <NuInput label=\"To\" type=\"email\" placeholder=\"name@example.com\" required />\n    <NuInput label=\"Subject\" required />\n    <NuTextarea label=\"Message\" :rows=\"6\" />\n  </form>\n  <template #footer=\"{ close }\">\n    <NuButton variant=\"ghost\" color=\"secondary\" @click=\"close\">Discard</NuButton>\n    <NuButton type=\"submit\" form=\"compose-form\" :icon=\"Send\">Send</NuButton>\n  </template>\n</NuModal>"
+        }
+      ]
+    },
+    {
+      "name": "NuDrawer",
+      "group": "Feedback",
+      "file": "packages/ui/src/components/NuDrawer.vue",
+      "description": "Side panel dialog (left or right) with the same behavior as NuModal.",
+      "props": [
+        {
+          "name": "title",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Title text."
+        },
+        {
+          "name": "side",
+          "type": "\"left\" | \"right\" | undefined",
+          "required": false,
+          "default": "\"right\"",
+          "description": ""
+        },
+        {
+          "name": "width",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"380px\"",
+          "description": "Width (CSS length)."
+        },
+        {
+          "name": "modelValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: boolean]",
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "header",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "{ close: () => void; }",
+          "description": ""
+        },
+        {
+          "name": "footer",
+          "type": "{ close: () => void; }",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/ui/Feedback.vue",
+          "route": "/ui/feedback",
+          "code": "<NuDrawer v-model=\"drawer\" title=\"Filters\">\n  <div class=\"nu-stack\" style=\"--nu-gap: 10px\">\n    <NuInput label=\"Customer\" placeholder=\"Any customer\" />\n    <NuInput label=\"Min amount\" type=\"number\" placeholder=\"0\" />\n  </div>\n  <template #footer=\"{ close }\">\n    <NuButton variant=\"ghost\" color=\"secondary\" @click=\"close\">Reset</NuButton>\n    <NuButton @click=\"close\">Apply</NuButton>\n  </template>\n</NuDrawer>"
+        },
+        {
+          "file": "apps/demo/src/pages/Users.vue",
+          "route": "/users",
+          "code": "<NuDrawer v-model=\"drawer\" :title=\"editing ? 'Edit user' : 'Add user'\">\n  <form id=\"user-form\" class=\"nu-stack\" style=\"--nu-gap: 10px\" novalidate @submit.prevent=\"save\">\n    <NuInput v-model=\"form.name\" label=\"Full name\" required autocomplete=\"name\" />\n    <NuInput v-model=\"form.email\" label=\"Email\" type=\"email\" required autocomplete=\"email\" :error=\"error\" />\n    <NuSelect v-model=\"form.role\" label=\"Role\" :options=\"roleOptions\" />\n    <NuSwitch v-model=\"form.active\" label=\"Active\" />\n  </form>\n  <template #footer=\"{ close }\">\n    <NuButton variant=\"ghost\" color=\"secondary\" @click=\"close\">Cancel</NuButton>\n    <NuButton type=\"submit\" form=\"user-form\">{{ editing ? 'Save changes' : 'Add user' }}</NuButton>\n  </template>\n</NuDrawer>"
+        }
+      ]
+    },
+    {
+      "name": "NuToastHost",
+      "group": "Feedback",
+      "file": "packages/ui/src/components/NuToastHost.vue",
+      "description": "Renders toasts from useToast(). NuLayout already includes one.",
+      "props": [],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "",
+          "code": "<!-- NuLayout includes one. Outside a layout (e.g. auth pages): -->\n<NuToastHost />"
+        }
+      ]
+    },
+    {
+      "name": "NuButton",
+      "group": "Actions",
+      "file": "packages/ui/src/components/NuButton.vue",
+      "description": "Button or link (to/href) in solid, soft, outline or ghost style, with icon and loading state.",
+      "props": [
+        {
+          "name": "color",
+          "type": "NuColor | undefined",
+          "required": false,
+          "default": "\"primary\"",
+          "description": "Theme color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'."
+        },
+        {
+          "name": "variant",
+          "type": "\"solid\" | \"soft\" | \"outline\" | \"ghost\" | undefined",
+          "required": false,
+          "default": "\"solid\"",
+          "description": "Visual style."
+        },
+        {
+          "name": "size",
+          "type": "NuSize | undefined",
+          "required": false,
+          "default": "\"md\"",
+          "description": "Size: 'sm' | 'md' | 'lg'."
+        },
+        {
+          "name": "icon",
+          "type": "Component | undefined",
+          "required": false,
+          "description": "Icon component (any Vue component, e.g. from lucide-vue-next)."
+        },
+        {
+          "name": "square",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Icon-only square button. Provide `aria-label`."
+        },
+        {
+          "name": "block",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Stretch to full width."
+        },
+        {
+          "name": "loading",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Show a loading state."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Disable the control."
+        },
+        {
+          "name": "to",
+          "type": "string | J | W | undefined",
+          "required": false,
+          "description": "Router location; renders a RouterLink."
+        },
+        {
+          "name": "href",
+          "type": "string | undefined",
+          "required": false,
+          "description": "URL; renders an <a>."
+        },
+        {
+          "name": "type",
+          "type": "\"button\" | \"submit\" | \"reset\" | undefined",
+          "required": false,
+          "default": "\"button\"",
+          "description": ""
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Widgets.vue",
+          "route": "/widgets",
+          "code": "<NuButton size=\"sm\" variant=\"soft\" color=\"danger\" @click=\"toast.info('Footer action')\">Action</NuButton>"
+        },
+        {
+          "file": "apps/demo/src/pages/forms/Wizard.vue",
+          "route": "/forms/wizard",
+          "code": "<NuButton variant=\"outline\" color=\"secondary\" :disabled=\"step === 0\" @click=\"step--\">Back</NuButton>"
+        }
+      ]
+    },
+    {
+      "name": "NuIconButton",
+      "group": "Actions",
+      "file": "packages/ui/src/components/NuIconButton.vue",
+      "description": "Square icon-only button with an accessible label and optional badge/dot.",
+      "props": [
+        {
+          "name": "icon",
+          "type": "Component | undefined",
+          "required": false,
+          "description": "Icon component (any Vue component, e.g. from lucide-vue-next)."
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "description": "Accessible name — required since the button has no text."
+        },
+        {
+          "name": "badge",
+          "type": "string | number | boolean | undefined",
+          "required": false,
+          "description": "Count bubble; `true` shows a plain dot."
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/layouts/AdminShell.vue",
+          "code": "<NuIconButton :icon=\"Languages\" label=\"Language\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuDropdown",
+      "group": "Actions",
+      "file": "packages/ui/src/components/NuDropdown.vue",
+      "description": "Popover menu anchored to a trigger slot, with keyboard navigation.",
+      "props": [
+        {
+          "name": "align",
+          "type": "\"left\" | \"right\" | undefined",
+          "required": false,
+          "default": "\"right\"",
+          "description": "Alignment."
+        },
+        {
+          "name": "width",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"220px\"",
+          "description": "Width (CSS length)."
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "trigger",
+          "type": "{ open: boolean; }",
+          "description": ""
+        },
+        {
+          "name": "default",
+          "type": "{ close: (refocus?: unknown) => void; }",
+          "description": ""
+        }
+      ],
+      "exposed": [
+        {
+          "name": "close",
+          "type": "(refocus?: unknown) => void",
+          "description": ""
+        }
+      ],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/ui/Navigation.vue",
+          "route": "/ui/navigation",
+          "code": "<NuDropdown align=\"left\">\n  <template #trigger><NuButton variant=\"outline\" color=\"secondary\">Actions</NuButton></template>\n  <NuDropdownItem :icon=\"User\">Profile</NuDropdownItem>\n  <NuDropdownItem :icon=\"CreditCard\">Billing</NuDropdownItem>\n  <div class=\"nu-dropdown__divider\" />\n  <NuDropdownItem :icon=\"Trash2\" danger>Delete</NuDropdownItem>\n</NuDropdown>"
+        },
+        {
+          "file": "apps/demo/src/layouts/AdminShell.vue",
+          "code": "<NuDropdown width=\"200px\">\n  <template #trigger><NuIconButton :icon=\"Languages\" label=\"Language\" /></template>\n  <div class=\"nu-dropdown__header\">Language</div>\n  <NuDropdownItem v-for=\"l in languages\" :key=\"l.code\" :class=\"{ 'is-current': language === l.code }\" :aria-current=\"language === l.code || undefined\" @click=\"setLocale(l.code)\">\n    {{ l.label }}\n  </NuDropdownItem>\n</NuDropdown>"
+        }
+      ]
+    },
+    {
+      "name": "NuDropdownItem",
+      "group": "Actions",
+      "file": "packages/ui/src/components/NuDropdownItem.vue",
+      "description": "Menu row inside NuDropdown; renders as link or button.",
+      "props": [
+        {
+          "name": "icon",
+          "type": "Component | undefined",
+          "required": false,
+          "description": "Icon component (any Vue component, e.g. from lucide-vue-next)."
+        },
+        {
+          "name": "to",
+          "type": "string | J | W | undefined",
+          "required": false,
+          "description": "Router location; renders a RouterLink."
+        },
+        {
+          "name": "href",
+          "type": "string | undefined",
+          "required": false,
+          "description": "URL; renders an <a>."
+        },
+        {
+          "name": "danger",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Disable the control."
+        }
+      ],
+      "events": [],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "end",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/ui/Navigation.vue",
+          "route": "/ui/navigation",
+          "code": "<NuDropdownItem :icon=\"User\">Profile</NuDropdownItem>"
+        },
+        {
+          "file": "apps/demo/src/layouts/AdminShell.vue",
+          "code": "<NuDropdownItem v-for=\"l in languages\" :key=\"l.code\" :class=\"{ 'is-current': language === l.code }\" :aria-current=\"language === l.code || undefined\" @click=\"setLocale(l.code)\">\n  {{ l.label }}\n</NuDropdownItem>"
+        }
+      ]
+    },
+    {
+      "name": "NuSegmented",
+      "group": "Actions",
+      "file": "packages/ui/src/components/NuSegmented.vue",
+      "description": "Segmented control (radio group styled as buttons).",
+      "props": [
+        {
+          "name": "options",
+          "type": "NuOption[]",
+          "required": true,
+          "description": "Choices as { label, value, disabled? }[]."
+        },
+        {
+          "name": "size",
+          "type": "NuSize | undefined",
+          "required": false,
+          "default": "\"md\"",
+          "description": "Size: 'sm' | 'md' | 'lg'."
+        },
+        {
+          "name": "block",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Stretch to full width."
+        },
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "modelValue",
+          "type": "string | number | undefined",
+          "required": false,
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: string | number | undefined]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Advanced.vue",
+          "route": "/forms/advanced",
+          "code": "<NuSegmented v-model=\"billing\" :options=\"[{ label: 'Monthly', value: 'monthly' }, { label: 'Yearly', value: 'yearly' }]\" label=\"Billing period\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/layout/Options.vue",
+          "route": "/layout/options",
+          "code": "<NuSegmented :model-value=\"layout.sidebarVariant\" size=\"sm\" label=\"Sidebar style\" :options=\"[{ label: 'Dark', value: 'dark' }, { label: 'Light', value: 'light' }]\" @update:model-value=\"setSidebarVariant($event as 'dark' | 'light')\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuInput",
+      "group": "Forms",
+      "file": "packages/ui/src/components/NuInput.vue",
+      "description": "Text input with label, hint, error, prefix/suffix slots and an optional `mask`.",
+      "props": [
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "type",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"text\"",
+          "description": ""
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Placeholder text."
+        },
+        {
+          "name": "hint",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Help text under the control."
+        },
+        {
+          "name": "error",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Error message; marks the control invalid."
+        },
+        {
+          "name": "size",
+          "type": "NuSize | undefined",
+          "required": false,
+          "default": "\"md\"",
+          "description": "Size: 'sm' | 'md' | 'lg'."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Disable the control."
+        },
+        {
+          "name": "required",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Mark as required (adds an asterisk to the label)."
+        },
+        {
+          "name": "mask",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Input mask: `9` digit, `a` letter, `*` either; other characters are literals."
+        },
+        {
+          "name": "modelValue",
+          "type": "string | number | undefined",
+          "required": false,
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: string | number | undefined]",
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "prefix",
+          "type": "{}",
+          "description": ""
+        },
+        {
+          "name": "suffix",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Wizard.vue",
+          "route": "/forms/wizard",
+          "code": "<NuInput v-model=\"form.name\" label=\"Full name\" required :error=\"errors.name\" autocomplete=\"name\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/forms/Validation.vue",
+          "route": "/forms/validation",
+          "code": "<NuInput v-bind=\"field('name')\" label=\"Full name\" required autocomplete=\"name\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuTextarea",
+      "group": "Forms",
+      "file": "packages/ui/src/components/NuTextarea.vue",
+      "description": "Multi-line text input with label, hint and error.",
+      "props": [
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Placeholder text."
+        },
+        {
+          "name": "hint",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Help text under the control."
+        },
+        {
+          "name": "error",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Error message; marks the control invalid."
+        },
+        {
+          "name": "rows",
+          "type": "number | undefined",
+          "required": false,
+          "default": "4",
+          "description": "Visible text rows."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Disable the control."
+        },
+        {
+          "name": "required",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Mark as required (adds an asterisk to the label)."
+        },
+        {
+          "name": "modelValue",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: string | undefined]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Validation.vue",
+          "route": "/forms/validation",
+          "code": "<NuTextarea v-bind=\"field('bio')\" label=\"Short bio\" :rows=\"3\" :hint=\"bioHint\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/forms/Basic.vue",
+          "route": "/forms/basic",
+          "code": "<NuTextarea v-model=\"form.bio\" label=\"Bio\" placeholder=\"A short introduction\" hint=\"Shown on the public profile.\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuSelect",
+      "group": "Forms",
+      "file": "packages/ui/src/components/NuSelect.vue",
+      "description": "Native select with label, placeholder, hint and error.",
+      "props": [
+        {
+          "name": "options",
+          "type": "NuOption[]",
+          "required": true,
+          "description": "Choices as { label, value, disabled? }[]."
+        },
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Placeholder text."
+        },
+        {
+          "name": "hint",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Help text under the control."
+        },
+        {
+          "name": "error",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Error message; marks the control invalid."
+        },
+        {
+          "name": "size",
+          "type": "NuSize | undefined",
+          "required": false,
+          "default": "\"md\"",
+          "description": "Size: 'sm' | 'md' | 'lg'."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Disable the control."
+        },
+        {
+          "name": "required",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Mark as required (adds an asterisk to the label)."
+        },
+        {
+          "name": "modelValue",
+          "type": "string | number | undefined",
+          "required": false,
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: string | number | undefined]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Wizard.vue",
+          "route": "/forms/wizard",
+          "code": "<NuSelect\n  v-model=\"form.size\"\n  label=\"Team size\"\n  :options=\"[{ label: '1–10', value: '1-10' }, { label: '11–50', value: '11-50' }, { label: '51–200', value: '51-200' }, { label: '200+', value: '200+' }]\"\n/>"
+        },
+        {
+          "file": "apps/demo/src/pages/forms/Validation.vue",
+          "route": "/forms/validation",
+          "code": "<NuSelect v-bind=\"field('country')\" label=\"Country\" placeholder=\"Choose a country\" required :options=\"[{ label: 'Indonesia', value: 'id' }, { label: 'Malaysia', value: 'my' }, { label: 'Singapore', value: 'sg' }]\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuCombobox",
+      "group": "Forms",
+      "file": "packages/ui/src/components/NuCombobox.vue",
+      "description": "Searchable select, single or multiple, keyboard friendly, clearable.",
+      "props": [
+        {
+          "name": "options",
+          "type": "NuOption[]",
+          "required": true,
+          "description": "Choices as { label, value, disabled? }[]."
+        },
+        {
+          "name": "multiple",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Allow several values."
+        },
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Placeholder text."
+        },
+        {
+          "name": "searchPlaceholder",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "hint",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Help text under the control."
+        },
+        {
+          "name": "error",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Error message; marks the control invalid."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Disable the control."
+        },
+        {
+          "name": "clearable",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Show a clear button."
+        },
+        {
+          "name": "emptyText",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "Value | Value[] | null | undefined",
+          "required": false,
+          "default": "null",
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: Value | Value[] | null]",
+          "description": ""
+        },
+        {
+          "name": "blur",
+          "type": "[]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Validation.vue",
+          "route": "/forms/validation",
+          "code": "<NuCombobox v-bind=\"field('skills')\" multiple label=\"Skills\" placeholder=\"Choose skills\" :options=\"['Vue', 'TypeScript', 'CSS', 'Node', 'Go', 'SQL'].map((s) => ({ label: s, value: s }))\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/forms/Advanced.vue",
+          "route": "/forms/advanced",
+          "code": "<NuCombobox v-model=\"city\" label=\"City (searchable)\" :options=\"cityOptions\" clearable />"
+        }
+      ]
+    },
+    {
+      "name": "NuDatePicker",
+      "group": "Forms",
+      "file": "packages/ui/src/components/NuDatePicker.vue",
+      "description": "Date input with a calendar popover; single date or `range`.",
+      "props": [
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Placeholder text."
+        },
+        {
+          "name": "hint",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Help text under the control."
+        },
+        {
+          "name": "error",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Error message; marks the control invalid."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Disable the control."
+        },
+        {
+          "name": "range",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "clearable",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Show a clear button."
+        },
+        {
+          "name": "locale",
+          "type": "string | undefined",
+          "required": false,
+          "description": "BCP 47 locale for dates; defaults to the active useLocale() language."
+        },
+        {
+          "name": "weekStart",
+          "type": "0 | 1 | undefined",
+          "required": false,
+          "default": "1",
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "Value | undefined",
+          "required": false,
+          "default": "null",
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: Value]",
+          "description": ""
+        },
+        {
+          "name": "blur",
+          "type": "[]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Validation.vue",
+          "route": "/forms/validation",
+          "code": "<NuDatePicker v-bind=\"field('start')\" label=\"Start date\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/forms/Advanced.vue",
+          "route": "/forms/advanced",
+          "code": "<NuDatePicker v-model=\"day\" label=\"Date\" clearable />"
+        }
+      ]
+    },
+    {
+      "name": "NuEditor",
+      "group": "Forms",
+      "file": "packages/ui/src/components/NuEditor.vue",
+      "description": "Lightweight rich-text editor (contenteditable) with a formatting toolbar; v-model is HTML.",
+      "props": [
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Placeholder text."
+        },
+        {
+          "name": "hint",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Help text under the control."
+        },
+        {
+          "name": "error",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Error message; marks the control invalid."
+        },
+        {
+          "name": "minHeight",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"160px\"",
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Disable the control."
+        },
+        {
+          "name": "modelValue",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"\"",
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: string]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Editors.vue",
+          "route": "/forms/editors",
+          "code": "<NuEditor v-model=\"html\" placeholder=\"Start writing…\" min-height=\"220px\" hint=\"Sanitize the HTML on the server before showing it to other users.\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/apps/Compose.vue",
+          "route": "/apps/mailbox/compose",
+          "code": "<NuEditor v-bind=\"form.field('body')\" label=\"Message\" placeholder=\"Write your message…\" min-height=\"220px\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuCodeEditor",
+      "group": "Forms",
+      "file": "packages/ui/src/components/NuCodeEditor.vue",
+      "description": "Plain-text code editor with line numbers, Tab indentation and auto-indent.",
+      "props": [
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "hint",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Help text under the control."
+        },
+        {
+          "name": "error",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Error message; marks the control invalid."
+        },
+        {
+          "name": "rows",
+          "type": "number | undefined",
+          "required": false,
+          "default": "10",
+          "description": "Visible text rows."
+        },
+        {
+          "name": "tabSize",
+          "type": "number | undefined",
+          "required": false,
+          "default": "2",
+          "description": ""
+        },
+        {
+          "name": "readonly",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Read-only."
+        },
+        {
+          "name": "language",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "modelValue",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"\"",
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: string]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Editors.vue",
+          "route": "/forms/editors",
+          "code": "<NuCodeEditor v-model=\"code\" language=\"ts\" :rows=\"8\" :hint=\"`${lines} lines`\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuCheckbox",
+      "group": "Forms",
+      "file": "packages/ui/src/components/NuCheckbox.vue",
+      "description": "Checkbox with label and error.",
+      "props": [
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Disable the control."
+        },
+        {
+          "name": "error",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Error message; marks the control invalid."
+        },
+        {
+          "name": "modelValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: boolean]",
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Validation.vue",
+          "route": "/forms/validation",
+          "code": "<NuCheckbox v-bind=\"field('terms')\">I accept the terms and privacy policy</NuCheckbox>"
+        },
+        {
+          "file": "apps/demo/src/pages/forms/Basic.vue",
+          "route": "/forms/basic",
+          "code": "<NuCheckbox v-model=\"form.terms\">I confirm this person agreed to the terms</NuCheckbox>"
+        }
+      ]
+    },
+    {
+      "name": "NuSwitch",
+      "group": "Forms",
+      "file": "packages/ui/src/components/NuSwitch.vue",
+      "description": "Toggle switch.",
+      "props": [
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Disable the control."
+        },
+        {
+          "name": "modelValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "false",
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: boolean]",
+          "description": ""
+        }
+      ],
+      "slots": [
+        {
+          "name": "default",
+          "type": "{}",
+          "description": ""
+        }
+      ],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Wizard.vue",
+          "route": "/forms/wizard",
+          "code": "<NuSwitch v-model=\"form.yearly\" label=\"Bill yearly (2 months free)\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/forms/Basic.vue",
+          "route": "/forms/basic",
+          "code": "<NuSwitch v-model=\"form.newsletter\" label=\"Send product updates by email\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuRadioGroup",
+      "group": "Forms",
+      "file": "packages/ui/src/components/NuRadioGroup.vue",
+      "description": "Radio buttons from an options array, stacked or inline.",
+      "props": [
+        {
+          "name": "options",
+          "type": "NuOption[]",
+          "required": true,
+          "description": "Choices as { label, value, disabled? }[]."
+        },
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "inline",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Disable the control."
+        },
+        {
+          "name": "hint",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Help text under the control."
+        },
+        {
+          "name": "error",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Error message; marks the control invalid."
+        },
+        {
+          "name": "modelValue",
+          "type": "string | number | undefined",
+          "required": false,
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: string | number | undefined]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Wizard.vue",
+          "route": "/forms/wizard",
+          "code": "<NuRadioGroup\n  v-model=\"form.plan\"\n  label=\"Plan\"\n  :options=\"[{ label: 'Starter — $19/mo', value: 'starter' }, { label: 'Team — $79/mo', value: 'team' }, { label: 'Business — $249/mo', value: 'business' }]\"\n/>"
+        },
+        {
+          "file": "apps/demo/src/pages/forms/Validation.vue",
+          "route": "/forms/validation",
+          "code": "<NuRadioGroup v-bind=\"field('plan')\" label=\"Plan\" inline :options=\"[{ label: 'Starter', value: 'starter' }, { label: 'Team', value: 'team' }, { label: 'Business', value: 'business' }]\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuSlider",
+      "group": "Forms",
+      "file": "packages/ui/src/components/NuSlider.vue",
+      "description": "Range slider with label and formatted value.",
+      "props": [
+        {
+          "name": "min",
+          "type": "number | undefined",
+          "required": false,
+          "default": "0",
+          "description": "Minimum value."
+        },
+        {
+          "name": "max",
+          "type": "number | undefined",
+          "required": false,
+          "default": "100",
+          "description": "Maximum value."
+        },
+        {
+          "name": "step",
+          "type": "number | undefined",
+          "required": false,
+          "default": "1",
+          "description": "Step between values."
+        },
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "showValue",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Disable the control."
+        },
+        {
+          "name": "format",
+          "type": "((v: number) => string) | undefined",
+          "required": false,
+          "description": "Formats numbers for display."
+        },
+        {
+          "name": "modelValue",
+          "type": "number | undefined",
+          "required": false,
+          "default": "0",
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: number]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Advanced.vue",
+          "route": "/forms/advanced",
+          "code": "<NuSlider v-model=\"volume\" label=\"Volume\" show-value />"
+        },
+        {
+          "file": "apps/demo/src/pages/projects/Form.vue",
+          "route": "/projects/new",
+          "code": "<NuSlider v-bind=\"form.field('progress')\" label=\"Progress\" show-value :format=\"(v) => `${v}%`\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuTagInput",
+      "group": "Forms",
+      "file": "packages/ui/src/components/NuTagInput.vue",
+      "description": "Free-text tags: Enter or comma adds, Backspace removes.",
+      "props": [
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "placeholder",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Placeholder text."
+        },
+        {
+          "name": "hint",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Help text under the control."
+        },
+        {
+          "name": "error",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Error message; marks the control invalid."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Disable the control."
+        },
+        {
+          "name": "modelValue",
+          "type": "string[] | undefined",
+          "required": false,
+          "default": "[]",
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: string[]]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Advanced.vue",
+          "route": "/forms/advanced",
+          "code": "<NuTagInput v-model=\"tags\" label=\"Tags\" placeholder=\"Add a tag\" hint=\"Press Enter or comma to add; Backspace removes the last tag.\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuTransfer",
+      "group": "Forms",
+      "file": "packages/ui/src/components/NuTransfer.vue",
+      "description": "Dual list box: move options between available and selected lists.",
+      "props": [
+        {
+          "name": "options",
+          "type": "NuOption[]",
+          "required": true,
+          "description": "Choices as { label, value, disabled? }[]."
+        },
+        {
+          "name": "titles",
+          "type": "[string, string] | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "searchable",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "true",
+          "description": "Show a search box."
+        },
+        {
+          "name": "height",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"220px\"",
+          "description": ""
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Disable the control."
+        },
+        {
+          "name": "modelValue",
+          "type": "Value[] | undefined",
+          "required": false,
+          "default": "[]",
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: Value[]]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Advanced.vue",
+          "route": "/forms/advanced",
+          "code": "<NuTransfer v-model=\"permissions\" :options=\"permissionOptions\" :titles=\"['Available permissions', 'Granted']\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuFileUpload",
+      "group": "Forms",
+      "file": "packages/ui/src/components/NuFileUpload.vue",
+      "description": "Drag-and-drop file picker with a file list; v-model is File[].",
+      "props": [
+        {
+          "name": "accept",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "multiple",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Allow several values."
+        },
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "hint",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Help text under the control."
+        },
+        {
+          "name": "disabled",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Disable the control."
+        },
+        {
+          "name": "modelValue",
+          "type": "File[] | undefined",
+          "required": false,
+          "default": "[]",
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: File[]]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Advanced.vue",
+          "route": "/forms/advanced",
+          "code": "<NuFileUpload v-model=\"files\" multiple hint=\"Any file type, several at once\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/apps/Compose.vue",
+          "route": "/apps/mailbox/compose",
+          "code": "<NuFileUpload v-model=\"form.values.files\" multiple label=\"Attach files\" hint=\"Max 25 MB in total\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuRating",
+      "group": "Forms",
+      "file": "packages/ui/src/components/NuRating.vue",
+      "description": "Star rating input or read-only display.",
+      "props": [
+        {
+          "name": "max",
+          "type": "number | undefined",
+          "required": false,
+          "default": "5",
+          "description": "Maximum value."
+        },
+        {
+          "name": "readonly",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Read-only."
+        },
+        {
+          "name": "size",
+          "type": "number | undefined",
+          "required": false,
+          "default": "18",
+          "description": "Size: 'sm' | 'md' | 'lg'."
+        },
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        },
+        {
+          "name": "modelValue",
+          "type": "number | undefined",
+          "required": false,
+          "default": "0",
+          "description": "Bound value (use v-model)."
+        }
+      ],
+      "events": [
+        {
+          "name": "update:modelValue",
+          "type": "[value: number]",
+          "description": ""
+        }
+      ],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/forms/Advanced.vue",
+          "route": "/forms/advanced",
+          "code": "<NuRating v-model=\"score\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/Ecommerce.vue",
+          "route": "/ecommerce",
+          "code": "<NuRating :model-value=\"4\" readonly :size=\"15\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuChart",
+      "group": "Charts",
+      "file": "packages/ui/src/components/NuChart.vue",
+      "description": "Dependency-free SVG line, area or bar chart with legend and hover tooltip.",
+      "props": [
+        {
+          "name": "type",
+          "type": "\"line\" | \"area\" | \"bar\" | undefined",
+          "required": false,
+          "default": "\"line\"",
+          "description": ""
+        },
+        {
+          "name": "series",
+          "type": "NuChartSeries[]",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "labels",
+          "type": "string[]",
+          "required": true,
+          "description": "One label per data point (x axis)."
+        },
+        {
+          "name": "height",
+          "type": "number | undefined",
+          "required": false,
+          "default": "280",
+          "description": "Height (CSS length or pixels)."
+        },
+        {
+          "name": "format",
+          "type": "((value: number) => string) | undefined",
+          "required": false,
+          "description": "Format y-axis ticks and tooltip values."
+        },
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Accessible summary of what the chart shows."
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Dashboard3.vue",
+          "route": "/dashboard-3",
+          "code": "<NuChart\n  :labels=\"visitors[range as 'week' | 'month'].labels\"\n  :series=\"[{ name: 'This period', data: visitors[range as 'week' | 'month'].current }, { name: 'Last period', data: visitors[range as 'week' | 'month'].last }]\"\n  :height=\"230\"\n/>"
+        },
+        {
+          "file": "apps/demo/src/pages/ui/Charts.vue",
+          "route": "/ui/charts",
+          "code": "<NuChart :labels=\"months\" :series=\"[{ name: 'Revenue', data: revenue }, { name: 'Expenses', data: expenses }]\" :format=\"usdK\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuDonut",
+      "group": "Charts",
+      "file": "packages/ui/src/components/NuDonut.vue",
+      "description": "Donut chart with center total and a legend with shares.",
+      "props": [
+        {
+          "name": "segments",
+          "type": "NuDonutSegment[]",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "size",
+          "type": "number | undefined",
+          "required": false,
+          "default": "176",
+          "description": "Size: 'sm' | 'md' | 'lg'."
+        },
+        {
+          "name": "thickness",
+          "type": "number | undefined",
+          "required": false,
+          "default": "22",
+          "description": ""
+        },
+        {
+          "name": "totalLabel",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"Total\"",
+          "description": "Caption under the center total."
+        },
+        {
+          "name": "format",
+          "type": "((value: number) => string) | undefined",
+          "required": false,
+          "description": "Formats numbers for display."
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/ui/Charts.vue",
+          "route": "/ui/charts",
+          "code": "<NuDonut :segments=\"channels\" total-label=\"Sessions\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/Dashboard2.vue",
+          "route": "/dashboard-2",
+          "code": "<NuDonut :segments=\"browsers\" total-label=\"Visits\" :size=\"150\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuSparkline",
+      "group": "Charts",
+      "file": "packages/ui/src/components/NuSparkline.vue",
+      "description": "Tiny trend line for tiles and table cells.",
+      "props": [
+        {
+          "name": "data",
+          "type": "number[]",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "color",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"var(--nu-chart-1)\"",
+          "description": "Theme color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'."
+        },
+        {
+          "name": "height",
+          "type": "number | undefined",
+          "required": false,
+          "default": "36",
+          "description": "Height (CSS length or pixels)."
+        },
+        {
+          "name": "area",
+          "type": "boolean | undefined",
+          "required": false,
+          "default": "true",
+          "description": ""
+        },
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Visible label (also the accessible name)."
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Dashboard3.vue",
+          "route": "/dashboard-3",
+          "code": "<NuSparkline :data=\"o.good ? [3, 4, 3, 5, 6, 7] : [6, 5, 6, 4, 3, 3]\" :color=\"o.good ? 'var(--nu-success)' : 'var(--nu-danger)'\" :height=\"28\" :area=\"false\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/ui/Charts.vue",
+          "route": "/ui/charts",
+          "code": "<NuSparkline :data=\"revenue\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuGeoMap",
+      "group": "Charts",
+      "file": "packages/ui/src/components/NuGeoMap.vue",
+      "description": "Choropleth map from GeoJSON features with a sequential color legend and tooltips.",
+      "props": [
+        {
+          "name": "features",
+          "type": "NuGeoFeature[]",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "values",
+          "type": "Record<string, number>",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "keyOf",
+          "type": "((f: NuGeoFeature) => string) | undefined",
+          "required": false,
+          "description": "How to get a feature's key into `values`. Defaults to `properties.name`."
+        },
+        {
+          "name": "aspect",
+          "type": "number | undefined",
+          "required": false,
+          "default": "2",
+          "description": "Width ÷ height of the drawing."
+        },
+        {
+          "name": "format",
+          "type": "((v: number) => string) | undefined",
+          "required": false,
+          "description": "Format values in the tooltip and legend."
+        },
+        {
+          "name": "label",
+          "type": "string | undefined",
+          "required": false,
+          "default": "\"Map\"",
+          "description": "Accessible summary (also provide the numbers as text elsewhere, e.g. a list or table)."
+        },
+        {
+          "name": "exclude",
+          "type": "string[] | undefined",
+          "required": false,
+          "default": "[]",
+          "description": "Feature keys to leave out, e.g. ['Antarctica']."
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/Dashboard2.vue",
+          "route": "/dashboard-2",
+          "code": "<NuGeoMap :features=\"shapes\" :values=\"visitors\" :exclude=\"['Antarctica']\" :format=\"(v) => `${v.toLocaleString()} sessions`\" label=\"World map of sessions by country; top countries listed beside it\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuAvatar",
+      "group": "Misc",
+      "file": "packages/ui/src/components/NuAvatar.vue",
+      "description": "Avatar image or initials with optional status dot.",
+      "props": [
+        {
+          "name": "src",
+          "type": "string | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "name",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Used for initials and alt text."
+        },
+        {
+          "name": "size",
+          "type": "number | undefined",
+          "required": false,
+          "default": "36",
+          "description": "Size: 'sm' | 'md' | 'lg'."
+        },
+        {
+          "name": "color",
+          "type": "NuColor | undefined",
+          "required": false,
+          "default": "\"primary\"",
+          "description": "Theme color: 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'."
+        },
+        {
+          "name": "status",
+          "type": "\"online\" | \"away\" | \"busy\" | \"offline\" | undefined",
+          "required": false,
+          "description": ""
+        },
+        {
+          "name": "square",
+          "type": "boolean | undefined",
+          "required": false,
+          "description": "Icon-only square shape (provide aria-label)."
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/apps/Chat.vue",
+          "route": "/apps/chat",
+          "code": "<NuAvatar :name=\"c.name\" :status=\"c.status\" :size=\"34\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/apps/Mailbox.vue",
+          "route": "/apps/mailbox",
+          "code": "<NuAvatar :name=\"current.from\" :size=\"28\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuAvatarGroup",
+      "group": "Misc",
+      "file": "packages/ui/src/components/NuAvatarGroup.vue",
+      "description": "Overlapping avatars with a \"+N\" counter.",
+      "props": [
+        {
+          "name": "names",
+          "type": "string[]",
+          "required": true,
+          "description": ""
+        },
+        {
+          "name": "max",
+          "type": "number | undefined",
+          "required": false,
+          "default": "4",
+          "description": "Maximum value."
+        },
+        {
+          "name": "size",
+          "type": "number | undefined",
+          "required": false,
+          "default": "30",
+          "description": "Size: 'sm' | 'md' | 'lg'."
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/apps/Kanban.vue",
+          "route": "/apps/kanban",
+          "code": "<NuAvatarGroup :names=\"task.people\" :size=\"22\" :max=\"3\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/ui/General.vue",
+          "route": "/ui/general",
+          "code": "<NuAvatarGroup :names=\"['Ayu Lestari', 'Budi Santoso', 'Citra Dewi', 'Dimas Pratama', 'Eka Putri', 'Fajar Nugroho']\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuIcon",
+      "group": "Misc",
+      "file": "packages/ui/src/components/NuIcon.vue",
+      "description": "The small built-in icon set the kit uses internally.",
+      "props": [
+        {
+          "name": "name",
+          "type": "\"menu\" | \"sort\" | \"search\" | \"refresh\" | \"info\" | \"chevron-down\" | \"chevron-up\" | \"chevron-right\" | \"chevron-left\" | \"x\" | \"sun\" | \"moon\" | \"check\" | \"minus\" | \"arrow-up\" | \"arrow-down\" | \"alert\" | \"check-circle\" | \"x-circle\" | \"star\" | \"upload\" | \"file\" | \"inbox\" | \"plus\" | \"maximize\" | \"minimize\" | \"download\" | \"arrow-right\" | \"arrow-left\" | \"grip\" | \"calendar\" | \"trash\"",
+          "required": true,
+          "description": "Name (used for initials, alt text or labels)."
+        },
+        {
+          "name": "size",
+          "type": "string | number | undefined",
+          "required": false,
+          "default": "18",
+          "description": "Size: 'sm' | 'md' | 'lg'."
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "",
+          "code": "<NuIcon name=\"check\" :size=\"16\" />"
+        }
+      ]
+    }
+  ],
+  "composables": [
+    {
+      "name": "useTheme",
+      "signature": "useTheme(): { theme: { mode, resolved, primary }, setMode(mode), toggleDark(), setPrimary(color | null), setDefaults({ mode, primary }) }",
+      "description": "Light/dark/system mode and brand color, saved in localStorage (nu-theme)."
+    },
+    {
+      "name": "useLayout",
+      "signature": "useLayout(): { layout, toggleSidebar(), setOption(key, value), setSidebarVariant('dark' | 'light'), setDefaults(), applyDirection(rtl), isMobile() }",
+      "description": "Layout options (topNav, boxed, fixedNavbar, fixedSidebar, fixedFooter, collapsed, rtl), saved in localStorage (nu-layout)."
+    },
+    {
+      "name": "useToast",
+      "signature": "useToast(): { toasts, show(input, color?), success(input), error(input), warning(input), info(input), dismiss(id) }",
+      "description": "Fire toasts from anywhere; input is a message string or { title?, message, duration? }."
+    },
+    {
+      "name": "useForm",
+      "signature": "useForm(initial, schema): { values, errors, touched, submitting, isValid, validate(), validateField(name), reset(next?), field(name), handleSubmit(fn) }",
+      "description": "Form state and validation. `v-bind=\"form.field('email')\"` wires value, update, blur validation and error into any Nu* input."
+    },
+    {
+      "name": "rules",
+      "signature": "rules.required(msg?) | email(msg?) | minLength(n, msg?) | maxLength(n, msg?) | min(n, msg?) | max(n, msg?) | pattern(re, msg?) | sameAs(field, msg?)",
+      "description": "Built-in validation rules; any (value, values) => true | message also works."
+    },
+    {
+      "name": "useLocale",
+      "signature": "useLocale(): { locale, setLocale(code), setDefaultLocale(code), addMessages(code, messages), t(key, params?) }",
+      "description": "Language of built-in text (en, id, or added), saved in localStorage (nu-locale)."
+    },
+    {
+      "name": "useOverlay",
+      "signature": "useOverlay(open: Ref<boolean>, panel: Ref<HTMLElement | null>, { onEscape? })",
+      "description": "Focus trap, scroll lock, Escape handling and focus restore for custom dialogs."
+    },
+    {
+      "name": "filterMenu",
+      "signature": "filterMenu(menu, (item) => boolean): NuMenuItem[]",
+      "description": "Hide menu items (e.g. by item.meta.roles), dropping emptied groups and headers."
+    },
+    {
+      "name": "toCsv / downloadText",
+      "signature": "toCsv(rows, columns): string; downloadText(filename, text, type?)",
+      "description": "CSV from table columns (labels + format) and a browser download helper."
+    },
+    {
+      "name": "applyMask / unmask",
+      "signature": "applyMask(value, mask): string; unmask(value, mask): string",
+      "description": "Input masks: 9 digit, a letter, * either; other characters are literals."
+    },
+    {
+      "name": "createNusaAdmin",
+      "signature": "createNusaAdmin({ theme?, primary?, sidebarVariant?, layout?, locale?, messages?, registerComponents? }): Plugin",
+      "description": "Vue plugin: applies defaults for first-time visitors and registers Nu* components globally (unless registerComponents: false)."
+    }
+  ],
+  "types": {
+    "NuMenuItem": "{ label: string; icon?: Component; to?: RouteLocationRaw; href?: string; target?: string; badge?: string | number; badgeColor?: NuColor; children?: NuMenuItem[]; header?: boolean; color?: NuColor; meta?: Record<string, unknown> }",
+    "NuTableColumn": "{ key: string; label: string; sortable?: boolean; align?: 'left' | 'center' | 'right'; width?: string; format?: (value, row) => string }",
+    "NuColor": "'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info'",
+    "NuOption": "{ label: string; value: string | number; disabled?: boolean }",
+    "NuChartSeries": "{ name: string; data: number[]; color?: string }",
+    "NuTimelineItem": "{ label?: string; title?: string; time?: string; description?: string; color?: NuColor; icon?: Component }"
+  },
+  "tokens": [
+    {
+      "name": "--nu-primary",
+      "value": "#4f46e5"
+    },
+    {
+      "name": "--nu-secondary",
+      "value": "#64748b"
+    },
+    {
+      "name": "--nu-success",
+      "value": "#15803d"
+    },
+    {
+      "name": "--nu-warning",
+      "value": "#b45309"
+    },
+    {
+      "name": "--nu-danger",
+      "value": "#dc2626"
+    },
+    {
+      "name": "--nu-info",
+      "value": "#0e7490"
+    },
+    {
+      "name": "--nu-on-color",
+      "value": "#ffffff"
+    },
+    {
+      "name": "--nu-bg",
+      "value": "#f3f5f9"
+    },
+    {
+      "name": "--nu-surface",
+      "value": "#ffffff"
+    },
+    {
+      "name": "--nu-surface-2",
+      "value": "#f7f8fb"
+    },
+    {
+      "name": "--nu-border",
+      "value": "#e2e7ef"
+    },
+    {
+      "name": "--nu-text",
+      "value": "#1c2434"
+    },
+    {
+      "name": "--nu-text-muted",
+      "value": "#64708a"
+    },
+    {
+      "name": "--nu-backdrop",
+      "value": "rgba(15, 23, 42, 0.5)"
+    },
+    {
+      "name": "--nu-radius",
+      "value": "6px"
+    },
+    {
+      "name": "--nu-radius-sm",
+      "value": "4px"
+    },
+    {
+      "name": "--nu-shadow-sm",
+      "value": "0 1px 2px rgba(16, 24, 40, 0.06)"
+    },
+    {
+      "name": "--nu-shadow",
+      "value": "0 1px 3px rgba(16, 24, 40, 0.07), 0 6px 16px -6px rgba(16, 24, 40, 0.1)"
+    },
+    {
+      "name": "--nu-shadow-lg",
+      "value": "0 12px 40px -8px rgba(16, 24, 40, 0.28)"
+    },
+    {
+      "name": "--nu-font",
+      "value": "Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif"
+    },
+    {
+      "name": "--nu-font-mono",
+      "value": "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace"
+    },
+    {
+      "name": "--nu-font-size",
+      "value": "14px"
+    },
+    {
+      "name": "--nu-sidebar-width",
+      "value": "240px"
+    },
+    {
+      "name": "--nu-sidebar-mini-width",
+      "value": "60px"
+    },
+    {
+      "name": "--nu-navbar-height",
+      "value": "52px"
+    },
+    {
+      "name": "--nu-content-padding",
+      "value": "16px"
+    },
+    {
+      "name": "--nu-transition",
+      "value": "0.2s ease"
+    },
+    {
+      "name": "--nu-sidebar-bg",
+      "value": "#171717"
+    },
+    {
+      "name": "--nu-sidebar-border",
+      "value": "rgba(255, 255, 255, 0.07)"
+    },
+    {
+      "name": "--nu-sidebar-text",
+      "value": "#a3a3a3"
+    },
+    {
+      "name": "--nu-sidebar-text-strong",
+      "value": "#ffffff"
+    },
+    {
+      "name": "--nu-sidebar-muted",
+      "value": "#737373"
+    },
+    {
+      "name": "--nu-sidebar-hover",
+      "value": "rgba(255, 255, 255, 0.07)"
+    },
+    {
+      "name": "--nu-sidebar-active-bg",
+      "value": "var(--nu-primary)"
+    },
+    {
+      "name": "--nu-sidebar-active-text",
+      "value": "#ffffff"
+    },
+    {
+      "name": "--nu-chart-1",
+      "value": "#2a78d6"
+    },
+    {
+      "name": "--nu-chart-2",
+      "value": "#eb6834"
+    },
+    {
+      "name": "--nu-chart-3",
+      "value": "#1baf7a"
+    },
+    {
+      "name": "--nu-chart-4",
+      "value": "#eda100"
+    },
+    {
+      "name": "--nu-chart-5",
+      "value": "#e87ba4"
+    },
+    {
+      "name": "--nu-chart-6",
+      "value": "#008300"
+    },
+    {
+      "name": "--nu-chart-7",
+      "value": "#6250d6"
+    },
+    {
+      "name": "--nu-chart-8",
+      "value": "#e34948"
+    },
+    {
+      "name": "--nu-chart-grid",
+      "value": "#e6e9f0"
+    },
+    {
+      "name": "--nu-seq-1",
+      "value": "#b7d3f6"
+    },
+    {
+      "name": "--nu-seq-2",
+      "value": "#6da7ec"
+    },
+    {
+      "name": "--nu-seq-3",
+      "value": "#3987e5"
+    },
+    {
+      "name": "--nu-seq-4",
+      "value": "#256abf"
+    },
+    {
+      "name": "--nu-seq-5",
+      "value": "#104281"
+    },
+    {
+      "name": "--nu-seq-empty",
+      "value": "#eceef2"
+    }
+  ]
+}

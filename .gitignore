@@ -5,3 +5,13 @@ dist
 *.local
 test-results
 playwright-report
+# generated from the repo by `bun run sync` / `bun run build` (see packages/create-nusa-admin, packages/mcp)
+packages/create-nusa-admin/templates/full
+packages/create-nusa-admin/templates/ai
+packages/create-nusa-admin/templates/versions.json
+packages/create-nusa-admin/templates/starter/src/auth.ts
+packages/create-nusa-admin/templates/starter/src/pages/Users.vue
+packages/create-nusa-admin/templates/starter/src/pages/Settings.vue
+packages/create-nusa-admin/templates/starter/src/pages/auth
+packages/create-nusa-admin/templates/starter/src/pages/errors
+packages/mcp/data

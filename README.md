@@ -5,15 +5,26 @@ components with no CSS framework and no jQuery: one layout shell, 70 components,
 charts, light/dark themes, and a single file of design tokens to re-skin it.
 
 ```
-packages/ui   → the kit (npm package `nusa-admin`): components, composables, styles
-apps/demo     → a demo/starter app that uses the kit (60 routes: dashboards, apps, forms, tables, examples, auth, errors)
+packages/ui                 → the kit (npm `nusa-admin`): components, composables, styles, meta/components.json
+packages/create-nusa-admin  → the CLI (npm `create-nusa-admin`): starter and full templates
+packages/mcp                → MCP server for AI assistants (npm `nusa-admin-mcp`)
+apps/demo                   → the demo app (60 routes: dashboards, apps, forms, tables, examples, auth, errors)
+apps/docs                   → the documentation site (built with the kit), plus /llms.txt
+docs/guide                  → guides in Markdown (shared by the docs site, the MCP server and llms.txt)
+skills/nusa-admin           → Claude Code skill (SKILL.md + generated references)
+scripts/gen-meta.ts         → extracts props/events/slots + demo examples → meta, skill references
 ```
+
+One generator feeds everything: `bun run meta` reads the component sources (via `vue-component-meta`) and the demo
+pages, and writes `packages/ui/meta/components.json` plus the skill's reference files. The docs site, the MCP server and
+`llms.txt` all read that file, so they can't drift from the code (CI fails if the committed output is stale).
 
 ## Quick start
 
 ```bash
 bun install
 bun run dev        # demo app with HMR against the kit source → http://localhost:5173
+bun run dev:docs   # documentation site → http://localhost:5174
 bun run build      # build the library (packages/ui/dist) and the demo
 bun run typecheck  # vue-tsc over both workspaces
 bun run test       # unit tests (Vitest, run under Bun)
@@ -22,6 +33,24 @@ bun run check      # all of the above
 ```
 
 CI (`.github/workflows/ci.yml`) runs the same steps on every push and pull request.
+
+## Create a new app
+
+```bash
+bun create nusa-admin my-admin            # or: npm create nusa-admin@latest my-admin
+```
+
+Choose `starter` (shell, dashboard, users CRUD, settings, auth and error pages) or `full` (the whole demo). Projects
+include the Claude Code skill, `.mcp.json` and `AGENTS.md` unless you pass `--no-ai`. See `docs/guide/cli.md`.
+
+## AI assistants
+
+- **Skill:** `skills/nusa-admin` (also linked at `.claude/skills/nusa-admin` in this repo) teaches Claude Code the
+  components, page recipes and conventions.
+- **MCP server:** `packages/mcp` — tools `list_components`, `get_component`, `search`, `get_guide`, `get_tokens`,
+  `scaffold_page` (list/form/detail/dashboard pages that type-check against the kit). This repo's `.mcp.json` runs it
+  from source; generated apps run the published `nusa-admin-mcp`.
+- **llms.txt:** the docs site serves `/llms.txt` and `/llms-full.txt`.
 
 ## Using the kit in an app
 

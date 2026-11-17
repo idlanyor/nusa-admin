@@ -1,0 +1,22 @@
+{
+  "name": "create-nusa-admin",
+  "version": "0.1.0",
+  "description": "Create a Vue 3 + Vite admin app with Nusa Admin",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "create-nusa-admin": "./index.mjs"
+  },
+  "files": [
+    "index.mjs",
+    "templates"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "sync": "bun scripts/sync-templates.ts",
+    "test": "bunx --bun vitest run",
+    "prepublishOnly": "bun run sync"
+  }
+}

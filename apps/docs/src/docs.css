@@ -1,0 +1,40 @@
+/* Docs-only styles. Everything else comes from the kit. */
+.docs-search { display: flex; align-items: center; gap: 8px; width: 260px; max-width: 100%; height: 32px; padding: 0 6px 0 10px; border: 0; border-radius: var(--nu-radius-sm); background: color-mix(in srgb, var(--nu-text) 6%, transparent); color: var(--nu-text-muted); text-align: start; cursor: pointer; }
+.docs-search:hover { background: color-mix(in srgb, var(--nu-text) 9%, transparent); }
+.docs-search svg { width: 16px; height: 16px; flex: none; }
+.docs-search kbd, .docs-version { padding: 1px 6px; border: 1px solid var(--nu-border); border-radius: 4px; background: var(--nu-surface); font-size: 11px; color: var(--nu-text-muted); }
+.docs-demo { margin-inline-end: 6px; padding: 5px 10px; border-radius: var(--nu-radius-sm); font-weight: 600; font-size: 13px; }
+.docs-demo:hover { background: color-mix(in srgb, var(--nu-primary) 10%, transparent); text-decoration: none; }
+@media (max-width: 640px) { .docs-search, .docs-version, .docs-demo { display: none; } }
+
+.prose { max-width: 820px; line-height: 1.65; }
+.prose h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 10px; }
+.prose h2 { margin: 26px 0 8px; padding-top: 6px; font-size: 18px; font-weight: 700; border-top: 1px solid var(--nu-border); }
+.prose h3 { margin: 18px 0 6px; font-size: 15px; font-weight: 700; }
+.prose p, .prose ul, .prose ol { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-inline-start: 20px; }
+.prose li { margin: 2px 0; }
+.prose :not(pre) > code { padding: 0.1em 0.35em; border-radius: 4px; background: color-mix(in srgb, var(--nu-text) 8%, transparent); font-size: 0.88em; }
+.prose blockquote { margin: 0 0 10px; padding: 6px 12px; border-inline-start: 3px solid var(--nu-primary); background: var(--nu-surface-2); color: var(--nu-text-muted); }
+.table-scroll { overflow-x: auto; margin: 0 0 12px; border: 1px solid var(--nu-border); border-radius: var(--nu-radius-sm); }
+.prose table, .api-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.prose th, .api-table th { padding: 7px 12px; background: var(--nu-surface-2); text-align: start; font-size: 12px; font-weight: 600; color: var(--nu-text-muted); text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+.prose td, .api-table td { padding: 7px 12px; border-top: 1px solid var(--nu-border); vertical-align: top; }
+
+.code-block { margin: 0 0 12px; padding: 12px 14px; overflow-x: auto; border-radius: var(--nu-radius-sm); background: var(--nu-surface-2); border: 1px solid var(--nu-border); font-size: 12.5px; line-height: 1.6; direction: ltr; text-align: left; }
+.codebox { margin: 0 0 12px; }
+.codebox .code-block { margin: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
+.codebox__bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 4px 6px 4px 12px; border: 1px solid var(--nu-border); border-bottom: 0; border-radius: var(--nu-radius-sm) var(--nu-radius-sm) 0 0; background: var(--nu-surface); font-size: 12px; color: var(--nu-text-muted); }
+.codebox__copy { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border: 0; border-radius: 4px; background: transparent; color: var(--nu-text-muted); font-size: 12px; cursor: pointer; }
+.codebox__copy:hover { background: color-mix(in srgb, var(--nu-text) 8%, transparent); color: var(--nu-text); }
+.codebox__copy svg { width: 13px; height: 13px; }
+
+/* highlight.js mapped onto theme tokens (works in light and dark) */
+.hljs-tag, .hljs-name, .hljs-selector-tag { color: color-mix(in srgb, var(--nu-danger) 85%, var(--nu-text)); }
+.hljs-attr, .hljs-attribute, .hljs-property { color: color-mix(in srgb, var(--nu-warning) 85%, var(--nu-text)); }
+.hljs-string, .hljs-template-tag { color: color-mix(in srgb, var(--nu-success) 85%, var(--nu-text)); }
+.hljs-keyword, .hljs-built_in, .hljs-literal { color: var(--nu-primary); }
+.hljs-number { color: var(--nu-info); }
+.hljs-comment { color: var(--nu-text-muted); font-style: italic; }
+.hljs-title, .hljs-function .hljs-title { color: color-mix(in srgb, var(--nu-info) 80%, var(--nu-text)); }
+.code-block code { padding: 0; border-radius: 0; background: none; font-size: inherit; }

@@ -1,0 +1,26 @@
+{
+  "name": "nusa-admin-mcp",
+  "version": "0.1.0",
+  "description": "MCP server that teaches AI assistants the Nusa Admin components, guides and page recipes",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "nusa-admin-mcp": "./dist/server.js"
+  },
+  "files": [
+    "dist",
+    "data"
+  ],
+  "scripts": {
+    "data": "bun scripts/copy-data.ts",
+    "build": "bun run data && bun build src/bin.ts --target=node --outfile dist/server.js",
+    "start": "bun src/bin.ts",
+    "test": "bunx --bun vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "prepublishOnly": "bun run build"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "zod": "^4.6.7"
+  }
+}
