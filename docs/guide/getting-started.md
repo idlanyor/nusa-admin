@@ -1,6 +1,6 @@
 # Getting started
 
-Nusa Admin is a Vue 3 admin template kit: one layout shell, 70 components, SVG charts, light/dark themes and design tokens — no CSS framework, no jQuery.
+Nusa Admin is a Vue 3 admin template kit: one layout shell, 71 components, SVG charts, light/dark themes and design tokens — no CSS framework, no jQuery.
 
 ## Create a project
 

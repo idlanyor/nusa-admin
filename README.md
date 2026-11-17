@@ -1,7 +1,14 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="brand/logo-lockup-dark.svg">
+    <img src="brand/logo-lockup-light.svg" alt="Nusa Admin" width="280">
+  </picture>
+</p>
+
 # Nusa Admin
 
 A reusable admin template kit for **Vue 3 + Vite**, run with **Bun**. Think AdminLTE, but as typed Vue
-components with no CSS framework and no jQuery: one layout shell, 70 components, dependency-free SVG
+components with no CSS framework and no jQuery: one layout shell, 71 components, dependency-free SVG
 charts, light/dark themes, and a single file of design tokens to re-skin it.
 
 ```
@@ -222,6 +229,12 @@ aliases `nusa-admin` to the kit's source (see `apps/demo/vite.config.ts`) so dev
 ## Requirements
 
 Bun ≥ 1.2, Vue ≥ 3.5, vue-router ≥ 4.4. Browsers need `color-mix()` (all evergreen browsers since 2023).
+
+## Brand
+
+The mark is three islands — *Nusa*, from Nusantara, the archipelago — forming an N. Assets live in `brand/`: tile and bare
+mark (SVG), light/dark lockups, a favicon that follows the system theme, PNG icons (32/180/192/512) and a 1200×630
+social image. In Vue use `<NuLogo />` (`variant="mark"` for the bare shape in the current text color).
 
 ## License
 

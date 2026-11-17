@@ -110,6 +110,7 @@ const results = computed(() => {
   font-size: 16px;
 }
 .nu-brand__logo img { width: 100%; height: 100%; object-fit: contain; border-radius: inherit; }
+.nu-brand__mark { flex: none; }
 .nu-brand__name { font-size: 15.5px; font-weight: 700; letter-spacing: -0.01em; }
 
 /* Menu */

@@ -4,6 +4,7 @@ import { RouterLink, useRoute, type RouteLocationRaw } from 'vue-router'
 import { useLayout, type NuSidebarVariant } from '../composables/useLayout'
 import type { NuMenuItem } from '../types'
 import NuCustomizer from './NuCustomizer.vue'
+import NuLogo from './NuLogo.vue'
 import NuNavbar from './NuNavbar.vue'
 import NuSidebar from './NuSidebar.vue'
 import NuToastHost from './NuToastHost.vue'
@@ -18,7 +19,7 @@ const props = withDefaults(
     menu: NuMenuItem[]
     /** Product name shown next to the logo. */
     brand?: string
-    /** Logo image URL; defaults to the first letter of `brand`. */
+    /** Logo image URL. Without one: the Nusa Admin mark for the default brand, otherwise the first letter of `brand`. */
     logo?: string
     brandTo?: RouteLocationRaw
     sidebarVariant?: NuSidebarVariant
@@ -85,7 +86,8 @@ watch(() => route.fullPath, closeMobile)
       <template #brand>
         <slot name="brand">
           <RouterLink class="nu-brand" :to="brandTo">
-            <span class="nu-brand__logo">
+            <NuLogo v-if="!logo && brand === 'Nusa Admin'" class="nu-brand__mark" :size="32" />
+            <span v-else class="nu-brand__logo">
               <img v-if="logo" :src="logo" alt="" />
               <template v-else>{{ brand.charAt(0) }}</template>
             </span>
@@ -104,7 +106,8 @@ watch(() => route.fullPath, closeMobile)
         <template v-if="topNav" #brand>
           <slot name="brand">
             <RouterLink class="nu-brand nu-brand--navbar" :to="brandTo">
-              <span class="nu-brand__logo">
+              <NuLogo v-if="!logo && brand === 'Nusa Admin'" class="nu-brand__mark" :size="28" />
+              <span v-else class="nu-brand__logo">
                 <img v-if="logo" :src="logo" alt="" />
                 <template v-else>{{ brand.charAt(0) }}</template>
               </span>

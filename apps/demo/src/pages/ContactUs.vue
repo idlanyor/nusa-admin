@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Clock, Mail, MapPin, Phone } from 'lucide-vue-next'
-import { NuButton, NuCard, NuInput, NuPageHeader, NuSelect, NuTextarea, rules, useForm, useToast } from 'nusa-admin'
+import { NuButton, NuCard, NuInput, NuLogo, NuPageHeader, NuSelect, NuTextarea, rules, useForm, useToast } from 'nusa-admin'
 
 const toast = useToast()
 const form = useForm(
@@ -20,7 +20,7 @@ const send = form.handleSubmit(async () => {
   <NuCard>
     <div class="nu-row">
       <div class="nu-col-md-5">
-        <div class="nu-brand" style="margin-bottom: 12px"><span class="nu-brand__logo">N</span><span class="nu-brand__name">Nusa Admin</span></div>
+        <div class="nu-brand" style="margin-bottom: 12px"><NuLogo :size="32" /><span class="nu-brand__name">Nusa Admin</span></div>
         <ul class="contact-info">
           <li><MapPin /><span>Jl. Asia Afrika No. 8<br />Bandung 40111, Indonesia</span></li>
           <li><Phone /><span>+62 22 1234 5678</span></li>

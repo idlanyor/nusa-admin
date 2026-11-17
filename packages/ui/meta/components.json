@@ -25,7 +25,7 @@
           "name": "logo",
           "type": "string | undefined",
           "required": false,
-          "description": "Logo image URL; defaults to the first letter of `brand`."
+          "description": "Logo image URL. Without one: the Nusa Admin mark for the default brand, otherwise the first letter of `brand`."
         },
         {
           "name": "brandTo",
@@ -4312,6 +4312,44 @@
         {
           "file": "",
           "code": "<NuIcon name=\"check\" :size=\"16\" />"
+        }
+      ]
+    },
+    {
+      "name": "NuLogo",
+      "group": "Misc",
+      "file": "packages/ui/src/components/NuLogo.vue",
+      "description": "The Nusa Admin mark (three islands forming an N), as a brand-colored tile or a bare mark in the current text color.",
+      "props": [
+        {
+          "name": "size",
+          "type": "string | number | undefined",
+          "required": false,
+          "default": "32",
+          "description": "Size: 'sm' | 'md' | 'lg'."
+        },
+        {
+          "name": "variant",
+          "type": "\"tile\" | \"mark\" | undefined",
+          "required": false,
+          "default": "\"tile\"",
+          "description": "Visual style."
+        },
+        {
+          "name": "title",
+          "type": "string | undefined",
+          "required": false,
+          "description": "Title text."
+        }
+      ],
+      "events": [],
+      "slots": [],
+      "exposed": [],
+      "examples": [
+        {
+          "file": "apps/demo/src/pages/ContactUs.vue",
+          "route": "/contact",
+          "code": "<NuLogo :size=\"32\" />"
         }
       ]
     }

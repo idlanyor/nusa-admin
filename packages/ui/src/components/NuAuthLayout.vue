@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import NuLogo from './NuLogo.vue'
 withDefaults(
   defineProps<{
     title: string
@@ -19,7 +20,11 @@ withDefaults(
   <div class="nu-auth" :class="`nu-auth--${variant}`">
     <aside v-if="variant === 'split'" class="nu-auth__aside">
       <slot name="aside">
-        <div class="nu-brand"><span class="nu-brand__logo">{{ brand.charAt(0) }}</span><span class="nu-brand__name">{{ brand }}</span></div>
+        <div class="nu-brand">
+          <NuLogo v-if="brand === 'Nusa Admin'" class="nu-brand__mark nu-brand__mark--onbrand" variant="mark" :size="32" />
+          <span v-else class="nu-brand__logo">{{ brand.charAt(0) }}</span>
+          <span class="nu-brand__name">{{ brand }}</span>
+        </div>
         <div>
           <h2>{{ asideTitle }}</h2>
           <p>{{ asideText }}</p>
@@ -29,7 +34,8 @@ withDefaults(
     <div class="nu-auth__card">
       <slot name="brand">
         <div class="nu-brand nu-auth__brand">
-          <span class="nu-brand__logo"><img v-if="logo" :src="logo" alt="" /><template v-else>{{ brand.charAt(0) }}</template></span>
+          <NuLogo v-if="!logo && brand === 'Nusa Admin'" class="nu-brand__mark" :size="32" />
+          <span v-else class="nu-brand__logo"><img v-if="logo" :src="logo" alt="" /><template v-else>{{ brand.charAt(0) }}</template></span>
           <span class="nu-brand__name">{{ brand }}</span>
         </div>
       </slot>
@@ -78,6 +84,7 @@ withDefaults(
   color: #fff;
 }
 .nu-auth__aside .nu-brand__logo { background: rgba(255, 255, 255, 0.18); color: #fff; }
+.nu-auth__aside .nu-brand__mark--onbrand { color: #fff; }
 .nu-auth__aside h2 { font-size: 26px; font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; }
 .nu-auth__aside p { max-width: 420px; margin-top: 8px; opacity: 0.85; }
 @media (min-width: 900px) {

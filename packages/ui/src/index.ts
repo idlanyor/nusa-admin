@@ -41,6 +41,7 @@ import NuCodeEditor from './components/NuCodeEditor.vue'
 import NuTransfer from './components/NuTransfer.vue'
 import NuGeoMap from './components/NuGeoMap.vue'
 import NuCommandPalette from './components/NuCommandPalette.vue'
+import NuLogo from './components/NuLogo.vue'
 import NuAlert from './components/NuAlert.vue'
 import NuAvatar from './components/NuAvatar.vue'
 import NuBadge from './components/NuBadge.vue'
@@ -82,7 +83,7 @@ export {
   NuProgress, NuSelect, NuSidebar, NuSidebarMenuItem, NuSparkline, NuStatCard, NuSwitch, NuTable, NuTabs, NuTextarea,
   NuTimeline, NuToastHost,
   NuAccordion, NuAuthLayout, NuAvatarGroup, NuBreadcrumb, NuCalendar, NuCustomizer, NuDescriptions, NuDivider, NuDrawer, NuEmpty, NuErrorPage, NuFileUpload, NuInfoBox, NuList, NuListItem, NuProgressRing, NuRadioGroup, NuRating, NuSegmented, NuSkeleton, NuSlider, NuSpinner, NuSteps, NuTagInput, NuTooltip,
-  NuCallout, NuCombobox, NuDatePicker, NuDirectChat, NuEditor, NuRibbon, NuRouteProgress, NuSmallBox, NuTodoList, NuTopNav, NuUserCard, NuCodeEditor, NuTransfer, NuGeoMap, NuCommandPalette,
+  NuCallout, NuCombobox, NuDatePicker, NuDirectChat, NuEditor, NuRibbon, NuRouteProgress, NuSmallBox, NuTodoList, NuTopNav, NuUserCard, NuCodeEditor, NuTransfer, NuGeoMap, NuCommandPalette, NuLogo,
 }
 
 export { useTheme, useLayout }
@@ -117,7 +118,7 @@ const components = {
   NuProgress, NuSelect, NuSidebar, NuSidebarMenuItem, NuSparkline, NuStatCard, NuSwitch, NuTable, NuTabs, NuTextarea,
   NuTimeline, NuToastHost,
   NuAccordion, NuAuthLayout, NuAvatarGroup, NuBreadcrumb, NuCalendar, NuCustomizer, NuDescriptions, NuDivider, NuDrawer, NuEmpty, NuErrorPage, NuFileUpload, NuInfoBox, NuList, NuListItem, NuProgressRing, NuRadioGroup, NuRating, NuSegmented, NuSkeleton, NuSlider, NuSpinner, NuSteps, NuTagInput, NuTooltip,
-  NuCallout, NuCombobox, NuDatePicker, NuDirectChat, NuEditor, NuRibbon, NuRouteProgress, NuSmallBox, NuTodoList, NuTopNav, NuUserCard, NuCodeEditor, NuTransfer, NuGeoMap, NuCommandPalette,
+  NuCallout, NuCombobox, NuDatePicker, NuDirectChat, NuEditor, NuRibbon, NuRouteProgress, NuSmallBox, NuTodoList, NuTopNav, NuUserCard, NuCodeEditor, NuTransfer, NuGeoMap, NuCommandPalette, NuLogo,
 }
 
 export interface NusaAdminOptions {

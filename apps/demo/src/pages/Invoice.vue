@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Download, Printer, Send } from 'lucide-vue-next'
-import { NuBadge, NuButton, NuCard, NuPageHeader, useToast } from 'nusa-admin'
+import { NuBadge, NuButton, NuCard, NuLogo, NuPageHeader, useToast } from 'nusa-admin'
 
 const toast = useToast()
 const items = [
@@ -24,7 +24,7 @@ const print = () => window.print()
   <NuCard class="invoice">
     <div class="invoice__head">
       <div>
-        <div class="nu-brand"><span class="nu-brand__logo">N</span><span class="nu-brand__name">Nusa Admin</span></div>
+        <div class="nu-brand"><NuLogo :size="32" /><span class="nu-brand__name">Nusa Admin</span></div>
         <address>PT Nusa Digital<br />Jl. Asia Afrika No. 8<br />Bandung 40111, Indonesia</address>
       </div>
       <div class="invoice__meta">

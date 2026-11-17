@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { ArrowRight, Bot, Boxes, Palette, SquareTerminal } from 'lucide-vue-next'
-import { NuButton, NuCard, NuSmallBox } from 'nusa-admin'
+import { NuButton, NuCard, NuLogo, NuSmallBox } from 'nusa-admin'
 import CodeBlock from '../CodeBlock.vue'
 import { components, demoUrl, groups, guides } from '../data'
 </script>
 
 <template>
   <section class="home-hero">
-    <h1>Nusa Admin</h1>
+    <div class="home-hero__brand"><NuLogo :size="56" /><h1>Nusa <span>Admin</span></h1></div>
     <p>A Vue 3 + Vite admin template kit: one layout shell, {{ components.length }} components, SVG charts, light and dark themes, i18n and RTL — compact, accessible, no CSS framework.</p>
     <div class="nu-cluster">
       <NuButton size="lg" :icon="ArrowRight" to="/guide/getting-started">Get started</NuButton>
@@ -37,7 +37,9 @@ import { components, demoUrl, groups, guides } from '../data'
 
 <style>
 .home-hero { padding: 18px 0 16px; }
-.home-hero h1 { font-size: 32px; font-weight: 800; letter-spacing: -0.02em; }
+.home-hero__brand { display: flex; align-items: center; gap: 14px; }
+.home-hero h1 { font-size: 34px; font-weight: 800; letter-spacing: -0.02em; }
+.home-hero h1 span { font-weight: 500; color: var(--nu-text-muted); }
 .home-hero p { max-width: 680px; margin: 6px 0 14px; color: var(--nu-text-muted); font-size: 15px; }
 .home-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: 13.5px; }
 </style>

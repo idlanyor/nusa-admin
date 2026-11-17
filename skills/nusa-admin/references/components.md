@@ -11,7 +11,7 @@ Generated from the kit source by `bun run meta` — do not edit by hand. `*` mar
 - **Actions:** [NuButton](#nubutton), [NuIconButton](#nuiconbutton), [NuDropdown](#nudropdown), [NuDropdownItem](#nudropdownitem), [NuSegmented](#nusegmented)
 - **Forms:** [NuInput](#nuinput), [NuTextarea](#nutextarea), [NuSelect](#nuselect), [NuCombobox](#nucombobox), [NuDatePicker](#nudatepicker), [NuEditor](#nueditor), [NuCodeEditor](#nucodeeditor), [NuCheckbox](#nucheckbox), [NuSwitch](#nuswitch), [NuRadioGroup](#nuradiogroup), [NuSlider](#nuslider), [NuTagInput](#nutaginput), [NuTransfer](#nutransfer), [NuFileUpload](#nufileupload), [NuRating](#nurating)
 - **Charts:** [NuChart](#nuchart), [NuDonut](#nudonut), [NuSparkline](#nusparkline), [NuGeoMap](#nugeomap)
-- **Misc:** [NuAvatar](#nuavatar), [NuAvatarGroup](#nuavatargroup), [NuIcon](#nuicon)
+- **Misc:** [NuAvatar](#nuavatar), [NuAvatarGroup](#nuavatargroup), [NuIcon](#nuicon), [NuLogo](#nulogo)
 
 ## NuLayout
 
@@ -21,7 +21,7 @@ App shell: sidebar (or top nav), navbar, content and footer, with every AdminLTE
 | --- | --- | --- | --- |
 | `menu`* | `NuMenuItem[]` |  | Menu definition (NuMenuItem[]); the same array drives sidebar, top nav and command palette. |
 | `brand` | `string \| undefined` | `"Nusa Admin"` | Product name shown next to the logo. |
-| `logo` | `string \| undefined` |  | Logo image URL; defaults to the first letter of `brand`. |
+| `logo` | `string \| undefined` |  | Logo image URL. Without one: the Nusa Admin mark for the default brand, otherwise the first letter of `brand`. |
 | `brandTo` | `string \| J \| W \| undefined` | `"/"` |  |
 | `sidebarVariant` | `NuSidebarVariant \| undefined` |  |  |
 | `layout` | `"sidebar" \| "top-nav" \| undefined` | `undefined` | `top-nav` puts the menu in the navbar on desktop (the sidebar remains the mobile drawer). |
@@ -1521,4 +1521,20 @@ Example:
 
 ```vue
 <NuIcon name="check" :size="16" />
+```
+
+## NuLogo
+
+The Nusa Admin mark (three islands forming an N), as a brand-colored tile or a bare mark in the current text color.
+
+| Prop | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `size` | `string \| number \| undefined` | `32` | Size: 'sm' \| 'md' \| 'lg'. |
+| `variant` | `"tile" \| "mark" \| undefined` | `"tile"` | Visual style. |
+| `title` | `string \| undefined` |  | Title text. |
+
+Example (demo `/contact`):
+
+```vue
+<NuLogo :size="32" />
 ```

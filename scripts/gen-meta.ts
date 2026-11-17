@@ -19,7 +19,7 @@ const GROUPS: Record<string, string[]> = {
   Actions: ['NuButton', 'NuIconButton', 'NuDropdown', 'NuDropdownItem', 'NuSegmented'],
   Forms: ['NuInput', 'NuTextarea', 'NuSelect', 'NuCombobox', 'NuDatePicker', 'NuEditor', 'NuCodeEditor', 'NuCheckbox', 'NuSwitch', 'NuRadioGroup', 'NuSlider', 'NuTagInput', 'NuTransfer', 'NuFileUpload', 'NuRating'],
   Charts: ['NuChart', 'NuDonut', 'NuSparkline', 'NuGeoMap'],
-  Misc: ['NuAvatar', 'NuAvatarGroup', 'NuIcon'],
+  Misc: ['NuAvatar', 'NuAvatarGroup', 'NuIcon', 'NuLogo'],
 }
 
 const DESCRIPTIONS: Record<string, string> = {
@@ -93,6 +93,7 @@ const DESCRIPTIONS: Record<string, string> = {
   NuAvatar: 'Avatar image or initials with optional status dot.',
   NuAvatarGroup: 'Overlapping avatars with a "+N" counter.',
   NuIcon: 'The small built-in icon set the kit uses internally.',
+  NuLogo: 'The Nusa Admin mark (three islands forming an N), as a brand-colored tile or a bare mark in the current text color.',
 }
 
 // ---- components exported by the kit ----
