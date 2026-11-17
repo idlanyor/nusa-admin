@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t } from '../composables/useLocale'
 import { useToast } from '../composables/useToast'
 import type { NuColor } from '../types'
 import NuIcon, { type NuIconName } from './NuIcon.vue'
@@ -17,13 +18,13 @@ const ICONS: Record<NuColor, NuIconName> = {
 <template>
   <Teleport to="body">
     <TransitionGroup tag="div" name="nu-toast" class="nu-toasts" aria-live="polite">
-      <div v-for="t in toasts" :key="t.id" class="nu-toast" :class="`nu-c-${t.color}`" role="status">
-        <NuIcon class="nu-toast__icon" :name="ICONS[t.color]" />
+      <div v-for="toast in toasts" :key="toast.id" class="nu-toast" :class="`nu-c-${toast.color}`" role="status">
+        <NuIcon class="nu-toast__icon" :name="ICONS[toast.color]" />
         <div class="nu-toast__body">
-          <div v-if="t.title" class="nu-toast__title">{{ t.title }}</div>
-          <div>{{ t.message }}</div>
+          <div v-if="toast.title" class="nu-toast__title">{{ toast.title }}</div>
+          <div>{{ toast.message }}</div>
         </div>
-        <button class="nu-toast__close" type="button" aria-label="Dismiss" @click="dismiss(t.id)">
+        <button class="nu-toast__close" type="button" :aria-label="t('dismiss')" @click="dismiss(toast.id)">
           <NuIcon name="x" :size="15" />
         </button>
       </div>
@@ -35,7 +36,7 @@ const ICONS: Record<NuColor, NuIconName> = {
 .nu-toasts {
   position: fixed;
   top: 16px;
-  right: 16px;
+  inset-inline-end: 16px;
   z-index: 200;
   display: flex;
   flex-direction: column;
@@ -48,7 +49,7 @@ const ICONS: Record<NuColor, NuIconName> = {
   gap: 10px;
   padding: 9px 10px 9px 12px;
   border: 1px solid var(--nu-border);
-  border-left: 3px solid var(--nu-c);
+  border-inline-start: 3px solid var(--nu-c);
   border-radius: var(--nu-radius-sm);
   background: var(--nu-surface);
   color: var(--nu-text);
@@ -74,5 +75,5 @@ const ICONS: Record<NuColor, NuIconName> = {
 .nu-toast__close:hover { color: var(--nu-text); }
 .nu-toast-enter-active, .nu-toast-leave-active, .nu-toast-move { transition: all 0.22s ease; }
 .nu-toast-enter-from, .nu-toast-leave-to { opacity: 0; transform: translateX(24px); }
-.nu-toast-leave-active { position: absolute; right: 0; left: 0; }
+.nu-toast-leave-active { position: absolute; inset-inline-end: 0; inset-inline-start: 0; }
 </style>

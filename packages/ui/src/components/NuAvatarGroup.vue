@@ -19,6 +19,6 @@ const rest = computed(() => props.names.length - shown.value.length)
 <style>
 .nu-avatar-group { display: inline-flex; }
 .nu-avatar-group > .nu-avatar { box-shadow: 0 0 0 2px var(--nu-surface); background: color-mix(in srgb, var(--nu-c, var(--nu-secondary)) 22%, var(--nu-surface)); }
-.nu-avatar-group > .nu-avatar + .nu-avatar { margin-left: -8px; }
+.nu-avatar-group > .nu-avatar + .nu-avatar { margin-inline-start: -8px; }
 .nu-avatar-group__more { --nu-c: var(--nu-secondary); color: var(--nu-text-muted); }
 </style>

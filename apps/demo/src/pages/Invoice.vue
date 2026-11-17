@@ -76,13 +76,13 @@ const print = () => window.print()
 .invoice__meta { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
 .invoice__meta dl { display: grid; grid-template-columns: auto auto; gap: 2px 14px; margin: 0; font-size: 13px; }
 .invoice__meta dt { color: var(--nu-text-muted); }
-.invoice__meta dd { margin: 0; text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+.invoice__meta dd { margin: 0; text-align: end; font-weight: 600; font-variant-numeric: tabular-nums; }
 .invoice__table { overflow-x: auto; border: 1px solid var(--nu-border); border-radius: var(--nu-radius-sm); }
 .invoice table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-.invoice th { padding: 7px 12px; background: var(--nu-surface-2); color: var(--nu-text-muted); font-size: 12px; text-align: left; text-transform: uppercase; letter-spacing: 0.04em; }
+.invoice th { padding: 7px 12px; background: var(--nu-surface-2); color: var(--nu-text-muted); font-size: 12px; text-align: start; text-transform: uppercase; letter-spacing: 0.04em; }
 .invoice td { padding: 8px 12px; border-top: 1px solid var(--nu-border); }
-.invoice .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.invoice tfoot td { padding: 5px 12px; border-top: 0; color: var(--nu-text-muted); text-align: right; }
+.invoice .num { text-align: end; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.invoice tfoot td { padding: 5px 12px; border-top: 0; color: var(--nu-text-muted); text-align: end; }
 .invoice tfoot tr:first-child td { border-top: 1px solid var(--nu-border); padding-top: 9px; }
 .invoice tfoot .invoice__total td { padding-bottom: 10px; color: var(--nu-text); font-size: 15px; font-weight: 700; }
 @media print {

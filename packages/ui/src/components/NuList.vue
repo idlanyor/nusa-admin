@@ -19,7 +19,7 @@ defineProps<{ bordered?: boolean }>()
   border: 0;
   background: transparent;
   color: var(--nu-text);
-  text-align: left;
+  text-align: start;
   text-decoration: none !important;
 }
 :is(a, button).nu-list-item { cursor: pointer; }

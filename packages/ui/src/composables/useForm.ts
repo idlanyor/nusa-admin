@@ -1,4 +1,5 @@
 import { computed, nextTick, reactive, ref } from 'vue'
+import { t } from './useLocale'
 
 /** A rule returns `true` when the value is valid, otherwise the error message. */
 export type NuRule = (value: any, values: Record<string, any>) => true | string
@@ -7,14 +8,14 @@ const isEmpty = (v: unknown) => v === undefined || v === null || v === '' || v =
 
 /** Built-in rules. Every one except `required` passes on empty values, so combine with `required()` when needed. */
 export const rules = {
-  required: (msg = 'This field is required.'): NuRule => (v) => (isEmpty(v) ? msg : true),
-  email: (msg = 'Enter a valid email address.'): NuRule => (v) => (isEmpty(v) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v)) ? true : msg),
-  minLength: (n: number, msg = `Use at least ${n} characters.`): NuRule => (v) => (isEmpty(v) || String(v).length >= n ? true : msg),
-  maxLength: (n: number, msg = `Use at most ${n} characters.`): NuRule => (v) => (isEmpty(v) || String(v).length <= n ? true : msg),
-  min: (n: number, msg = `Must be at least ${n}.`): NuRule => (v) => (isEmpty(v) || Number(v) >= n ? true : msg),
-  max: (n: number, msg = `Must be at most ${n}.`): NuRule => (v) => (isEmpty(v) || Number(v) <= n ? true : msg),
-  pattern: (re: RegExp, msg = 'The format is not valid.'): NuRule => (v) => (isEmpty(v) || re.test(String(v)) ? true : msg),
-  sameAs: (field: string, msg = 'The values do not match.'): NuRule => (v, values) => (v === values[field] ? true : msg),
+  required: (msg?: string): NuRule => (v) => (isEmpty(v) ? (msg ?? t('vRequired')) : true),
+  email: (msg?: string): NuRule => (v) => (isEmpty(v) || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v)) ? true : (msg ?? t('vEmail'))),
+  minLength: (n: number, msg?: string): NuRule => (v) => (isEmpty(v) || String(v).length >= n ? true : (msg ?? t('vMinLength', { n }))),
+  maxLength: (n: number, msg?: string): NuRule => (v) => (isEmpty(v) || String(v).length <= n ? true : (msg ?? t('vMaxLength', { n }))),
+  min: (n: number, msg?: string): NuRule => (v) => (isEmpty(v) || Number(v) >= n ? true : (msg ?? t('vMin', { n }))),
+  max: (n: number, msg?: string): NuRule => (v) => (isEmpty(v) || Number(v) <= n ? true : (msg ?? t('vMax', { n }))),
+  pattern: (re: RegExp, msg?: string): NuRule => (v) => (isEmpty(v) || re.test(String(v)) ? true : (msg ?? t('vPattern'))),
+  sameAs: (field: string, msg?: string): NuRule => (v, values) => (v === values[field] ? true : (msg ?? t('vSameAs'))),
 }
 
 /**

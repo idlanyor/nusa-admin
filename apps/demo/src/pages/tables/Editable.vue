@@ -89,5 +89,5 @@ function remove(id: number) {
 .grid tr.is-editing td { background: color-mix(in srgb, var(--nu-primary) 6%, transparent); }
 .grid__input { width: 100%; height: 28px; padding: 0 8px; border: 1px solid var(--nu-border); border-radius: var(--nu-radius-sm); background: var(--nu-surface); color: var(--nu-text); }
 .grid__input:focus { outline: 0; border-color: var(--nu-primary); }
-.grid__actions { text-align: right; white-space: nowrap; }
+.grid__actions { text-align: end; white-space: nowrap; }
 </style>

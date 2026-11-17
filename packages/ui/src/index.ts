@@ -37,6 +37,10 @@ import NuSmallBox from './components/NuSmallBox.vue'
 import NuTodoList from './components/NuTodoList.vue'
 import NuTopNav from './components/NuTopNav.vue'
 import NuUserCard from './components/NuUserCard.vue'
+import NuCodeEditor from './components/NuCodeEditor.vue'
+import NuTransfer from './components/NuTransfer.vue'
+import NuGeoMap from './components/NuGeoMap.vue'
+import NuCommandPalette from './components/NuCommandPalette.vue'
 import NuAlert from './components/NuAlert.vue'
 import NuAvatar from './components/NuAvatar.vue'
 import NuBadge from './components/NuBadge.vue'
@@ -68,6 +72,8 @@ import NuTextarea from './components/NuTextarea.vue'
 import NuTimeline from './components/NuTimeline.vue'
 import NuToastHost from './components/NuToastHost.vue'
 import { useTheme, type NuThemeMode } from './composables/useTheme'
+import { useLocale } from './composables/useLocale'
+import type { NuMessages } from './locales'
 import { useLayout, type NuLayoutOption, type NuSidebarVariant } from './composables/useLayout'
 
 export {
@@ -76,7 +82,7 @@ export {
   NuProgress, NuSelect, NuSidebar, NuSidebarMenuItem, NuSparkline, NuStatCard, NuSwitch, NuTable, NuTabs, NuTextarea,
   NuTimeline, NuToastHost,
   NuAccordion, NuAuthLayout, NuAvatarGroup, NuBreadcrumb, NuCalendar, NuCustomizer, NuDescriptions, NuDivider, NuDrawer, NuEmpty, NuErrorPage, NuFileUpload, NuInfoBox, NuList, NuListItem, NuProgressRing, NuRadioGroup, NuRating, NuSegmented, NuSkeleton, NuSlider, NuSpinner, NuSteps, NuTagInput, NuTooltip,
-  NuCallout, NuCombobox, NuDatePicker, NuDirectChat, NuEditor, NuRibbon, NuRouteProgress, NuSmallBox, NuTodoList, NuTopNav, NuUserCard,
+  NuCallout, NuCombobox, NuDatePicker, NuDirectChat, NuEditor, NuRibbon, NuRouteProgress, NuSmallBox, NuTodoList, NuTopNav, NuUserCard, NuCodeEditor, NuTransfer, NuGeoMap, NuCommandPalette,
 }
 
 export { useTheme, useLayout }
@@ -84,6 +90,11 @@ export { useToast } from './composables/useToast'
 export { useElementWidth } from './composables/useElementWidth'
 export { useOverlay } from './composables/useOverlay'
 export { useForm, rules } from './composables/useForm'
+export { useLocale, t } from './composables/useLocale'
+export type { NuMessages, NuMessageKey } from './locales'
+export { applyMask, unmask } from './utils/mask'
+export { toCsv, downloadText } from './utils/csv'
+export { filterMenu } from './utils/menu'
 export type { NuRule } from './composables/useForm'
 export type { NuThemeMode } from './composables/useTheme'
 export type { NuSidebarVariant, NuLayoutOption } from './composables/useLayout'
@@ -94,6 +105,9 @@ export type { NuCalendarEvent } from './components/NuCalendar.vue'
 export type { NuDescriptionItem } from './components/NuDescriptions.vue'
 export type { NuStep } from './components/NuSteps.vue'
 export type { NuTodo } from './components/NuTodoList.vue'
+export type { NuTableSort } from './components/NuTable.vue'
+export type { NuGeoFeature } from './components/NuGeoMap.vue'
+export type { NuCommand } from './components/NuCommandPalette.vue'
 export type { NuChatMessage } from './components/NuDirectChat.vue'
 export type * from './types'
 
@@ -103,7 +117,7 @@ const components = {
   NuProgress, NuSelect, NuSidebar, NuSidebarMenuItem, NuSparkline, NuStatCard, NuSwitch, NuTable, NuTabs, NuTextarea,
   NuTimeline, NuToastHost,
   NuAccordion, NuAuthLayout, NuAvatarGroup, NuBreadcrumb, NuCalendar, NuCustomizer, NuDescriptions, NuDivider, NuDrawer, NuEmpty, NuErrorPage, NuFileUpload, NuInfoBox, NuList, NuListItem, NuProgressRing, NuRadioGroup, NuRating, NuSegmented, NuSkeleton, NuSlider, NuSpinner, NuSteps, NuTagInput, NuTooltip,
-  NuCallout, NuCombobox, NuDatePicker, NuDirectChat, NuEditor, NuRibbon, NuRouteProgress, NuSmallBox, NuTodoList, NuTopNav, NuUserCard,
+  NuCallout, NuCombobox, NuDatePicker, NuDirectChat, NuEditor, NuRibbon, NuRouteProgress, NuSmallBox, NuTodoList, NuTopNav, NuUserCard, NuCodeEditor, NuTransfer, NuGeoMap, NuCommandPalette,
 }
 
 export interface NusaAdminOptions {
@@ -112,6 +126,10 @@ export interface NusaAdminOptions {
   /** Brand color (any CSS color) used when the visitor has no saved preference. */
   primary?: string
   sidebarVariant?: NuSidebarVariant
+  /** Language for built-in text (`en`, `id`, or one added with `messages`). */
+  locale?: string
+  /** Extra or overriding translations, e.g. `{ ms: { close: 'Tutup' } }`. */
+  messages?: Record<string, Partial<NuMessages>>
   /** Default layout options (top nav, boxed, fixed parts…) for visitors without a saved preference. */
   layout?: Partial<Record<NuLayoutOption, boolean>>
   /** Register every Nu* component globally. Default true; set false and import per-file to tree-shake. */
@@ -123,6 +141,9 @@ export function createNusaAdmin(options: NusaAdminOptions = {}): Plugin {
   return {
     install(app: App) {
       useTheme().setDefaults({ mode: options.theme, primary: options.primary })
+      const i18n = useLocale()
+      for (const [code, msgs] of Object.entries(options.messages ?? {})) i18n.addMessages(code, msgs)
+      if (options.locale) i18n.setDefaultLocale(options.locale)
       useLayout().setDefaults({ sidebarVariant: options.sidebarVariant, ...options.layout })
 
       if (options.registerComponents !== false) {

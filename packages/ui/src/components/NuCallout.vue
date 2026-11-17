@@ -15,7 +15,7 @@ withDefaults(defineProps<{ color?: NuColor; title?: string }>(), { color: 'info'
 .nu-callout {
   padding: 10px 14px;
   border: 1px solid var(--nu-border);
-  border-left: 4px solid var(--nu-c);
+  border-inline-start: 4px solid var(--nu-c);
   border-radius: var(--nu-radius-sm);
   background: var(--nu-surface);
   box-shadow: var(--nu-shadow-sm);

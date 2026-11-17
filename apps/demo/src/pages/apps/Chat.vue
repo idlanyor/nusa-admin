@@ -100,7 +100,7 @@ async function send() {
 @media (max-width: 800px) { .chat { grid-template-columns: 1fr; } }
 .chat__contacts { margin: 0; padding: 0; list-style: none; }
 .chat__contacts li + li { border-top: 1px solid var(--nu-border); }
-.chat__contacts button { display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 14px; border: 0; background: transparent; color: var(--nu-text); text-align: left; cursor: pointer; }
+.chat__contacts button { display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 14px; border: 0; background: transparent; color: var(--nu-text); text-align: start; cursor: pointer; }
 .chat__contacts button:hover { background: color-mix(in srgb, var(--nu-text) 4%, transparent); }
 .chat__contacts button.is-active { background: color-mix(in srgb, var(--nu-primary) 9%, transparent); }
 .chat__name, .chat__last { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -110,7 +110,7 @@ async function send() {
 .chat__msg { align-self: flex-start; max-width: min(70%, 520px); }
 .chat__msg p { padding: 7px 10px; border-radius: var(--nu-radius); background: color-mix(in srgb, var(--nu-text) 7%, transparent); }
 .chat__msg time { display: block; margin-top: 2px; font-size: 11px; color: var(--nu-text-muted); }
-.chat__msg.is-me { align-self: flex-end; text-align: right; }
-.chat__msg.is-me p { background: var(--nu-primary); color: var(--nu-on-color); text-align: left; }
+.chat__msg.is-me { align-self: flex-end; text-align: end; }
+.chat__msg.is-me p { background: var(--nu-primary); color: var(--nu-on-color); text-align: start; }
 .chat__form { display: flex; gap: 8px; }
 </style>

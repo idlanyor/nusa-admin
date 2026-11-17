@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t } from '../composables/useLocale'
 import { computed, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import type { NuMenuItem as MenuItem } from '../types'
@@ -8,7 +9,7 @@ import NuMenuItem from './NuMenuItem.vue'
 
 const props = withDefaults(
   defineProps<{ menu: MenuItem[]; variant?: NuSidebarVariant; searchable?: boolean; searchPlaceholder?: string }>(),
-  { variant: 'dark', searchPlaceholder: 'Search menu' },
+  { variant: 'dark' },
 )
 
 const query = ref('')
@@ -31,11 +32,11 @@ const results = computed(() => {
 <template>
   <aside class="nu-sidebar" :class="`nu-sidebar--${variant}`">
     <div v-if="$slots.brand" class="nu-sidebar__brand"><slot name="brand" /></div>
-    <nav class="nu-sidebar__nav" aria-label="Main">
+    <nav class="nu-sidebar__nav" :aria-label="t('mainNav')">
       <slot name="before" />
       <label v-if="searchable" class="nu-sidebar__search">
         <NuIcon name="search" :size="15" />
-        <input v-model="query" type="search" :placeholder="searchPlaceholder" :aria-label="searchPlaceholder" @keydown.esc="query = ''" />
+        <input v-model="query" type="search" :placeholder="searchPlaceholder ?? t('searchMenu')" :aria-label="searchPlaceholder ?? t('searchMenu')" @keydown.esc="query = ''" />
       </label>
       <ul v-if="query.trim()" class="nu-menu" aria-live="polite">
         <li v-for="(r, i) in results" :key="i" class="nu-menu__item">
@@ -52,7 +53,7 @@ const results = computed(() => {
             </span>
           </component>
         </li>
-        <li v-if="!results.length" class="nu-menu__empty">No menu items match “{{ query.trim() }}”</li>
+        <li v-if="!results.length" class="nu-menu__empty">{{ t('noMenuMatch', { query: query.trim() }) }}</li>
       </ul>
       <ul v-else class="nu-menu">
         <NuMenuItem v-for="(item, i) in menu" :key="i" :item="item" />
@@ -70,7 +71,7 @@ const results = computed(() => {
   width: var(--nu-sidebar-width);
   height: 100%;
   overflow: hidden;
-  border-right: 1px solid var(--nu-sidebar-border);
+  border-inline-end: 1px solid var(--nu-sidebar-border);
   background: var(--nu-sidebar-bg);
   color: var(--nu-sidebar-text);
 }
@@ -136,14 +137,14 @@ const results = computed(() => {
   width: 100%;
   height: 34px;
   padding: 0 12px;
-  padding-left: calc(12px + var(--nu-depth, 0) * 14px);
+  padding-inline-start: calc(12px + var(--nu-depth, 0) * 14px);
   border: 0;
   border-radius: var(--nu-radius-sm);
   background: transparent;
   color: var(--nu-sidebar-text);
   font-size: 13.5px;
   font-weight: 500;
-  text-align: left;
+  text-align: start;
   text-decoration: none !important;
   white-space: nowrap;
   cursor: pointer;

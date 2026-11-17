@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { feature } from 'topojson-client'
+import world from 'world-atlas/countries-110m.json'
 import { Cog, Download, ShoppingCart, ThumbsUp, Users } from 'lucide-vue-next'
 import {
-  NuAvatar, NuBadge, NuButton, NuCard, NuChart, NuDirectChat, NuDonut, NuInfoBox, NuList, NuListItem, NuPageHeader,
-  NuProgress, NuTable, type NuChatMessage, type NuTableColumn,
+  NuAvatar, NuBadge, NuButton, NuCard, NuChart, NuDirectChat, NuDonut, NuGeoMap, NuInfoBox, NuList, NuListItem, NuPageHeader,
+  NuProgress, NuTable, type NuChatMessage, type NuGeoFeature, type NuTableColumn,
 } from 'nusa-admin'
 import { expenses, months, orders, placeholderImage, revenue, statusColor, usd, type Order } from '../data'
 
@@ -38,10 +40,15 @@ const products = [
 const countries = [
   { name: 'Indonesia', share: 48 },
   { name: 'Malaysia', share: 17 },
-  { name: 'Singapore', share: 12 },
   { name: 'Philippines', share: 9 },
   { name: 'Thailand', share: 7 },
+  { name: 'Vietnam', share: 5 },
 ]
+const shapes = (feature(world as any, (world as any).objects.countries) as unknown as { features: NuGeoFeature[] }).features
+const visitors: Record<string, number> = {
+  Indonesia: 4820, Malaysia: 1710, Philippines: 905, Thailand: 702, Vietnam: 498, Australia: 640, Japan: 420, India: 610,
+  China: 380, 'United States of America': 760, Germany: 210, 'United Kingdom': 260, Netherlands: 190, Brazil: 120, 'Saudi Arabia': 150,
+}
 </script>
 
 <template>
@@ -84,9 +91,14 @@ const countries = [
 
     <div class="nu-row">
       <div class="nu-col-lg-8 nu-stack">
-        <NuCard title="Visitors by country" subtitle="Share of sessions this month">
-          <div class="nu-stack" style="--nu-gap: 10px">
-            <NuProgress v-for="(c, i) in countries" :key="c.name" :label="c.name" :value="c.share" :color="i === 0 ? 'primary' : 'info'" show-value />
+        <NuCard title="Visitors by country" subtitle="Sessions this month">
+          <div class="nu-row">
+            <div class="nu-col-md-8">
+              <NuGeoMap :features="shapes" :values="visitors" :exclude="['Antarctica']" :format="(v) => `${v.toLocaleString()} sessions`" label="World map of sessions by country; top countries listed beside it" />
+            </div>
+            <div class="nu-col-md-4 nu-stack" style="--nu-gap: 10px">
+              <NuProgress v-for="(c, i) in countries" :key="c.name" :label="c.name" :value="c.share" :color="i === 0 ? 'primary' : 'info'" show-value />
+            </div>
           </div>
         </NuCard>
         <div class="nu-row">
@@ -144,12 +156,12 @@ const countries = [
 <style>
 .recap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; text-align: center; }
 .recap > div { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-.recap > div + div { border-left: 1px solid var(--nu-border); }
+.recap > div + div { border-inline-start: 1px solid var(--nu-border); }
 .recap strong { font-size: 16px; font-variant-numeric: tabular-nums; }
 .recap span { font-size: 12px; color: var(--nu-text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
 @media (max-width: 640px) {
   .recap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .recap > div:nth-child(3) { border-left: 0; }
+  .recap > div:nth-child(3) { border-inline-start: 0; }
 }
 .members { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px 6px; margin: 0; padding: 0; list-style: none; text-align: center; }
 .members li { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 0; max-width: 100%; }

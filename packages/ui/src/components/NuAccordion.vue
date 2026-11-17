@@ -48,7 +48,7 @@ function toggle(key: string) {
   background: transparent;
   color: var(--nu-text);
   font-weight: 600;
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 .nu-accordion__head:hover { background: color-mix(in srgb, var(--nu-text) 4%, transparent); }

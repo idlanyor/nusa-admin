@@ -10,6 +10,11 @@
     "typecheck": "vue-tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
-    "nusa-admin": "workspace:*"
+    "nusa-admin": "workspace:*",
+    "topojson-client": "3",
+    "world-atlas": "2"
+  },
+  "devDependencies": {
+    "@types/topojson-client": "^3.1.5"
   }
 }

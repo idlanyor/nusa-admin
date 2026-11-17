@@ -39,7 +39,7 @@ defineProps<{
 .nu-icon-btn__badge {
   position: absolute;
   top: -3px;
-  right: -5px;
+  inset-inline-end: -5px;
   min-width: 16px;
   height: 16px;
   padding: 0 4px;
@@ -52,5 +52,5 @@ defineProps<{
   line-height: 12px;
   box-sizing: content-box;
 }
-.nu-icon-btn__badge.is-dot { top: 6px; right: 6px; min-width: 8px; width: 8px; height: 8px; padding: 0; box-sizing: border-box; }
+.nu-icon-btn__badge.is-dot { top: 6px; inset-inline-end: 6px; min-width: 8px; width: 8px; height: 8px; padding: 0; box-sizing: border-box; }
 </style>

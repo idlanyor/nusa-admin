@@ -20,7 +20,7 @@ export const menu: NuMenuItem[] = [
   {
     label: 'Layout options',
     icon: LayoutTemplate,
-    badge: 5,
+    badge: 6,
     badgeColor: 'info',
     children: [
       { label: 'All options', to: '/layout/options' },
@@ -28,6 +28,7 @@ export const menu: NuMenuItem[] = [
       { label: 'Boxed', to: '/layout/boxed' },
       { label: 'Fixed footer', to: '/layout/fixed-footer' },
       { label: 'Scrolling navbar & sidebar', to: '/layout/static' },
+      { label: 'Right-to-left (RTL)', to: '/layout/rtl' },
     ],
   },
 
@@ -84,11 +85,11 @@ export const menu: NuMenuItem[] = [
 
   { label: 'Examples', header: true },
   { label: 'Projects', icon: FolderKanban, to: '/projects' },
-  { label: 'Users', icon: Users, to: '/users' },
+  { label: 'Users', icon: Users, to: '/users', meta: { roles: ['admin'] } },
   { label: 'Contacts', icon: Contact, to: '/contacts' },
   { label: 'Profile', icon: UserRound, to: '/profile' },
   { label: 'E-commerce', icon: ShoppingBag, to: '/ecommerce' },
-  { label: 'Billing', icon: CreditCard, to: '/billing' },
+  { label: 'Billing', icon: CreditCard, to: '/billing', meta: { roles: ['admin'] } },
   { label: 'Invoice', icon: ReceiptText, to: '/invoice' },
   { label: 'Pricing', icon: Tags, to: '/pricing' },
   { label: 'Search results', icon: Search, to: '/search?q=project' },
@@ -125,7 +126,7 @@ export const menu: NuMenuItem[] = [
   },
 
   { label: 'Misc', header: true },
-  { label: 'Settings', icon: Settings, to: '/settings' },
+  { label: 'Settings', icon: Settings, to: '/settings', meta: { roles: ['admin'] } },
   { label: 'Documentation', icon: File, href: 'https://vuejs.org/guide/introduction.html', target: '_blank' },
   {
     label: 'Multi level',

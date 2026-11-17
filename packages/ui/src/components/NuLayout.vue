@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue'
+import { computed, onBeforeUnmount, watch, watchEffect } from 'vue'
 import { RouterLink, useRoute, type RouteLocationRaw } from 'vue-router'
 import { useLayout, type NuSidebarVariant } from '../composables/useLayout'
 import type { NuMenuItem } from '../types'
@@ -28,6 +28,8 @@ const props = withDefaults(
     fixedNavbar?: boolean
     fixedSidebar?: boolean
     fixedFooter?: boolean
+    /** Right-to-left layout (sets `dir` on <html> while this layout is mounted). */
+    rtl?: boolean
     /** Filter box at the top of the sidebar menu. */
     sidebarSearch?: boolean
     themeToggle?: boolean
@@ -44,10 +46,11 @@ const props = withDefaults(
     fixedNavbar: undefined,
     fixedSidebar: undefined,
     fixedFooter: undefined,
+    rtl: undefined,
   },
 )
 
-const { layout: state, closeMobile } = useLayout()
+const { layout: state, closeMobile, applyDirection } = useLayout()
 const route = useRoute()
 
 const variant = computed(() => props.sidebarVariant ?? state.sidebarVariant)
@@ -56,6 +59,11 @@ const boxed = computed(() => props.boxed ?? state.boxed)
 const fixedNavbar = computed(() => props.fixedNavbar ?? state.fixedNavbar)
 const fixedSidebar = computed(() => (props.fixedSidebar ?? state.fixedSidebar) && !boxed.value)
 const fixedFooter = computed(() => props.fixedFooter ?? state.fixedFooter)
+
+const rtl = computed(() => props.rtl ?? state.rtl)
+watchEffect(() => applyDirection(rtl.value))
+// Hand <html dir> back to the saved preference when a page that forced it goes away.
+onBeforeUnmount(() => applyDirection(state.rtl))
 
 watch(() => route.fullPath, closeMobile)
 </script>
@@ -124,7 +132,7 @@ watch(() => route.fullPath, closeMobile)
 .nu-layout { position: relative; min-height: 100vh; }
 .nu-layout__sidebar {
   position: fixed;
-  inset: 0 auto 0 0;
+  inset-block: 0; inset-inline: 0 auto;
   z-index: 50;
   transition: width var(--nu-transition), transform var(--nu-transition), box-shadow var(--nu-transition);
 }
@@ -133,8 +141,8 @@ watch(() => route.fullPath, closeMobile)
   flex-direction: column;
   min-width: 0;
   min-height: 100vh;
-  margin-left: var(--nu-sidebar-width);
-  transition: margin-left var(--nu-transition);
+  margin-inline-start: var(--nu-sidebar-width);
+  transition: margin-inline-start var(--nu-transition);
 }
 .nu-layout__content { flex: 1 1 auto; min-width: 0; padding: var(--nu-content-padding); }
 .nu-layout__footer {
@@ -168,7 +176,7 @@ body:has(.nu-layout.is-boxed) { background: color-mix(in srgb, var(--nu-bg) 82%,
 
 /* Desktop */
 @media (min-width: 992px) {
-  .nu-layout.is-collapsed .nu-layout__main { margin-left: var(--nu-sidebar-mini-width); }
+  .nu-layout.is-collapsed .nu-layout__main { margin-inline-start: var(--nu-sidebar-mini-width); }
   .nu-layout.is-collapsed .nu-layout__sidebar { width: var(--nu-sidebar-mini-width); }
   .nu-layout.is-collapsed .nu-layout__sidebar:is(:hover, :focus-within) {
     width: var(--nu-sidebar-width);
@@ -188,14 +196,14 @@ body:has(.nu-layout.is-boxed) { background: color-mix(in srgb, var(--nu-bg) 82%,
 
   /* Top navigation: no sidebar, menu in the navbar, centered content */
   .nu-layout.is-top-nav .nu-layout__sidebar { display: none; }
-  .nu-layout.is-top-nav .nu-layout__main { margin-left: 0; }
+  .nu-layout.is-top-nav .nu-layout__main { margin-inline-start: 0; }
   .nu-layout.is-top-nav .nu-navbar__toggle { display: none; }
   .nu-layout.is-top-nav :is(.nu-navbar__inner, .nu-layout__content) { width: 100%; max-width: 1320px; margin-inline: auto; }
 }
 
 /* Mobile: off-canvas drawer; the top nav collapses into it */
 @media (max-width: 991.98px) {
-  .nu-layout__main { margin-left: 0; }
+  .nu-layout__main { margin-inline-start: 0; }
   .nu-layout__sidebar { position: fixed !important; height: 100% !important; transform: translateX(-100%); }
   .nu-layout__sidebar .nu-sidebar__nav { overflow-y: auto !important; }
   .nu-layout.is-mobile-open .nu-layout__sidebar { transform: none; box-shadow: var(--nu-shadow-lg); }

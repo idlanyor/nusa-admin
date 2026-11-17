@@ -2,6 +2,7 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { NuAuthLayout, NuButton, NuCheckbox, NuInput } from 'nusa-admin'
+import { useAuth } from '../../auth'
 
 const router = useRouter()
 const form = reactive({ name: '', email: '', password: '', terms: false })
@@ -14,7 +15,10 @@ function submit() {
   errors.password = form.password.length >= 8 ? undefined : 'Use at least 8 characters.'
   if (errors.name || errors.email || errors.password) return
   loading.value = true
-  setTimeout(() => router.push('/'), 600)
+  setTimeout(() => {
+    useAuth().login(form.email, 'admin')
+    router.push('/')
+  }, 400)
 }
 
 defineProps<{ split?: boolean }>()

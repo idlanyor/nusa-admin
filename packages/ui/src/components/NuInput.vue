@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { useId } from 'vue'
+import { computed, useId } from 'vue'
+import { applyMask } from '../utils/mask'
 import type { NuSize } from '../types'
 import './form.css'
 
 defineOptions({ inheritAttrs: false })
-withDefaults(
+const props = withDefaults(
   defineProps<{
     label?: string
     type?: string
@@ -14,11 +15,23 @@ withDefaults(
     size?: NuSize
     disabled?: boolean
     required?: boolean
+    /** Input mask: `9` digit, `a` letter, `*` either; other characters are literals. */
+    mask?: string
   }>(),
   { type: 'text', size: 'md' },
 )
 const model = defineModel<string | number>()
 const id = useId()
+const numericMask = computed(() => !!props.mask && /^[^a*]*$/.test(props.mask) && /9/.test(props.mask))
+
+function onMaskedInput(e: Event) {
+  const el = e.target as HTMLInputElement
+  const atEnd = el.selectionStart === el.value.length
+  const next = applyMask(el.value, props.mask!)
+  el.value = next
+  if (atEnd) el.setSelectionRange(next.length, next.length)
+  model.value = next
+}
 </script>
 
 <template>
@@ -29,6 +42,22 @@ const id = useId()
     <div class="nu-control" :class="[`nu-control--${size}`, { 'is-invalid': error, 'is-disabled': disabled }]">
       <span v-if="$slots.prefix" class="nu-control__affix"><slot name="prefix" /></span>
       <input
+        v-if="mask"
+        :id="id"
+        :value="model"
+        v-bind="$attrs"
+        class="nu-control__input"
+        :type="type"
+        :inputmode="numericMask ? 'numeric' : undefined"
+        :placeholder="placeholder ?? mask.replace(/[9a*]/g, '_')"
+        :maxlength="mask.length"
+        :disabled="disabled"
+        :required="required"
+        :aria-invalid="!!error || undefined"
+        @input="onMaskedInput"
+      />
+      <input
+        v-else
         :id="id"
         v-model="model"
         v-bind="$attrs"

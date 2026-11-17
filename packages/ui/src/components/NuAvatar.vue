@@ -53,7 +53,7 @@ const initials = computed(() =>
 .nu-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
 .nu-avatar__status {
   position: absolute;
-  right: -1px;
+  inset-inline-end: -1px;
   bottom: -1px;
   width: 28%;
   height: 28%;

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t } from '../composables/useLocale'
 import { computed } from 'vue'
 import NuIcon from './NuIcon.vue'
 
@@ -29,8 +30,8 @@ function go(p: number) {
 </script>
 
 <template>
-  <nav class="nu-pagination" aria-label="Pagination">
-    <button class="nu-pagination__btn" type="button" :disabled="page <= 1" aria-label="Previous page" @click="go(page - 1)">
+  <nav class="nu-pagination" :aria-label="t('pagination')">
+    <button class="nu-pagination__btn" type="button" :disabled="page <= 1" :aria-label="t('previousPage')" @click="go(page - 1)">
       <NuIcon name="chevron-left" :size="16" />
     </button>
     <template v-for="item in items" :key="item">
@@ -46,7 +47,7 @@ function go(p: number) {
         {{ item }}
       </button>
     </template>
-    <button class="nu-pagination__btn" type="button" :disabled="page >= pageCount" aria-label="Next page" @click="go(page + 1)">
+    <button class="nu-pagination__btn" type="button" :disabled="page >= pageCount" :aria-label="t('nextPage')" @click="go(page + 1)">
       <NuIcon name="chevron-right" :size="16" />
     </button>
   </nav>

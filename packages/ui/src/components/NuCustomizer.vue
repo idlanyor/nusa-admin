@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useLayout, type NuLayoutOption } from '../composables/useLayout'
+import { t } from '../composables/useLocale'
+import type { NuMessageKey } from '../locales'
 import { useTheme, type NuThemeMode } from '../composables/useTheme'
 import NuDrawer from './NuDrawer.vue'
 import NuSegmented from './NuSegmented.vue'
@@ -29,42 +32,43 @@ withDefaults(
 const open = defineModel<boolean>({ default: false })
 const { theme, setMode, setPrimary } = useTheme()
 const { layout, setSidebarVariant, setOption } = useLayout()
-const options: { key: NuLayoutOption; label: string }[] = [
-  { key: 'topNav', label: 'Top navigation' },
-  { key: 'collapsed', label: 'Collapse sidebar to icons' },
-  { key: 'boxed', label: 'Boxed layout' },
-  { key: 'fixedNavbar', label: 'Fixed navbar' },
-  { key: 'fixedSidebar', label: 'Fixed sidebar' },
-  { key: 'fixedFooter', label: 'Fixed footer' },
+const options: { key: NuLayoutOption; label: NuMessageKey }[] = [
+  { key: 'topNav', label: 'optTopNav' },
+  { key: 'collapsed', label: 'optCollapsed' },
+  { key: 'boxed', label: 'optBoxed' },
+  { key: 'fixedNavbar', label: 'optFixedNavbar' },
+  { key: 'fixedSidebar', label: 'optFixedSidebar' },
+  { key: 'fixedFooter', label: 'optFixedFooter' },
+  { key: 'rtl', label: 'optRtl' },
 ]
 
-const modes = [
-  { label: 'Light', value: 'light' },
-  { label: 'Dark', value: 'dark' },
-  { label: 'System', value: 'auto' },
-]
-const variants = [
-  { label: 'Dark', value: 'dark' },
-  { label: 'Light', value: 'light' },
-]
+const modes = computed(() => [
+  { label: t('light'), value: 'light' },
+  { label: t('dark'), value: 'dark' },
+  { label: t('system'), value: 'auto' },
+])
+const variants = computed(() => [
+  { label: t('dark'), value: 'dark' },
+  { label: t('light'), value: 'light' },
+])
 </script>
 
 <template>
-  <button v-if="!hideTrigger" class="nu-customizer__fab" type="button" aria-label="Customize theme" title="Customize theme" @click="open = true">
+  <button v-if="!hideTrigger" class="nu-customizer__fab" type="button" :aria-label="t('customizeTheme')" :title="t('customizeTheme')" @click="open = true">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2Z" />
       <circle cx="12" cy="12" r="3" />
     </svg>
   </button>
 
-  <NuDrawer v-model="open" title="Customize" width="300px">
+  <NuDrawer v-model="open" :title="t('customize')" width="300px">
     <div class="nu-customizer">
       <section>
-        <h4>Theme</h4>
-        <NuSegmented :model-value="theme.mode" :options="modes" block label="Theme" @update:model-value="setMode($event as NuThemeMode)" />
+        <h4>{{ t('theme') }}</h4>
+        <NuSegmented :model-value="theme.mode" :options="modes" block :label="t('theme')" @update:model-value="setMode($event as NuThemeMode)" />
       </section>
       <section>
-        <h4>Brand color</h4>
+        <h4>{{ t('brandColor') }}</h4>
         <div class="nu-customizer__swatches">
           <button
             v-for="c in colors"
@@ -81,12 +85,12 @@ const variants = [
         </div>
       </section>
       <section>
-        <h4>Sidebar</h4>
-        <NuSegmented :model-value="layout.sidebarVariant" :options="variants" block label="Sidebar style" @update:model-value="setSidebarVariant($event as 'dark' | 'light')" />
+        <h4>{{ t('sidebar') }}</h4>
+        <NuSegmented :model-value="layout.sidebarVariant" :options="variants" block :label="t('sidebarStyle')" @update:model-value="setSidebarVariant($event as 'dark' | 'light')" />
       </section>
       <section>
-        <h4>Layout</h4>
-        <NuSwitch v-for="o in options" :key="o.key" :model-value="layout[o.key]" :label="o.label" @update:model-value="setOption(o.key, $event)" />
+        <h4>{{ t('layout') }}</h4>
+        <NuSwitch v-for="o in options" :key="o.key" :model-value="layout[o.key]" :label="t(o.label)" @update:model-value="setOption(o.key, $event)" />
       </section>
       <slot />
     </div>
@@ -96,7 +100,7 @@ const variants = [
 <style>
 .nu-customizer__fab {
   position: fixed;
-  right: 14px;
+  inset-inline-end: 14px;
   bottom: 52px;
   z-index: 40;
   display: grid;

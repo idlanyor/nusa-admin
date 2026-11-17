@@ -1,12 +1,12 @@
 # Nusa Admin
 
 A reusable admin template kit for **Vue 3 + Vite**, run with **Bun**. Think AdminLTE, but as typed Vue
-components with no CSS framework and no jQuery: one layout shell, 66 components, dependency-free SVG
+components with no CSS framework and no jQuery: one layout shell, 70 components, dependency-free SVG
 charts, light/dark themes, and a single file of design tokens to re-skin it.
 
 ```
 packages/ui   → the kit (npm package `nusa-admin`): components, composables, styles
-apps/demo     → a demo/starter app that uses the kit (58 routes: dashboards, apps, forms, tables, examples, auth, errors)
+apps/demo     → a demo/starter app that uses the kit (60 routes: dashboards, apps, forms, tables, examples, auth, errors)
 ```
 
 ## Quick start
@@ -71,21 +71,24 @@ const menu: NuMenuItem[] = [
 
 | Group | Components |
 | --- | --- |
-| Layout | `NuLayout`, `NuSidebar`, `NuSidebarMenuItem`, `NuTopNav`, `NuNavbar`, `NuPageHeader`, `NuBreadcrumb`, `NuCustomizer`, `NuAuthLayout`, `NuErrorPage`, `NuRouteProgress` |
+| Layout | `NuLayout`, `NuSidebar`, `NuSidebarMenuItem`, `NuTopNav`, `NuNavbar`, `NuPageHeader`, `NuBreadcrumb`, `NuCustomizer`, `NuCommandPalette`, `NuAuthLayout`, `NuErrorPage`, `NuRouteProgress` |
 | Content | `NuCard`, `NuStatCard`, `NuSmallBox`, `NuInfoBox`, `NuUserCard`, `NuTimeline`, `NuTable`, `NuPagination`, `NuList`, `NuListItem`, `NuDescriptions`, `NuCalendar`, `NuAccordion`, `NuTabs`, `NuSteps`, `NuDivider`, `NuCallout`, `NuRibbon` |
 | Apps | `NuDirectChat`, `NuTodoList` |
 | Feedback | `NuAlert`, `NuBadge`, `NuProgress`, `NuProgressRing`, `NuSpinner`, `NuSkeleton`, `NuEmpty`, `NuTooltip`, `NuModal`, `NuDrawer`, `NuToastHost` (+ `useToast()`) |
 | Actions | `NuButton`, `NuIconButton`, `NuDropdown`, `NuDropdownItem`, `NuSegmented` |
-| Forms | `NuInput`, `NuTextarea`, `NuSelect`, `NuCombobox`, `NuDatePicker` (single or range), `NuEditor` (rich text), `NuCheckbox`, `NuSwitch`, `NuRadioGroup`, `NuSlider`, `NuTagInput`, `NuFileUpload`, `NuRating` (+ `useForm()` / `rules`) |
-| Charts | `NuChart` (line / area / bar), `NuDonut`, `NuSparkline` |
+| Forms | `NuInput` (with `mask`), `NuTextarea`, `NuSelect`, `NuCombobox`, `NuDatePicker` (single or range), `NuEditor` (rich text), `NuCodeEditor`, `NuCheckbox`, `NuSwitch`, `NuRadioGroup`, `NuSlider`, `NuTagInput`, `NuTransfer` (dual list), `NuFileUpload`, `NuRating` (+ `useForm()` / `rules`) |
+| Charts | `NuChart` (line / area / bar), `NuDonut`, `NuSparkline`, `NuGeoMap` (choropleth from GeoJSON) |
 | Misc | `NuAvatar`, `NuAvatarGroup`, `NuIcon` |
+
+`NuTable` does client-side search/sort/paging, or server-side with `manual` + `v-model:page/sort/search` + `total`;
+add `selectable` (with a `#bulk` actions slot) and `exportable` (CSV).
 
 `NuCard` has AdminLTE-style tools: `collapsible`, `maximizable`, `refreshable` (`@refresh`), `removable`, plus `accent` with `solid` headers.
 
 ### Layout options
 
-Top navigation, boxed, fixed/scrolling navbar, fixed/scrolling sidebar, fixed footer, collapsed icon rail, dark/light
-sidebar, sidebar menu search and a full-screen toggle. Each is a `NuLayout` prop; props left unset follow the saved
+Top navigation, boxed, fixed/scrolling navbar, fixed/scrolling sidebar, fixed footer, collapsed icon rail, right-to-left
+(RTL), dark/light sidebar, sidebar menu search and a full-screen toggle. Each is a `NuLayout` prop; props left unset follow the saved
 `useLayout()` state, which `NuCustomizer` (the control panel) edits at runtime.
 
 ```vue
@@ -114,17 +117,41 @@ Composables:
 - `useToast()` — `success()`, `error()`, `warning()`, `info()`, `show()`, `dismiss()`
 - `useForm()` — see above
 - `useOverlay()` — focus trap, scroll lock and Escape handling for custom dialogs
+- `useLocale()` — `setLocale('id')`, `addMessages(code, messages)`, `t(key, params)`
 
-Theme and layout preferences persist in `localStorage` (`nu-theme`, `nu-layout`).
+Helpers: `filterMenu(menu, item => …)` (e.g. hide items by role via `item.meta.roles`), `toCsv()` / `downloadText()`,
+`applyMask()` / `unmask()`.
 
-### Demo pages (58 routes)
+### Languages
 
-Dashboards v1–v3 · Widgets · Layout options + examples (top nav, boxed, fixed footer, scrolling) · Calendar, Kanban,
+Built-in text (placeholders, labels for assistive tech, validation messages, dates) ships in English and Indonesian:
+
+```ts
+app.use(createNusaAdmin({ locale: 'id', messages: { ms: { close: 'Tutup' } } }))
+```
+
+Missing keys fall back to English. The demo's page copy is English; the language menu switches the kit's text.
+
+### Command palette
+
+`<NuCommandPalette v-model="open" :menu="menu" :commands="commands" />` opens with Ctrl/⌘+K, lists every page in the menu
+plus your own commands, and can turn the typed text into a final command via `fallback` (the demo uses it for full-text search).
+
+Theme, layout and language preferences persist in `localStorage` (`nu-theme`, `nu-layout`, `nu-locale`).
+
+### Demo pages (60 routes)
+
+The demo signs you in with a mock session (pick Admin, Editor or Viewer on the sign-in page); a router guard redirects
+to sign-in and back, admin-only pages return 403 for other roles, and the menu hides what the role can't open. Replace
+`apps/demo/src/auth.ts` with your API.
+
+
+Dashboards v1–v3 (v2 has a world map) · Widgets · Layout options + examples (top nav, boxed, fixed footer, scrolling, RTL) · Calendar, Kanban,
 Mailbox (inbox + compose), Chat, Gallery · UI: general, icons, feedback & modals, navigation & tabs, timeline,
 ribbons & callouts, data display, charts · Forms: general, advanced, validation, editors, wizard · Tables: simple,
 data, editable grid · Projects (list, detail, add, edit), Users (CRUD), Contacts, Profile, E-commerce, Billing,
 Invoice, Pricing, Search results, FAQ, Contact us, Blank · Sign in / register (two styles each), forgot & recover
-password, lock screen · 404, 500, maintenance · Settings. The sidebar also shows multi-level menus and labels.
+password, lock screen · 403, 404, 500, maintenance · Settings. The sidebar also shows multi-level menus and labels.
 
 ## Theming
 

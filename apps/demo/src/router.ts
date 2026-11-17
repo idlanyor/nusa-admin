@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import { useAuth } from './auth'
 
 const layoutExamples: RouteRecordRaw[] = [
   { path: 'layout/top-nav', meta: { layout: 'top-nav', title: 'Top navigation', note: 'The menu moves into the navbar on desktop; on small screens it stays in the drawer.' } },
   { path: 'layout/boxed', meta: { boxed: true, title: 'Boxed layout', note: 'The page is centered with a max width; the sidebar scrolls with the content.' } },
   { path: 'layout/fixed-footer', meta: { fixedFooter: true, title: 'Fixed footer', note: 'The footer stays visible at the bottom of the window.' } },
+  { path: 'layout/rtl', meta: { rtl: true, title: 'Right-to-left', note: 'Everything mirrors for Arabic, Hebrew, Persian or Urdu: sidebar, menus, drawers, toasts and form controls.' } },
   { path: 'layout/static', meta: { fixedNavbar: false, fixedSidebar: false, title: 'Scrolling navbar & sidebar', note: 'Navbar and sidebar scroll away with the page instead of staying fixed.' } },
 ].map((r) => ({ ...r, component: () => import('./pages/layout/Example.vue') }) as RouteRecordRaw)
 
@@ -14,6 +16,7 @@ export const router = createRouter({
     {
       path: '/',
       component: () => import('./layouts/AdminShell.vue'),
+      meta: { requiresAuth: true },
       children: [
         { path: '', component: () => import('./pages/Dashboard.vue') },
         { path: 'dashboard-2', component: () => import('./pages/Dashboard2.vue') },
@@ -50,22 +53,22 @@ export const router = createRouter({
         { path: 'tables/data', component: () => import('./pages/Tables.vue') },
         { path: 'tables/editable', component: () => import('./pages/tables/Editable.vue') },
 
-        { path: 'users', component: () => import('./pages/Users.vue') },
+        { path: 'users', component: () => import('./pages/Users.vue'), meta: { roles: ['admin'] } },
         { path: 'profile', component: () => import('./pages/Profile.vue') },
         { path: 'projects', component: () => import('./pages/projects/List.vue') },
-        { path: 'projects/new', component: () => import('./pages/projects/Form.vue') },
+        { path: 'projects/new', component: () => import('./pages/projects/Form.vue'), meta: { roles: ['admin', 'editor'] } },
         { path: 'projects/:id', component: () => import('./pages/projects/Detail.vue') },
-        { path: 'projects/:id/edit', component: () => import('./pages/projects/Form.vue') },
+        { path: 'projects/:id/edit', component: () => import('./pages/projects/Form.vue'), meta: { roles: ['admin', 'editor'] } },
         { path: 'contacts', component: () => import('./pages/Contacts.vue') },
         { path: 'ecommerce', component: () => import('./pages/Ecommerce.vue') },
-        { path: 'billing', component: () => import('./pages/Billing.vue') },
+        { path: 'billing', component: () => import('./pages/Billing.vue'), meta: { roles: ['admin'] } },
         { path: 'invoice', component: () => import('./pages/Invoice.vue') },
         { path: 'pricing', component: () => import('./pages/Pricing.vue') },
         { path: 'faq', component: () => import('./pages/Faq.vue') },
         { path: 'contact', component: () => import('./pages/ContactUs.vue') },
         { path: 'search', component: () => import('./pages/Search.vue') },
         { path: 'blank', component: () => import('./pages/Blank.vue') },
-        { path: 'settings', component: () => import('./pages/Settings.vue') },
+        { path: 'settings', component: () => import('./pages/Settings.vue'), meta: { roles: ['admin'] } },
       ],
     },
     { path: '/auth/login', component: () => import('./pages/auth/Login.vue') },
@@ -76,8 +79,18 @@ export const router = createRouter({
     { path: '/auth/recover-password', component: () => import('./pages/auth/RecoverPassword.vue') },
     { path: '/auth/lock', component: () => import('./pages/auth/LockScreen.vue') },
     { path: '/login', redirect: '/auth/login' },
+    { path: '/errors/403', component: () => import('./pages/errors/Forbidden.vue') },
     { path: '/errors/500', component: () => import('./pages/errors/ServerError.vue') },
     { path: '/errors/maintenance', component: () => import('./pages/errors/Maintenance.vue') },
     { path: '/:pathMatch(.*)*', component: () => import('./pages/errors/NotFound.vue') },
   ],
+})
+
+const auth = useAuth()
+router.beforeEach((to) => {
+  if (to.matched.some((r) => r.meta.requiresAuth) && !auth.isAuthenticated.value) {
+    return { path: '/auth/login', query: to.fullPath === '/' ? {} : { redirect: to.fullPath } }
+  }
+  const roles = to.matched.flatMap((r) => (r.meta.roles as string[] | undefined) ?? [])
+  if (roles.length && !auth.can(roles)) return { path: '/errors/403', query: { from: to.fullPath } }
 })

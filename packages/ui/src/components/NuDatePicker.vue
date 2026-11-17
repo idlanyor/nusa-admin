@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t, useLocale } from '../composables/useLocale'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, useId } from 'vue'
 import NuCalendar from './NuCalendar.vue'
 import NuIcon from './NuIcon.vue'
@@ -19,7 +20,7 @@ const props = withDefaults(
     locale?: string
     weekStart?: 0 | 1
   }>(),
-  { locale: 'en', weekStart: 1 },
+  { weekStart: 1 },
 )
 const model = defineModel<Value>({ default: null })
 const emit = defineEmits<{ blur: [] }>()
@@ -32,8 +33,9 @@ const calendar = ref<InstanceType<typeof NuCalendar> | null>(null)
 /** First click of a range, waiting for the second. */
 const pending = ref<string | null>(null)
 
+const { locale: currentLocale } = useLocale()
 const fmt = (iso: string) =>
-  new Date(`${iso}T00:00:00`).toLocaleDateString(props.locale, { day: 'numeric', month: 'short', year: 'numeric' })
+  new Date(`${iso}T00:00:00`).toLocaleDateString(props.locale ?? currentLocale.value, { day: 'numeric', month: 'short', year: 'numeric' })
 const display = computed(() => {
   const v = model.value
   if (!v) return ''
@@ -101,23 +103,23 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', onDoc))
         @click="open ? hide() : show()"
       >
         <span v-if="display">{{ display }}</span>
-        <span v-else class="nu-combo__placeholder">{{ placeholder ?? (range ? 'Select a date range' : 'Select a date') }}</span>
+        <span v-else class="nu-combo__placeholder">{{ placeholder ?? (range ? t('selectDateRange') : t('selectDate')) }}</span>
       </button>
-      <button v-if="clearable && model && !disabled" class="nu-combo__clear" type="button" aria-label="Clear date" @click="model = null">
+      <button v-if="clearable && model && !disabled" class="nu-combo__clear" type="button" :aria-label="t('clearDate')" @click="model = null">
         <NuIcon name="x" :size="14" />
       </button>
     </div>
-    <div v-if="open" class="nu-datepicker__popover" role="dialog" :aria-label="range ? 'Choose a date range' : 'Choose a date'">
+    <div v-if="open" class="nu-datepicker__popover" role="dialog" :aria-label="range ? t('chooseDateRange') : t('chooseDate')">
       <NuCalendar
         ref="calendar"
         compact
         :model-value="selectedDay"
         :range="highlight"
-        :locale="locale"
+        :locale="locale ?? currentLocale"
         :week-start="weekStart"
         @select="pick"
       />
-      <p v-if="range" class="nu-datepicker__hint">{{ pending ? 'Now pick the end date' : 'Pick the start date' }}</p>
+      <p v-if="range" class="nu-datepicker__hint">{{ pending ? t('pickEnd') : t('pickStart') }}</p>
     </div>
     <span v-if="error" class="nu-field__error">{{ error }}</span>
     <span v-else-if="hint" class="nu-field__hint">{{ hint }}</span>
@@ -135,7 +137,7 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', onDoc))
   outline: 0;
   background: transparent;
   color: var(--nu-text);
-  text-align: left;
+  text-align: start;
   cursor: pointer;
   white-space: nowrap;
   overflow: hidden;
@@ -144,7 +146,7 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', onDoc))
 .nu-datepicker__popover {
   position: absolute;
   top: 100%;
-  left: 0;
+  inset-inline-start: 0;
   z-index: 65;
   width: 290px;
   max-width: calc(100vw - 24px);

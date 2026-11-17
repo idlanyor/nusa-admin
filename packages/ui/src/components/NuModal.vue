@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t } from '../composables/useLocale'
 import { ref } from 'vue'
 import { useOverlay } from '../composables/useOverlay'
 import NuIcon from './NuIcon.vue'
@@ -24,7 +25,7 @@ useOverlay(open, panel, { onEscape: () => !props.persistent && close() })
         <div ref="panel" class="nu-modal__dialog" :class="`nu-modal__dialog--${size}`" tabindex="-1" role="dialog" aria-modal="true" :aria-label="title">
           <header class="nu-modal__header">
             <slot name="header"><h3 class="nu-modal__title">{{ title }}</h3></slot>
-            <button class="nu-modal__close" type="button" aria-label="Close" @click="close">
+            <button class="nu-modal__close" type="button" :aria-label="t('close')" @click="close">
               <NuIcon name="x" />
             </button>
           </header>

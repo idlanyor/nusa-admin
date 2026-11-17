@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t } from '../composables/useLocale'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
 import type { NuMenuItem } from '../types'
@@ -11,7 +12,7 @@ import NuIcon from './NuIcon.vue'
  * each section header becomes a dropdown holding the items under it. Entries that don't fit
  * move into a "More" dropdown.
  */
-const props = withDefaults(defineProps<{ menu: NuMenuItem[]; moreLabel?: string }>(), { moreLabel: 'More' })
+const props = defineProps<{ menu: NuMenuItem[]; moreLabel?: string }>()
 
 const route = useRoute()
 const router = useRouter()
@@ -83,7 +84,7 @@ watch(entries, remeasure)
 </script>
 
 <template>
-  <nav ref="root" class="nu-topnav" aria-label="Main">
+  <nav ref="root" class="nu-topnav" :aria-label="t('mainNav')">
     <div v-for="(item, i) in entries" v-show="i < visible" :key="i" class="nu-topnav__entry">
       <NuDropdown v-if="item.children?.length" align="left" width="230px">
         <template #trigger>
@@ -94,7 +95,7 @@ watch(entries, remeasure)
           </button>
         </template>
         <template v-for="(entry, j) in flatten(item.children)" :key="j">
-          <div v-if="entry.item.children?.length" class="nu-dropdown__header" :style="{ paddingLeft: `${8 + entry.depth * 12}px` }">
+          <div v-if="entry.item.children?.length" class="nu-dropdown__header" :style="{ paddingInlineStart: `${8 + entry.depth * 12}px` }">
             {{ entry.item.label }}
           </div>
           <NuDropdownItem
@@ -103,7 +104,7 @@ watch(entries, remeasure)
             :href="entry.item.to ? undefined : entry.item.href"
             :icon="entry.item.icon"
             :class="{ 'is-current': isActive(entry.item) }"
-            :style="{ paddingLeft: `${8 + entry.depth * 12}px` }"
+            :style="{ paddingInlineStart: `${8 + entry.depth * 12}px` }"
           >
             {{ entry.item.label }}
           </NuDropdownItem>
@@ -122,11 +123,11 @@ watch(entries, remeasure)
     <NuDropdown v-if="overflow.length" align="right" width="240px">
       <template #trigger>
         <button class="nu-topnav__link" :class="{ 'is-active': overflow.some(isActive) }" type="button">
-          {{ moreLabel }} <NuIcon name="chevron-down" :size="14" />
+          {{ moreLabel ?? t('more') }} <NuIcon name="chevron-down" :size="14" />
         </button>
       </template>
       <template v-for="(entry, j) in flatten(overflow)" :key="j">
-        <div v-if="entry.item.children?.length" class="nu-dropdown__header" :style="{ paddingLeft: `${8 + entry.depth * 12}px` }">
+        <div v-if="entry.item.children?.length" class="nu-dropdown__header" :style="{ paddingInlineStart: `${8 + entry.depth * 12}px` }">
           {{ entry.item.label }}
         </div>
         <NuDropdownItem
@@ -135,7 +136,7 @@ watch(entries, remeasure)
           :href="entry.item.to ? undefined : entry.item.href"
           :icon="entry.item.icon"
           :class="{ 'is-current': isActive(entry.item) }"
-          :style="{ paddingLeft: `${8 + entry.depth * 12}px` }"
+          :style="{ paddingInlineStart: `${8 + entry.depth * 12}px` }"
         >
           {{ entry.item.label }}
         </NuDropdownItem>

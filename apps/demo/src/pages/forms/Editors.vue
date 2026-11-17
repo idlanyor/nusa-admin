@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { NuCard, NuEditor, NuPageHeader, NuTextarea } from 'nusa-admin'
+import { NuCard, NuCodeEditor, NuEditor, NuPageHeader } from 'nusa-admin'
 
 const html = ref('<h2>Release notes</h2><p>This version adds <b>layout options</b>, a <i>rich text editor</i> and form validation.</p><ul><li>Top navigation</li><li>Boxed layout</li></ul>')
 const code = ref(`import { createApp } from 'vue'
@@ -24,13 +24,10 @@ const lines = computed(() => code.value.split('\n').length)
       <NuCard title="HTML output" flush>
         <pre class="code" style="border-radius: 0; max-height: 220px; white-space: pre-wrap">{{ html }}</pre>
       </NuCard>
-      <NuCard title="Code (plain textarea)">
-        <NuTextarea v-model="code" class="code-area" :rows="7" spellcheck="false" :hint="`${lines} lines`" />
+      <NuCard title="Code (NuCodeEditor)" subtitle="Line numbers, Tab / Shift+Tab, auto-indent">
+        <NuCodeEditor v-model="code" language="ts" :rows="8" :hint="`${lines} lines`" />
       </NuCard>
     </div>
   </div>
 </template>
 
-<style>
-.code-area textarea { font-family: var(--nu-font-mono); font-size: 12.5px; white-space: pre; }
-</style>

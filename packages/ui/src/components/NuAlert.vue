@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t } from '../composables/useLocale'
 import { computed, ref } from 'vue'
 import type { NuColor } from '../types'
 import NuIcon, { type NuIconName } from './NuIcon.vue'
@@ -33,7 +34,7 @@ function dismiss() {
       <div v-if="title" class="nu-alert__title">{{ title }}</div>
       <div class="nu-alert__text"><slot /></div>
     </div>
-    <button v-if="dismissible" class="nu-alert__close" type="button" aria-label="Dismiss" @click="dismiss">
+    <button v-if="dismissible" class="nu-alert__close" type="button" :aria-label="t('dismiss')" @click="dismiss">
       <NuIcon name="x" :size="16" />
     </button>
   </div>
@@ -45,7 +46,7 @@ function dismiss() {
   gap: 10px;
   padding: 9px 12px;
   border: 1px solid color-mix(in srgb, var(--nu-c) 30%, transparent);
-  border-left: 3px solid var(--nu-c);
+  border-inline-start: 3px solid var(--nu-c);
   border-radius: var(--nu-radius-sm);
   background: color-mix(in srgb, var(--nu-c) 8%, var(--nu-surface));
 }

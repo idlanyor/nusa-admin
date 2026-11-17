@@ -132,7 +132,7 @@ function add(col: Column) {
 }
 .kanban__col.is-over { border-color: var(--nu-primary); background: color-mix(in srgb, var(--nu-primary) 6%, var(--nu-surface-2)); }
 .kanban__head { display: flex; align-items: center; gap: 8px; padding: 0 2px; }
-.kanban__add { margin-left: auto; }
+.kanban__add { margin-inline-start: auto; }
 .kanban__card {
   display: flex;
   flex-direction: column;

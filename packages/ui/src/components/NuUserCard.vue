@@ -57,12 +57,12 @@ withDefaults(
 .nu-user-card__avatar { margin-top: -36px; box-shadow: 0 0 0 3px var(--nu-surface); background: color-mix(in srgb, var(--nu-c) 18%, var(--nu-surface)); }
 .nu-user-card__stats { display: flex; margin: 10px 0 0; border-top: 1px solid var(--nu-border); }
 .nu-user-card__stats > div { flex: 1; padding: 8px 4px; }
-.nu-user-card__stats > div + div { border-left: 1px solid var(--nu-border); }
+.nu-user-card__stats > div + div { border-inline-start: 1px solid var(--nu-border); }
 .nu-user-card__stats dd { margin: 0; font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .nu-user-card__stats dt { font-size: 11.5px; color: var(--nu-text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
 .nu-user-card__body { padding: 10px 14px 14px; border-top: 1px solid var(--nu-border); }
-.nu-user-card--left { text-align: left; }
-.nu-user-card--left .nu-user-card__cover { height: auto; min-height: 92px; padding-left: 100px; }
-.nu-user-card--left .nu-user-card__avatar { position: absolute; top: 10px; left: 14px; margin: 0; }
+.nu-user-card--left { text-align: start; }
+.nu-user-card--left .nu-user-card__cover { height: auto; min-height: 92px; padding-inline-start: 100px; }
+.nu-user-card--left .nu-user-card__avatar { position: absolute; top: 10px; inset-inline-start: 14px; margin: 0; }
 .nu-user-card--left .nu-user-card__stats { margin-top: 0; }
 </style>

@@ -9,6 +9,7 @@ const options: { key: NuLayoutOption; label: string; help: string }[] = [
   { key: 'fixedNavbar', label: 'Fixed navbar', help: 'Navbar stays at the top while scrolling.' },
   { key: 'fixedSidebar', label: 'Fixed sidebar', help: 'Sidebar stays in place while scrolling.' },
   { key: 'fixedFooter', label: 'Fixed footer', help: 'Footer stays at the bottom of the window.' },
+  { key: 'rtl', label: 'Right-to-left', help: 'Mirror the whole interface for RTL languages.' },
 ]
 </script>
 

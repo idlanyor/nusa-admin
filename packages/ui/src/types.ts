@@ -18,6 +18,8 @@ export interface NuMenuItem {
   header?: boolean
   /** Colors the bullet of an icon-less item (AdminLTE "labels"). */
   color?: NuColor
+  /** Free-form app data, e.g. `{ roles: ['admin'] }` for use with `filterMenu()`. */
+  meta?: Record<string, unknown>
 }
 
 export interface NuBreadcrumbItem {

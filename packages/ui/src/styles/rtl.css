@@ -1,0 +1,21 @@
+/* Right-to-left: everything spacing-related uses logical properties; these are the leftovers
+   that need an explicit mirror (horizontal motion, rotations, directional icons, sliders). */
+[dir='rtl'] .nu-icon--dir { transform: scaleX(-1); }
+[dir='rtl'] .nu-switch__input:checked + .nu-switch__track .nu-switch__thumb { transform: translateX(-16px); }
+[dir='rtl'] .nu-toast-enter-from,
+[dir='rtl'] .nu-toast-leave-to { transform: translateX(-24px); }
+[dir='rtl'] .nu-drawer--right.nu-drawer-enter-from .nu-drawer__panel,
+[dir='rtl'] .nu-drawer--right.nu-drawer-leave-to .nu-drawer__panel { transform: translateX(-100%); }
+[dir='rtl'] .nu-drawer--left.nu-drawer-enter-from .nu-drawer__panel,
+[dir='rtl'] .nu-drawer--left.nu-drawer-leave-to .nu-drawer__panel { transform: translateX(100%); }
+[dir='rtl'] .nu-ribbon span { transform: rotate(-45deg); }
+[dir='rtl'] .nu-slider::-webkit-slider-runnable-track {
+  background: linear-gradient(to left, var(--nu-primary) var(--nu-fill), color-mix(in srgb, var(--nu-text) 15%, transparent) var(--nu-fill));
+}
+@media (max-width: 991.98px) {
+  [dir='rtl'] .nu-layout__sidebar { transform: translateX(100%); }
+  [dir='rtl'] .nu-layout.is-mobile-open .nu-layout__sidebar { transform: none; }
+}
+/* Data visualisations and code read left-to-right in every locale. */
+[dir='rtl'] :is(.nu-chart__plot, .nu-sparkline, .nu-donut__ring, pre, code, kbd) { direction: ltr; }
+[dir='rtl'] pre { text-align: left; }

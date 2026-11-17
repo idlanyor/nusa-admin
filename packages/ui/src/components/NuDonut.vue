@@ -104,5 +104,5 @@ const center = computed(() => {
 .nu-donut__swatch { flex: none; width: 10px; height: 10px; border-radius: 3px; }
 .nu-donut__name { flex: 1; min-width: 0; }
 .nu-donut__value { font-weight: 600; font-variant-numeric: tabular-nums; }
-.nu-donut__share { width: 36px; text-align: right; color: var(--nu-text-muted); font-variant-numeric: tabular-nums; }
+.nu-donut__share { width: 36px; text-align: end; color: var(--nu-text-muted); font-variant-numeric: tabular-nums; }
 </style>

@@ -15,7 +15,7 @@ withDefaults(defineProps<{ text: string; color?: NuColor; size?: 'md' | 'lg' }>(
 .nu-ribbon {
   position: absolute;
   top: -1px;
-  right: -1px;
+  inset-inline-end: -1px;
   z-index: 3;
   width: 72px;
   height: 72px;
@@ -26,7 +26,7 @@ withDefaults(defineProps<{ text: string; color?: NuColor; size?: 'md' | 'lg' }>(
 .nu-ribbon span {
   position: absolute;
   top: 16px;
-  right: -26px;
+  inset-inline-end: -26px;
   width: 110px;
   padding: 2px 0;
   background: var(--nu-c);
@@ -39,5 +39,5 @@ withDefaults(defineProps<{ text: string; color?: NuColor; size?: 'md' | 'lg' }>(
   text-transform: uppercase;
   transform: rotate(45deg);
 }
-.nu-ribbon--lg span { top: 22px; right: -30px; width: 140px; font-size: 12px; }
+.nu-ribbon--lg span { top: 22px; inset-inline-end: -30px; width: 140px; font-size: 12px; }
 </style>

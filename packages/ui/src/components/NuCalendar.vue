@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t, useLocale } from '../composables/useLocale'
 import { computed, ref } from 'vue'
 import type { NuColor } from '../types'
 import NuIcon from './NuIcon.vue'
@@ -20,7 +21,7 @@ const props = withDefaults(
     /** Highlight an inclusive date range, [start, end] as YYYY-MM-DD. */
     range?: [string, string] | null
   }>(),
-  { events: () => [], weekStart: 1, locale: 'en' },
+  { events: () => [], weekStart: 1 },
 )
 const emit = defineEmits<{ select: [date: string]; 'event-click': [event: NuCalendarEvent] }>()
 /** Selected day, YYYY-MM-DD. */
@@ -38,9 +39,11 @@ const today = iso(new Date())
 const init = selected.value ? new Date(`${selected.value}T00:00:00`) : new Date()
 const cursor = ref(new Date(init.getFullYear(), init.getMonth(), 1))
 
-const title = computed(() => cursor.value.toLocaleDateString(props.locale, { month: 'long', year: 'numeric' }))
+const { locale: currentLocale } = useLocale()
+const lang = computed(() => props.locale ?? currentLocale.value)
+const title = computed(() => cursor.value.toLocaleDateString(lang.value, { month: 'long', year: 'numeric' }))
 const weekdays = computed(() =>
-  Array.from({ length: 7 }, (_, i) => new Date(2024, 0, 7 + i + props.weekStart).toLocaleDateString(props.locale, { weekday: 'short' })),
+  Array.from({ length: 7 }, (_, i) => new Date(2024, 0, 7 + i + props.weekStart).toLocaleDateString(lang.value, { weekday: 'short' })),
 )
 const byDate = computed(() => {
   const map = new Map<string, NuCalendarEvent[]>()
@@ -76,9 +79,9 @@ function pick(key: string) {
     <div class="nu-calendar__bar">
       <strong class="nu-calendar__title">{{ title }}</strong>
       <div class="nu-calendar__nav">
-        <button type="button" class="nu-calendar__today" @click="goToday">Today</button>
-        <button type="button" aria-label="Previous month" @click="move(-1)"><NuIcon name="chevron-left" :size="16" /></button>
-        <button type="button" aria-label="Next month" @click="move(1)"><NuIcon name="chevron-right" :size="16" /></button>
+        <button type="button" class="nu-calendar__today" @click="goToday">{{ t('today') }}</button>
+        <button type="button" :aria-label="t('previousMonth')" @click="move(-1)"><NuIcon name="chevron-left" :size="16" /></button>
+        <button type="button" :aria-label="t('nextMonth')" @click="move(1)"><NuIcon name="chevron-right" :size="16" /></button>
       </div>
     </div>
     <div class="nu-calendar__grid nu-calendar__weekdays"><span v-for="w in weekdays" :key="w">{{ w }}</span></div>
@@ -118,7 +121,7 @@ function pick(key: string) {
           >
             {{ e.title }}
           </button>
-          <span v-if="d.events.length > 3" class="nu-calendar__more">+{{ d.events.length - 3 }} more</span>
+          <span v-if="d.events.length > 3" class="nu-calendar__more">{{ t('moreEvents', { count: d.events.length - 3 }) }}</span>
         </template>
       </div>
     </div>
@@ -161,12 +164,12 @@ function pick(key: string) {
   gap: 2px;
   min-height: 92px;
   padding: 4px;
-  border-right: 1px solid var(--nu-border);
+  border-inline-end: 1px solid var(--nu-border);
   border-bottom: 1px solid var(--nu-border);
   cursor: pointer;
   min-width: 0;
 }
-.nu-calendar__day:nth-child(7n) { border-right: 0; }
+.nu-calendar__day:nth-child(7n) { border-inline-end: 0; }
 .nu-calendar__day:nth-last-child(-n + 7) { border-bottom: 0; }
 .nu-calendar__day:hover { background: color-mix(in srgb, var(--nu-text) 3%, transparent); }
 .nu-calendar__day.is-outside .nu-calendar__day.is-in-range { background: color-mix(in srgb, var(--nu-primary) 12%, transparent); }
@@ -190,12 +193,12 @@ function pick(key: string) {
   width: 100%;
   padding: 1px 5px;
   border: 0;
-  border-left: 2px solid var(--nu-c);
+  border-inline-start: 2px solid var(--nu-c);
   border-radius: 2px;
   background: color-mix(in srgb, var(--nu-c) 13%, transparent);
   color: var(--nu-text);
   font-size: 11.5px;
-  text-align: left;
+  text-align: start;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

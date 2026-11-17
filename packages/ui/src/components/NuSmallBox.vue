@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t } from '../composables/useLocale'
 import type { Component } from 'vue'
 import { RouterLink, type RouteLocationRaw } from 'vue-router'
 import type { NuColor } from '../types'
@@ -7,7 +8,7 @@ import NuIcon from './NuIcon.vue'
 /** AdminLTE's "small box": solid tile, big number, faded icon and a footer link. */
 withDefaults(
   defineProps<{ label: string; value: string | number; icon?: Component; color?: NuColor; to?: RouteLocationRaw; href?: string; linkLabel?: string }>(),
-  { color: 'primary', linkLabel: 'More info' },
+  { color: 'primary' },
 )
 </script>
 
@@ -19,7 +20,7 @@ withDefaults(
     </div>
     <component :is="icon" v-if="icon" class="nu-small-box__icon" aria-hidden="true" />
     <component :is="to ? RouterLink : 'a'" v-if="to || href" v-bind="to ? { to } : { href }" class="nu-small-box__footer">
-      {{ linkLabel }} <NuIcon name="chevron-right" :size="14" />
+      {{ linkLabel ?? t('moreInfo') }} <NuIcon name="chevron-right" :size="14" />
     </component>
   </div>
 </template>
@@ -39,7 +40,7 @@ withDefaults(
 .nu-small-box__icon {
   position: absolute;
   top: 12px;
-  right: 12px;
+  inset-inline-end: 12px;
   width: 58px;
   height: 58px;
   opacity: 0.22;

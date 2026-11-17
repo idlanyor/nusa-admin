@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t } from '../composables/useLocale'
 import { nextTick, onMounted, ref, watch } from 'vue'
 import NuAvatar from './NuAvatar.vue'
 import NuIcon from './NuIcon.vue'
@@ -14,7 +15,6 @@ export interface NuChatMessage {
 
 const props = withDefaults(defineProps<{ messages: NuChatMessage[]; height?: string; placeholder?: string; avatars?: boolean }>(), {
   height: '320px',
-  placeholder: 'Type a message',
   avatars: true,
 })
 const emit = defineEmits<{ send: [text: string] }>()
@@ -47,9 +47,9 @@ watch(() => props.messages.length, scrollToEnd)
       </div>
     </div>
     <form class="nu-dchat__form" @submit.prevent="send">
-      <input v-model="draft" class="nu-dchat__input" :placeholder="placeholder" :aria-label="placeholder" />
+      <input v-model="draft" class="nu-dchat__input" :placeholder="placeholder ?? t('typeMessage')" :aria-label="placeholder ?? t('typeMessage')" />
       <button class="nu-btn nu-btn--solid nu-btn--md nu-c-primary" type="submit" :disabled="!draft.trim()">
-        <NuIcon name="arrow-up" :size="15" /><span class="nu-sr-only">Send</span>
+        <NuIcon name="arrow-up" :size="15" /><span class="nu-sr-only">{{ t('send') }}</span>
       </button>
     </form>
   </div>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t } from '../composables/useLocale'
 import { ref } from 'vue'
 import NuIcon from './NuIcon.vue'
 
@@ -34,7 +35,7 @@ function size(bytes: number) {
     >
       <input ref="input" class="nu-sr-only" type="file" :accept="accept" :multiple="multiple" :disabled="disabled" @change="add(($event.target as HTMLInputElement).files)" />
       <NuIcon name="upload" :size="20" />
-      <span class="nu-upload__label">{{ label ?? 'Drop files here or click to browse' }}</span>
+      <span class="nu-upload__label">{{ label ?? t('dropFiles') }}</span>
       <span v-if="hint" class="nu-upload__hint">{{ hint }}</span>
     </label>
     <ul v-if="files.length" class="nu-upload__list">
@@ -42,7 +43,7 @@ function size(bytes: number) {
         <NuIcon name="file" :size="16" />
         <span class="nu-upload__name">{{ f.name }}</span>
         <span class="nu-upload__size">{{ size(f.size) }}</span>
-        <button type="button" :aria-label="`Remove ${f.name}`" @click="remove(i)"><NuIcon name="x" :size="14" /></button>
+        <button type="button" :aria-label="t('remove', { label: f.name })" @click="remove(i)"><NuIcon name="x" :size="14" /></button>
       </li>
     </ul>
   </div>

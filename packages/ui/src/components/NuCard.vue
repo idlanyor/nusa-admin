@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t } from '../composables/useLocale'
 import { onBeforeUnmount, ref, watch } from 'vue'
 import type { NuColor } from '../types'
 import NuIcon from './NuIcon.vue'
@@ -63,7 +64,7 @@ function remove() {
       </slot>
       <div class="nu-card__tools">
         <slot name="tools" />
-        <button v-if="refreshable" class="nu-card__tool" type="button" aria-label="Refresh" @click="emit('refresh')">
+        <button v-if="refreshable" class="nu-card__tool" type="button" :aria-label="t('refresh')" @click="emit('refresh')">
           <NuIcon name="refresh" :size="15" />
         </button>
         <button
@@ -71,7 +72,7 @@ function remove() {
           class="nu-card__tool"
           type="button"
           :aria-pressed="maximized"
-          :aria-label="maximized ? 'Restore size' : 'Maximize'"
+          :aria-label="maximized ? t('restoreSize') : t('maximize')"
           @click="maximized = !maximized"
         >
           <NuIcon :name="maximized ? 'minimize' : 'maximize'" :size="15" />
@@ -81,12 +82,12 @@ function remove() {
           class="nu-card__tool"
           type="button"
           :aria-expanded="!collapsed"
-          :aria-label="collapsed ? 'Expand' : 'Collapse'"
+          :aria-label="collapsed ? t('expand') : t('collapse')"
           @click="collapsed = !collapsed"
         >
           <NuIcon :name="collapsed ? 'chevron-down' : 'chevron-up'" :size="16" />
         </button>
-        <button v-if="removable" class="nu-card__tool" type="button" aria-label="Remove" @click="remove">
+        <button v-if="removable" class="nu-card__tool" type="button" :aria-label="t('removeCard')" @click="remove">
           <NuIcon name="x" :size="16" />
         </button>
       </div>
@@ -95,7 +96,7 @@ function remove() {
       <slot />
     </div>
     <footer v-if="$slots.footer" v-show="!collapsed || maximized" class="nu-card__footer"><slot name="footer" /></footer>
-    <div v-if="loading" class="nu-card__loading" aria-label="Loading"><span /></div>
+    <div v-if="loading" class="nu-card__loading" :aria-label="t('loading')"><span /></div>
   </section>
 </template>
 
@@ -174,7 +175,7 @@ function remove() {
   width: 26px;
   height: 26px;
   border: 3px solid var(--nu-primary);
-  border-right-color: transparent;
+  border-inline-end-color: transparent;
   border-radius: 50%;
   animation: nu-spin 0.7s linear infinite;
 }

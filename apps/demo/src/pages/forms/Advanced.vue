@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import {
   NuCard, NuCheckbox, NuCombobox, NuDatePicker, NuFileUpload, NuInput, NuPageHeader, NuRadioGroup, NuRating, NuSegmented, NuSelect, NuSlider,
-  NuSwitch, NuTagInput,
+  NuSwitch, NuTagInput, NuTransfer,
 } from 'nusa-admin'
 
 const plan = ref('team')
@@ -20,6 +20,12 @@ const city = ref<string | number | null>('bdg')
 const cities = ref<(string | number)[]>(['jkt', 'sby'])
 const day = ref<string | null>('2026-11-20')
 const stay = ref<[string, string] | null>(['2026-11-18', '2026-11-22'])
+const card = ref('')
+const phone = ref('')
+const expiry = ref('')
+const plate = ref('')
+const permissions = ref<(string | number)[]>(['users.read', 'orders.read'])
+const permissionOptions = ['users.read', 'users.write', 'orders.read', 'orders.write', 'orders.refund', 'billing.read', 'billing.write', 'reports.export', 'settings.manage'].map((p) => ({ label: p, value: p, disabled: p === 'settings.manage' }))
 const cityOptions = [
   { label: 'Bandung', value: 'bdg' },
   { label: 'Jakarta', value: 'jkt' },
@@ -39,6 +45,12 @@ const cityOptions = [
   />
 
   <div class="nu-row">
+    <div class="nu-col-12">
+      <NuCard title="Dual list box" subtitle="NuTransfer — v-model is the chosen values">
+        <NuTransfer v-model="permissions" :options="permissionOptions" :titles="['Available permissions', 'Granted']" />
+        <p class="nu-text-sm nu-text-muted" style="margin-top: 8px">Granted: {{ permissions.join(', ') || 'none' }}</p>
+      </NuCard>
+    </div>
     <div class="nu-col-lg-6 nu-stack">
       <NuCard title="Choices">
         <div class="nu-stack" style="--nu-gap: 12px">
@@ -93,6 +105,15 @@ const cityOptions = [
           <NuTagInput v-model="tags" label="Tags" placeholder="Add a tag" hint="Press Enter or comma to add; Backspace removes the last tag." />
           <NuFileUpload v-model="files" multiple hint="Any file type, several at once" />
           <NuFileUpload v-model="avatar" accept="image/*" label="Upload an avatar" hint="PNG or JPG, single file" />
+        </div>
+      </NuCard>
+
+      <NuCard title="Input masks" subtitle="mask: 9 = digit, a = letter, * = either">
+        <div class="nu-row" style="--nu-gap: 12px">
+          <div class="nu-col-md-6"><NuInput v-model="card" label="Card number" mask="9999 9999 9999 9999" autocomplete="cc-number" /></div>
+          <div class="nu-col-md-6"><NuInput v-model="expiry" label="Expiry" mask="99/99" autocomplete="cc-exp" /></div>
+          <div class="nu-col-md-6"><NuInput v-model="phone" label="Phone" mask="+62 999-9999-9999" autocomplete="tel" /></div>
+          <div class="nu-col-md-6"><NuInput v-model="plate" label="Plate (letters, then digits)" mask="aa 9999 aaa" /></div>
         </div>
       </NuCard>
 

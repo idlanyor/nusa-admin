@@ -18,7 +18,7 @@ const model = defineModel<boolean>({ default: false })
 .nu-check { position: relative; display: inline-flex; align-items: center; gap: 9px; cursor: pointer; }
 .nu-check.is-invalid { flex-wrap: wrap; }
 .nu-check.is-invalid .nu-check__box { border-color: var(--nu-danger); }
-.nu-check__error { flex-basis: 100%; padding-left: 27px; font-size: 12.5px; color: var(--nu-danger); }
+.nu-check__error { flex-basis: 100%; padding-inline-start: 27px; font-size: 12.5px; color: var(--nu-danger); }
 .nu-check.is-disabled { opacity: 0.55; cursor: not-allowed; }
 .nu-check__input { position: absolute; opacity: 0; width: 0; height: 0; }
 .nu-check__box {

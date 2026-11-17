@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t } from '../composables/useLocale'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useLayout } from '../composables/useLayout'
 import { useTheme } from '../composables/useTheme'
@@ -27,17 +28,17 @@ onBeforeUnmount(() => document.removeEventListener('fullscreenchange', syncFulls
 <template>
   <header class="nu-navbar">
     <div class="nu-navbar__inner">
-      <NuIconButton class="nu-navbar__toggle" label="Toggle sidebar" @click="toggleSidebar"><NuIcon name="menu" :size="20" /></NuIconButton>
+      <NuIconButton class="nu-navbar__toggle" :label="t('toggleSidebar')" @click="toggleSidebar"><NuIcon name="menu" :size="20" /></NuIconButton>
       <div v-if="$slots.brand" class="nu-navbar__brand"><slot name="brand" /></div>
       <div class="nu-navbar__start"><slot name="start" /></div>
       <div class="nu-navbar__end">
         <slot name="end" />
-        <NuIconButton v-if="fullscreenToggle" :label="fullscreen ? 'Exit full screen' : 'Full screen'" @click="toggleFullscreen">
+        <NuIconButton v-if="fullscreenToggle" :label="fullscreen ? t('exitFullscreen') : t('fullscreen')" @click="toggleFullscreen">
           <NuIcon :name="fullscreen ? 'minimize' : 'maximize'" :size="18" />
         </NuIconButton>
         <NuIconButton
           v-if="themeToggle"
-          :label="theme.resolved === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
+          :label="theme.resolved === 'dark' ? t('lightMode') : t('darkMode')"
           @click="toggleDark"
         >
           <NuIcon :name="theme.resolved === 'dark' ? 'sun' : 'moon'" :size="19" />
@@ -59,7 +60,7 @@ onBeforeUnmount(() => document.removeEventListener('fullscreenchange', syncFulls
   backdrop-filter: saturate(1.4) blur(10px);
 }
 .nu-navbar__inner { display: flex; align-items: center; gap: 6px; height: 100%; padding: 0 12px; }
-.nu-navbar__brand { flex: none; display: flex; align-items: center; margin-right: 8px; }
+.nu-navbar__brand { flex: none; display: flex; align-items: center; margin-inline-end: 8px; }
 .nu-navbar__start { flex: 1 1 auto; display: flex; align-items: center; gap: 8px; min-width: 0; }
 .nu-navbar__end { flex: none; display: flex; align-items: center; gap: 2px; }
 </style>

@@ -167,7 +167,7 @@ function send() {
   border: 0;
   background: transparent;
   color: var(--nu-text);
-  text-align: left;
+  text-align: start;
   cursor: pointer;
 }
 .mailbox__from, .mailbox__subject, .mailbox__preview { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

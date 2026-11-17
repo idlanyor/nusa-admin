@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t } from '../composables/useLocale'
 import { onBeforeUnmount, onMounted, reactive, ref, useId, watch } from 'vue'
 import './form.css'
 
@@ -16,25 +17,25 @@ const editor = ref<HTMLElement | null>(null)
 const state = reactive<Record<string, boolean>>({})
 
 const TOOLS = [
-  { cmd: 'bold', label: 'Bold', glyph: 'B', style: 'font-weight:800' },
-  { cmd: 'italic', label: 'Italic', glyph: 'I', style: 'font-style:italic;font-family:serif' },
-  { cmd: 'underline', label: 'Underline', glyph: 'U', style: 'text-decoration:underline' },
-  { cmd: 'strikeThrough', label: 'Strikethrough', glyph: 'S', style: 'text-decoration:line-through' },
+  { cmd: 'bold', label: 'bold', glyph: 'B', style: 'font-weight:800' },
+  { cmd: 'italic', label: 'italic', glyph: 'I', style: 'font-style:italic;font-family:serif' },
+  { cmd: 'underline', label: 'underline', glyph: 'U', style: 'text-decoration:underline' },
+  { cmd: 'strikeThrough', label: 'strike', glyph: 'S', style: 'text-decoration:line-through' },
   { sep: true },
-  { cmd: 'formatBlock', arg: 'h2', label: 'Heading', glyph: 'H2', style: 'font-weight:700' },
-  { cmd: 'formatBlock', arg: 'blockquote', label: 'Quote', glyph: '“', style: 'font-weight:800;font-size:16px' },
-  { cmd: 'insertUnorderedList', label: 'Bulleted list', glyph: '•≡' },
-  { cmd: 'insertOrderedList', label: 'Numbered list', glyph: '1≡' },
+  { cmd: 'formatBlock', arg: 'h2', label: 'heading', glyph: 'H2', style: 'font-weight:700' },
+  { cmd: 'formatBlock', arg: 'blockquote', label: 'quote', glyph: '“', style: 'font-weight:800;font-size:16px' },
+  { cmd: 'insertUnorderedList', label: 'bulletList', glyph: '•≡' },
+  { cmd: 'insertOrderedList', label: 'numberedList', glyph: '1≡' },
   { sep: true },
-  { cmd: 'createLink', label: 'Link', glyph: '🔗' },
-  { cmd: 'removeFormat', label: 'Clear formatting', glyph: 'Tx' },
+  { cmd: 'createLink', label: 'link', glyph: '🔗' },
+  { cmd: 'removeFormat', label: 'clearFormat', glyph: 'Tx' },
 ] as const
 
 function exec(cmd: string, arg?: string) {
   if (props.disabled) return
   editor.value?.focus()
   if (cmd === 'createLink') {
-    const url = window.prompt('Link URL', 'https://')
+    const url = window.prompt(t('linkUrl'), 'https://')
     if (!url || url === 'https://') return
     arg = url
   }
@@ -64,22 +65,22 @@ onBeforeUnmount(() => document.removeEventListener('selectionchange', refreshSta
   <div class="nu-field nu-editor">
     <label v-if="label" class="nu-field__label" :for="id">{{ label }}</label>
     <div class="nu-editor__box" :class="{ 'is-invalid': error, 'is-disabled': disabled }">
-      <div class="nu-editor__toolbar" role="toolbar" :aria-label="`${label ?? 'Editor'} formatting`">
-        <template v-for="(t, i) in TOOLS" :key="i">
-          <span v-if="'sep' in t" class="nu-editor__sep" />
+      <div class="nu-editor__toolbar" role="toolbar" :aria-label="t('formatting', { label: label ?? t('editor') })">
+        <template v-for="(tool, i) in TOOLS" :key="i">
+          <span v-if="'sep' in tool" class="nu-editor__sep" />
           <button
             v-else
             type="button"
             class="nu-editor__tool"
-            :class="{ 'is-on': state[t.cmd] }"
-            :aria-pressed="'arg' in t ? undefined : !!state[t.cmd]"
-            :aria-label="t.label"
-            :title="t.label"
+            :class="{ 'is-on': state[tool.cmd] }"
+            :aria-pressed="'arg' in tool ? undefined : !!state[tool.cmd]"
+            :aria-label="t(tool.label)"
+            :title="t(tool.label)"
             :disabled="disabled"
             @mousedown.prevent
-            @click="exec(t.cmd, 'arg' in t ? t.arg : undefined)"
+            @click="exec(tool.cmd, 'arg' in tool ? tool.arg : undefined)"
           >
-            <span :style="'style' in t ? t.style : undefined">{{ t.glyph }}</span>
+            <span :style="'style' in tool ? tool.style : undefined">{{ tool.glyph }}</span>
           </button>
         </template>
       </div>
@@ -125,7 +126,7 @@ onBeforeUnmount(() => document.removeEventListener('selectionchange', refreshSta
 .nu-editor__area { padding: 10px 12px; outline: 0; line-height: 1.6; overflow-wrap: anywhere; }
 .nu-editor__area:empty::before { content: attr(data-placeholder); color: color-mix(in srgb, var(--nu-text-muted) 75%, transparent); pointer-events: none; }
 .nu-editor__area :is(h2) { margin: 6px 0; font-size: 18px; }
-.nu-editor__area :is(ul, ol) { margin: 4px 0; padding-left: 22px; }
-.nu-editor__area blockquote { margin: 6px 0; padding-left: 10px; border-left: 3px solid var(--nu-border); color: var(--nu-text-muted); }
+.nu-editor__area :is(ul, ol) { margin: 4px 0; padding-inline-start: 22px; }
+.nu-editor__area blockquote { margin: 6px 0; padding-inline-start: 10px; border-inline-start: 3px solid var(--nu-border); color: var(--nu-text-muted); }
 .nu-editor__area p { margin: 0 0 6px; }
 </style>

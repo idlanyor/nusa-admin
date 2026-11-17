@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t } from '../composables/useLocale'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, useId } from 'vue'
 import type { NuOption } from '../types'
 import NuIcon from './NuIcon.vue'
@@ -19,7 +20,7 @@ const props = withDefaults(
     clearable?: boolean
     emptyText?: string
   }>(),
-  { placeholder: 'Select…', searchPlaceholder: 'Search…', emptyText: 'No matches' },
+  {},
 )
 const model = defineModel<Value | Value[] | null>({ default: null })
 const emit = defineEmits<{ blur: [] }>()
@@ -116,14 +117,14 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', onDoc))
           <template v-if="multiple">
             <span v-for="o in selectedOptions" :key="o.value" class="nu-tag-input__tag">
               {{ o.label }}
-              <button type="button" :aria-label="`Remove ${o.label}`" @click.stop="unselect(o.value)"><NuIcon name="x" :size="12" /></button>
+              <button type="button" :aria-label="t('remove', { label: o.label })" @click.stop="unselect(o.value)"><NuIcon name="x" :size="12" /></button>
             </span>
           </template>
           <span v-else class="nu-combo__value">{{ selectedOptions[0]!.label }}</span>
         </template>
-        <span v-else class="nu-combo__placeholder">{{ placeholder }}</span>
+        <span v-else class="nu-combo__placeholder">{{ placeholder ?? t('selectPlaceholder') }}</span>
       </div>
-      <button v-if="clearable && selected.length && !disabled" class="nu-combo__clear" type="button" aria-label="Clear selection" @click="clear">
+      <button v-if="clearable && selected.length && !disabled" class="nu-combo__clear" type="button" :aria-label="t('clearSelection')" @click="clear">
         <NuIcon name="x" :size="14" />
       </button>
       <span class="nu-control__affix"><NuIcon name="chevron-down" :size="16" /></span>
@@ -134,8 +135,8 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', onDoc))
         <input
           ref="search"
           v-model="query"
-          :placeholder="searchPlaceholder"
-          :aria-label="searchPlaceholder"
+          :placeholder="searchPlaceholder ?? t('search')"
+          :aria-label="searchPlaceholder ?? t('search')"
           :aria-controls="listId"
           :aria-activedescendant="filtered[active] ? `${id}-o-${active}` : undefined"
           @keydown="onKey"
@@ -158,7 +159,7 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', onDoc))
           <span class="nu-grow">{{ o.label }}</span>
           <NuIcon v-if="selected.includes(o.value)" name="check" :size="14" />
         </li>
-        <li v-if="!filtered.length" class="nu-combo__empty">{{ emptyText }}</li>
+        <li v-if="!filtered.length" class="nu-combo__empty">{{ emptyText ?? t('noMatches') }}</li>
       </ul>
     </div>
     <span v-if="error" class="nu-field__error">{{ error }}</span>
@@ -168,7 +169,7 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', onDoc))
 
 <style>
 .nu-combo { position: relative; }
-.nu-combo__control { padding-right: 8px; }
+.nu-combo__control { padding-inline-end: 8px; }
 .nu-combo__trigger {
   flex: 1;
   min-width: 0;
@@ -189,8 +190,8 @@ onBeforeUnmount(() => document.removeEventListener('pointerdown', onDoc))
 .nu-combo__popover {
   position: absolute;
   top: 100%;
-  left: 0;
-  right: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
   z-index: 65;
   margin-top: 4px;
   border: 1px solid var(--nu-border);

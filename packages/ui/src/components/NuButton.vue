@@ -93,7 +93,7 @@ const attrs = computed(() => {
   width: 14px;
   height: 14px;
   border: 2px solid currentColor;
-  border-right-color: transparent;
+  border-inline-end-color: transparent;
   border-radius: 50%;
   animation: nu-spin 0.7s linear infinite;
 }

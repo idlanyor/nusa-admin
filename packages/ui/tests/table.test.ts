@@ -68,3 +68,36 @@ describe('NuTable', () => {
     expect(w.find('.custom').text()).toBe('Citra!')
   })
 })
+
+describe('NuTable selection and server mode', () => {
+  const many = Array.from({ length: 12 }, (_, i) => ({ id: i + 1, name: `User ${i + 1}`, amount: i }))
+
+  it('selects rows and the whole page, and shows the bulk bar', async () => {
+    const w = mount(NuTable as any, {
+      props: { columns, rows: many, rowKey: 'id', pageSize: 5, selectable: true, selected: [] },
+      slots: { bulk: '<button class="bulk-go">Go</button>' },
+    })
+    const boxes = () => w.findAll('tbody input[type="checkbox"]')
+    await boxes()[1]!.setValue(true)
+    expect(w.emitted('update:selected')![0]).toEqual([[2]])
+    await w.setProps({ selected: [2] })
+    expect(w.find('.nu-table__bulk').text()).toContain('1 selected')
+    expect(w.find('.bulk-go').exists()).toBe(true)
+    await w.find('thead input[type="checkbox"]').setValue(true)
+    expect(w.emitted('update:selected')![1]).toEqual([[2, 1, 3, 4, 5]])
+  })
+
+  it('does not search, sort or page rows itself in manual mode, and emits the requests', async () => {
+    const pageRows = many.slice(0, 5)
+    const w = mount(NuTable as any, { props: { columns, rows: pageRows, rowKey: 'id', pageSize: 5, manual: true, total: 12, searchable: true } })
+    expect(w.findAll('tbody tr')).toHaveLength(5)
+    expect(w.find('.nu-table__range').text()).toBe('1–5 of 12')
+    await w.find('input[type="search"]').setValue('zzz')
+    expect(w.findAll('tbody tr')).toHaveLength(5)
+    expect(w.emitted('update:search')).toEqual([['zzz']])
+    await w.findAll('.nu-table__sort')[0]!.trigger('click')
+    expect(w.emitted('update:sort')).toEqual([[{ key: 'name', dir: 'asc' }]])
+    await w.find('[aria-label="Next page"]').trigger('click')
+    expect(w.emitted('update:page')!.at(-1)).toEqual([2])
+  })
+})

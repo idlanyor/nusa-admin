@@ -107,8 +107,8 @@ defineExpose({ close })
   background: var(--nu-surface);
   box-shadow: var(--nu-shadow-lg);
 }
-.nu-dropdown__menu--right { right: 0; }
-.nu-dropdown__menu--left { left: 0; }
+.nu-dropdown__menu--right { inset-inline-end: 0; }
+.nu-dropdown__menu--left { inset-inline-start: 0; }
 .nu-dropdown__header { padding: 6px 8px; font-size: 12px; font-weight: 600; color: var(--nu-text-muted); }
 .nu-dropdown__divider { height: 1px; margin: 4px -4px; background: var(--nu-border); }
 

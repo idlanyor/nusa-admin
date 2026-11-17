@@ -32,7 +32,7 @@ const attrs = computed(() => {
   background: transparent;
   color: var(--nu-text);
   font-size: 13.5px;
-  text-align: left;
+  text-align: start;
   text-decoration: none !important;
   cursor: pointer;
 }

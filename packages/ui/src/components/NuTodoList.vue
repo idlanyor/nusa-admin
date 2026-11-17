@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t } from '../composables/useLocale'
 import { ref } from 'vue'
 import type { NuColor } from '../types'
 import NuIcon from './NuIcon.vue'
@@ -13,7 +14,6 @@ export interface NuTodo {
 }
 
 const props = withDefaults(defineProps<{ addable?: boolean; addPlaceholder?: string; sortable?: boolean }>(), {
-  addPlaceholder: 'Add a task and press Enter',
   sortable: true,
 })
 const items = defineModel<NuTodo[]>({ default: () => [] })
@@ -58,10 +58,10 @@ function move(i: number, delta: number) {
   <div class="nu-todo">
     <ul class="nu-todo__list">
       <li
-        v-for="(t, i) in items"
-        :key="t.id"
+        v-for="(todo, i) in items"
+        :key="todo.id"
         class="nu-todo__item"
-        :class="{ 'is-done': t.done, 'is-over': overIndex === i && dragIndex !== i }"
+        :class="{ 'is-done': todo.done, 'is-over': overIndex === i && dragIndex !== i }"
         :draggable="props.sortable"
         @dragstart="dragIndex = i"
         @dragover.prevent="overIndex = i"
@@ -73,23 +73,23 @@ function move(i: number, delta: number) {
           class="nu-todo__handle"
           tabindex="0"
           role="button"
-          :aria-label="`Reorder ${t.text} (use arrow keys)`"
+          :aria-label="t('reorder', { label: todo.text })"
           @keydown.up.prevent="move(i, -1)"
           @keydown.down.prevent="move(i, 1)"
         >
           <NuIcon name="grip" :size="15" />
         </span>
         <label class="nu-check">
-          <input class="nu-check__input" type="checkbox" :checked="t.done" @change="toggle(i)" />
+          <input class="nu-check__input" type="checkbox" :checked="todo.done" @change="toggle(i)" />
           <span class="nu-check__box"><NuIcon name="check" :size="12" /></span>
-          <span class="nu-todo__text">{{ t.text }}</span>
+          <span class="nu-todo__text">{{ todo.text }}</span>
         </label>
-        <span v-if="t.due" class="nu-badge nu-badge--soft" :class="`nu-c-${t.dueColor ?? 'secondary'}`">{{ t.due }}</span>
-        <button class="nu-todo__remove" type="button" :aria-label="`Delete ${t.text}`" @click="remove(i)"><NuIcon name="trash" :size="14" /></button>
+        <span v-if="todo.due" class="nu-badge nu-badge--soft" :class="`nu-c-${todo.dueColor ?? 'secondary'}`">{{ todo.due }}</span>
+        <button class="nu-todo__remove" type="button" :aria-label="t('deleteItem', { label: todo.text })" @click="remove(i)"><NuIcon name="trash" :size="14" /></button>
       </li>
     </ul>
     <form v-if="addable" class="nu-todo__add" @submit.prevent="add">
-      <input v-model="draft" class="nu-todo__input" :placeholder="addPlaceholder" :aria-label="addPlaceholder" />
+      <input v-model="draft" class="nu-todo__input" :placeholder="addPlaceholder ?? t('addTask')" :aria-label="addPlaceholder ?? t('addTask')" />
     </form>
   </div>
 </template>
@@ -102,10 +102,10 @@ function move(i: number, delta: number) {
   gap: 8px;
   padding: 6px 14px 6px 8px;
   border-bottom: 1px solid var(--nu-border);
-  border-left: 2px solid transparent;
+  border-inline-start: 2px solid transparent;
   background: var(--nu-surface);
 }
-.nu-todo__item:hover { border-left-color: var(--nu-primary); }
+.nu-todo__item:hover { border-inline-start-color: var(--nu-primary); }
 .nu-todo__item.is-over { box-shadow: inset 0 2px 0 var(--nu-primary); }
 .nu-todo__item .nu-check { flex: 1; min-width: 0; }
 .nu-todo__text { min-width: 0; overflow-wrap: anywhere; }

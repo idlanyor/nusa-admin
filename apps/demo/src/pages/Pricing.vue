@@ -74,7 +74,7 @@ const matrix = [
 .plan__features svg { width: 15px; height: 15px; color: var(--nu-success); flex: none; }
 .compare { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 .compare th { padding: 7px 14px; background: var(--nu-surface-2); color: var(--nu-text-muted); font-size: 12px; text-align: center; text-transform: uppercase; letter-spacing: 0.04em; }
-.compare th:first-child, .compare td:first-child { text-align: left; }
+.compare th:first-child, .compare td:first-child { text-align: start; }
 .compare td { padding: 8px 14px; border-top: 1px solid var(--nu-border); text-align: center; }
 .compare svg { width: 16px; height: 16px; }
 .compare .is-yes { color: var(--nu-success); }

@@ -1,14 +1,15 @@
 <script setup lang="ts">
+import { t } from '../composables/useLocale'
 import { ref } from 'vue'
 import NuIcon from './NuIcon.vue'
 
-withDefaults(defineProps<{ max?: number; readonly?: boolean; size?: number; label?: string }>(), { max: 5, size: 18, label: 'Rating' })
+withDefaults(defineProps<{ max?: number; readonly?: boolean; size?: number; label?: string }>(), { max: 5, size: 18 })
 const model = defineModel<number>({ default: 0 })
 const hover = ref(0)
 </script>
 
 <template>
-  <span class="nu-rating" :class="{ 'is-readonly': readonly }" role="radiogroup" :aria-label="label" @pointerleave="hover = 0">
+  <span class="nu-rating" :class="{ 'is-readonly': readonly }" role="radiogroup" :aria-label="label ?? t('rating')" @pointerleave="hover = 0">
     <button
       v-for="n in max"
       :key="n"
@@ -17,7 +18,7 @@ const hover = ref(0)
       type="button"
       role="radio"
       :aria-checked="n === model"
-      :aria-label="`${n} of ${max}`"
+      :aria-label="t('ratingOf', { n, max })"
       :disabled="readonly"
       @pointerenter="!readonly && (hover = n)"
       @click="model = n === model ? 0 : n"

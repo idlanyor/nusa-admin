@@ -63,14 +63,14 @@ onBeforeUnmount(() => document.removeEventListener('keydown', onKey))
 .gallery__item { position: relative; padding: 0; border: 0; border-radius: var(--nu-radius-sm); overflow: hidden; background: none; cursor: zoom-in; aspect-ratio: 32 / 21; }
 .gallery__item img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.25s ease; }
 .gallery__item:hover img { transform: scale(1.05); }
-.gallery__item span { position: absolute; inset: auto 0 0; padding: 14px 8px 5px; background: linear-gradient(transparent, rgba(0, 0, 0, 0.55)); color: #fff; font-size: 12.5px; font-weight: 600; text-align: left; }
+.gallery__item span { position: absolute; inset: auto 0 0; padding: 14px 8px 5px; background: linear-gradient(transparent, rgba(0, 0, 0, 0.55)); color: #fff; font-size: 12.5px; font-weight: 600; text-align: start; }
 .lightbox { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; padding: 48px 56px; background: rgba(0, 0, 0, 0.88); }
 .lightbox figure { margin: 0; max-width: 100%; }
 .lightbox img { display: block; max-width: min(1000px, 100%); max-height: calc(100vh - 140px); border-radius: var(--nu-radius-sm); }
 .lightbox figcaption { margin-top: 8px; color: #e5e5e5; font-size: 13px; text-align: center; }
 .lightbox__btn { position: absolute; display: grid; place-items: center; width: 38px; height: 38px; border: 0; border-radius: 50%; background: rgba(255, 255, 255, 0.12); color: #fff; cursor: pointer; }
 .lightbox__btn:hover { background: rgba(255, 255, 255, 0.24); }
-.lightbox__close { top: 12px; right: 12px; }
-.lightbox__prev { left: 10px; top: 50%; transform: translateY(-50%); }
-.lightbox__next { right: 10px; top: 50%; transform: translateY(-50%); }
+.lightbox__close { top: 12px; inset-inline-end: 12px; }
+.lightbox__prev { inset-inline-start: 10px; top: 50%; transform: translateY(-50%); }
+.lightbox__next { inset-inline-end: 10px; top: 50%; transform: translateY(-50%); }
 </style>

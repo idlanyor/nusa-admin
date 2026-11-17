@@ -39,6 +39,6 @@
 .nu-control__input::placeholder { color: color-mix(in srgb, var(--nu-text-muted) 75%, transparent); }
 .nu-control__affix { display: inline-flex; align-items: center; color: var(--nu-text-muted); flex: none; }
 .nu-control__affix svg { width: 16px; height: 16px; }
-select.nu-control__input { appearance: none; cursor: pointer; padding-right: 4px; }
+select.nu-control__input { appearance: none; cursor: pointer; padding-inline-end: 4px; }
 select.nu-control__input option { background: var(--nu-surface); color: var(--nu-text); }
 textarea.nu-control__input { resize: vertical; padding: 7px 0; line-height: 1.5; }

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { t } from '../composables/useLocale'
 import { ref, useId } from 'vue'
 import NuIcon from './NuIcon.vue'
 import './form.css'
@@ -32,7 +33,7 @@ function onKey(e: KeyboardEvent) {
     <div class="nu-control nu-tag-input" :class="{ 'is-disabled': disabled, 'is-invalid': error }">
       <span v-for="tag in model" :key="tag" class="nu-tag-input__tag">
         {{ tag }}
-        <button type="button" :aria-label="`Remove ${tag}`" :disabled="disabled" @click="remove(tag)"><NuIcon name="x" :size="12" /></button>
+        <button type="button" :aria-label="t('remove', { label: tag })" :disabled="disabled" @click="remove(tag)"><NuIcon name="x" :size="12" /></button>
       </span>
       <input :id="id" v-model="draft" class="nu-control__input" :placeholder="model.length ? '' : placeholder" :disabled="disabled" :aria-invalid="!!error || undefined" @keydown="onKey" @blur="add" />
     </div>

@@ -86,6 +86,6 @@ function highlight(text: string) {
 .search-results { margin: 0; padding: 0; list-style: none; }
 .search-results li { padding: 10px 14px; }
 .search-results li + li { border-top: 1px solid var(--nu-border); }
-.search-results__title { margin-right: 8px; font-weight: 600; }
+.search-results__title { margin-inline-end: 8px; font-weight: 600; }
 .search-results mark { padding: 0 1px; border-radius: 2px; background: color-mix(in srgb, var(--nu-warning) 30%, transparent); color: inherit; }
 </style>

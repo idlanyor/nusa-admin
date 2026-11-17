@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { Lock, Mail } from 'lucide-vue-next'
-import { NuAuthLayout, NuButton, NuCheckbox, NuDivider, NuInput } from 'nusa-admin'
+import { NuAuthLayout, NuButton, NuCheckbox, NuDivider, NuInput, NuSegmented } from 'nusa-admin'
+import { useAuth, type Role } from '../../auth'
 
 const router = useRouter()
+const route = useRoute()
+const auth = useAuth()
+const role = ref<Role>('admin')
 const email = ref('ayu@example.com')
 const password = ref('password')
 const remember = ref(true)
@@ -12,7 +16,11 @@ const loading = ref(false)
 
 function signIn() {
   loading.value = true
-  setTimeout(() => router.push('/'), 600)
+  setTimeout(() => {
+    auth.login(email.value, role.value)
+    const target = typeof route.query.redirect === 'string' && route.query.redirect.startsWith('/') ? route.query.redirect : '/'
+    router.push(target)
+  }, 400)
 }
 
 defineProps<{ split?: boolean }>()
@@ -27,13 +35,17 @@ defineProps<{ split?: boolean }>()
       <NuInput v-model="password" label="Password" type="password" autocomplete="current-password" required>
         <template #prefix><Lock /></template>
       </NuInput>
+      <div>
+        <div class="nu-field__label" style="margin-bottom: 4px">Demo role</div>
+        <NuSegmented v-model="role" block label="Demo role" :options="[{ label: 'Admin', value: 'admin' }, { label: 'Editor', value: 'editor' }, { label: 'Viewer', value: 'viewer' }]" />
+      </div>
       <div class="nu-between">
         <NuCheckbox v-model="remember" label="Remember me" />
         <RouterLink to="/auth/forgot-password">Forgot password?</RouterLink>
       </div>
       <NuButton type="submit" size="lg" block :loading="loading">Sign in</NuButton>
       <NuDivider label="or" />
-      <NuButton variant="outline" color="secondary" block @click="signIn">Continue with SSO</NuButton>
+      <NuButton variant="outline" color="secondary" block type="button" @click="signIn">Continue with SSO</NuButton>
     </form>
     <template #footer>No account yet? <RouterLink to="/auth/register">Create one</RouterLink></template>
   </NuAuthLayout>

@@ -32,11 +32,11 @@ defineProps<{ items: NuTimelineItem[] }>()
 .nu-timeline__item:not(:last-child)::before {
   content: '';
   position: absolute;
-  left: 13px;
+  inset-inline-start: 13px;
   top: 28px;
   bottom: 0;
   width: 2px;
-  margin-left: -1px;
+  margin-inline-start: -1px;
   background: var(--nu-border);
 }
 .nu-timeline__item--label { padding-bottom: 12px; }

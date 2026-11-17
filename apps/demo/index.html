@@ -10,6 +10,8 @@
         var t = JSON.parse(localStorage.getItem('nu-theme') || '{}')
         var dark = t.mode === 'dark' || ((!t.mode || t.mode === 'auto') && matchMedia('(prefers-color-scheme: dark)').matches)
         document.documentElement.dataset.theme = dark ? 'dark' : 'light'
+        var l = JSON.parse(localStorage.getItem('nu-layout') || '{}')
+        if (l.rtl) document.documentElement.dir = 'rtl'
       } catch (e) {}
     </script>
   </head>

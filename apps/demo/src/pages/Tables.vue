@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { Download, Plus } from 'lucide-vue-next'
-import { NuAvatar, NuAvatarGroup, NuBadge, NuButton, NuCard, NuPageHeader, NuProgress, NuTable, type NuTableColumn } from 'nusa-admin'
+import { ref, watch } from 'vue'
+import { Plus, Trash2 } from 'lucide-vue-next'
+import { NuAvatar, NuAvatarGroup, NuBadge, NuButton, NuCard, NuPageHeader, NuProgress, NuTable, useToast, type NuTableColumn, type NuTableSort } from 'nusa-admin'
 import { orders, statusColor, usd, type Order } from '../data'
 
 const columns: NuTableColumn<Order>[] = [
@@ -11,6 +12,40 @@ const columns: NuTableColumn<Order>[] = [
   { key: 'amount', label: 'Amount', sortable: true, align: 'right', format: usd },
   { key: 'status', label: 'Status', sortable: true },
 ]
+
+const toast = useToast()
+const selected = ref<(string | number)[]>([])
+
+/* Server-side example: a fake API that searches, sorts and pages on "the server". */
+const remote = ref<Order[]>([])
+const remoteTotal = ref(0)
+const remoteLoading = ref(false)
+const remotePage = ref(1)
+const remoteSearch = ref('')
+const remoteSort = ref<NuTableSort | null>({ key: 'date', dir: 'desc' })
+const PAGE = 6
+let timer: ReturnType<typeof setTimeout> | undefined
+async function fakeApi(q: { page: number; search: string; sort: NuTableSort | null }) {
+  await new Promise((r) => setTimeout(r, 450))
+  let list = orders.filter((o) => !q.search || `${o.customer} ${o.product} ${o.id}`.toLowerCase().includes(q.search.toLowerCase()))
+  if (q.sort) {
+    const { key, dir } = q.sort
+    list = [...list].sort((a, b) => String(a[key as keyof Order]).localeCompare(String(b[key as keyof Order]), undefined, { numeric: true }) * (dir === 'asc' ? 1 : -1))
+  }
+  return { rows: list.slice((q.page - 1) * PAGE, q.page * PAGE), total: list.length }
+}
+async function load() {
+  remoteLoading.value = true
+  const res = await fakeApi({ page: remotePage.value, search: remoteSearch.value, sort: remoteSort.value })
+  remote.value = res.rows
+  remoteTotal.value = res.total
+  remoteLoading.value = false
+}
+watch([remotePage, remoteSort], load, { immediate: true })
+watch(remoteSearch, () => {
+  clearTimeout(timer)
+  timer = setTimeout(load, 300)
+})
 
 const projects = [
   { name: 'Website redesign', budget: 12500, status: 'In progress', progress: 60, team: ['Ayu Lestari', 'Budi Santoso', 'Citra Dewi'] },
@@ -30,15 +65,26 @@ const projectColor = { 'In progress': 'info', Done: 'success', 'On hold': 'warni
 </script>
 
 <template>
-  <NuPageHeader title="Tables" subtitle="Client-side search, sorting and pagination." :breadcrumb="[{ label: 'Home', to: '/' }, { label: 'Tables' }]">
+  <NuPageHeader title="Tables" subtitle="Selection with bulk actions, CSV export, and server-side mode." :breadcrumb="[{ label: 'Home', to: '/' }, { label: 'Tables' }]">
     <NuButton :icon="Plus">Add order</NuButton>
   </NuPageHeader>
 
   <div class="nu-stack">
     <NuCard title="Orders" flush>
-      <NuTable :columns="columns" :rows="orders" row-key="id" searchable search-placeholder="Search orders…" :page-size="8">
-        <template #toolbar>
-          <NuButton size="sm" variant="outline" color="secondary" :icon="Download">Export CSV</NuButton>
+      <NuTable
+        v-model:selected="selected"
+        :columns="columns"
+        :rows="orders"
+        row-key="id"
+        searchable
+        search-placeholder="Search orders…"
+        :page-size="8"
+        selectable
+        exportable="orders.csv"
+      >
+        <template #bulk="{ selected: keys, clear }">
+          <NuButton size="sm" variant="soft" @click="toast.info(`Marked ${keys.length} orders as shipped (demo).`); clear()">Mark shipped</NuButton>
+          <NuButton size="sm" variant="soft" color="danger" :icon="Trash2" @click="toast.error(`Deleted ${keys.length} orders (demo).`); clear()">Delete</NuButton>
         </template>
         <template #cell-customer="{ row }">
           <div class="nu-cluster">
@@ -55,6 +101,27 @@ const projectColor = { 'In progress': 'info', Done: 'success', 'On hold': 'warni
       </NuTable>
     </NuCard>
 
+    <NuCard title="Server-side data" subtitle="manual mode: the (fake) API searches, sorts and pages; 450 ms latency" flush>
+      <NuTable
+        v-model:page="remotePage"
+        v-model:search="remoteSearch"
+        v-model:sort="remoteSort"
+        :columns="columns.filter((c) => c.key !== 'customer')"
+        :rows="remote"
+        :total="remoteTotal"
+        :loading="remoteLoading"
+        :page-size="PAGE"
+        row-key="id"
+        manual
+        searchable
+        search-placeholder="Search on the server…"
+      >
+        <template #cell-status="{ row }">
+          <NuBadge :color="statusColor[row.status as Order['status']]" dot>{{ row.status }}</NuBadge>
+        </template>
+      </NuTable>
+    </NuCard>
+
     <NuCard title="Projects" subtitle="Custom cells: avatar group and progress" flush>
       <NuTable :columns="projectColumns" :rows="projects" row-key="name" :page-size="0">
         <template #cell-name="{ row }"><span class="nu-fw-600">{{ row.name }}</span></template>
@@ -65,7 +132,7 @@ const projectColor = { 'In progress': 'info', Done: 'success', 'On hold': 'warni
         <template #cell-progress="{ row }">
           <div class="nu-cluster" style="flex-wrap: nowrap">
             <NuProgress class="nu-grow" :value="row.progress" :height="5" :color="row.progress === 100 ? 'success' : 'primary'" :label="`${row.name} completion`" label-hidden />
-            <span class="nu-text-sm nu-tabular" style="width: 34px; text-align: right">{{ row.progress }}%</span>
+            <span class="nu-text-sm nu-tabular" style="width: 34px; text-align: end">{{ row.progress }}%</span>
           </div>
         </template>
       </NuTable>

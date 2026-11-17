@@ -41,6 +41,12 @@ const roleColor = { Admin: 'primary', Editor: 'info', Viewer: 'secondary' } as c
 const roleOptions = ['Admin', 'Editor', 'Viewer'].map((r) => ({ label: r, value: r }))
 
 const filter = ref('all')
+const selected = ref<(string | number)[]>([])
+function removeMany(ids: (string | number)[]) {
+  users.value = users.value.filter((u) => !ids.includes(u.id))
+  selected.value = []
+  toast.info(`${ids.length} user(s) removed.`)
+}
 const rows = computed(() => users.value.filter((u) => filter.value === 'all' || (filter.value === 'active') === u.active))
 
 const drawer = ref(false)
@@ -81,7 +87,10 @@ function remove() {
   </NuPageHeader>
 
   <NuCard flush>
-    <NuTable :columns="columns" :rows="rows" row-key="id" searchable search-placeholder="Search users…" :page-size="8">
+    <NuTable v-model:selected="selected" :columns="columns" :rows="rows" row-key="id" searchable search-placeholder="Search users…" :page-size="8" selectable exportable="users.csv">
+      <template #bulk="{ selected: ids }">
+        <NuButton size="sm" variant="soft" color="danger" :icon="Trash2" @click="removeMany(ids)">Remove selected</NuButton>
+      </template>
       <template #toolbar>
         <NuSegmented v-model="filter" size="sm" label="Status filter" :options="[{ label: 'All', value: 'all' }, { label: 'Active', value: 'active' }, { label: 'Inactive', value: 'inactive' }]" />
       </template>

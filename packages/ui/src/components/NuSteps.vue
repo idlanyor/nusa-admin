@@ -45,7 +45,7 @@ const current = defineModel<number>({ default: 0 })
 .nu-steps__step:not(:last-child)::after { content: ''; flex: 1; min-width: 12px; height: 2px; background: var(--nu-border); }
 .nu-steps__step:last-child { flex: 0 1 auto; }
 .nu-steps__step.is-done::after { background: var(--nu-primary); }
-.nu-steps__btn { display: flex; align-items: center; gap: 8px; padding: 0; border: 0; background: transparent; color: inherit; text-align: left; min-width: 0; }
+.nu-steps__btn { display: flex; align-items: center; gap: 8px; padding: 0; border: 0; background: transparent; color: inherit; text-align: start; min-width: 0; }
 button.nu-steps__btn { cursor: pointer; }
 .nu-steps__marker {
   flex: none;
