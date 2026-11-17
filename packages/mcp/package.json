@@ -4,6 +4,11 @@
   "description": "MCP server that teaches AI assistants the Nusa Admin components, guides and page recipes",
   "type": "module",
   "license": "MIT",
+  "author": {
+    "name": "Roynaldi (Antidonasi Creative)",
+    "email": "roy@irengcloud.com",
+    "url": "https://roynaldi.website"
+  },
   "bin": {
     "nusa-admin-mcp": "./dist/server.js"
   },

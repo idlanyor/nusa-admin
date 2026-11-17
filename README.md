@@ -222,3 +222,7 @@ aliases `nusa-admin` to the kit's source (see `apps/demo/vite.config.ts`) so dev
 ## Requirements
 
 Bun ≥ 1.2, Vue ≥ 3.5, vue-router ≥ 4.4. Browsers need `color-mix()` (all evergreen browsers since 2023).
+
+## License
+
+MIT © 2026 Roynaldi (Antidonasi Creative) — https://roynaldi.website · roy@irengcloud.com. See `LICENSE`.
