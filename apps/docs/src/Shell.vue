@@ -4,6 +4,7 @@ import { BookOpen, Bot, Boxes, Braces, Search, Sparkles, SquareTerminal } from '
 import { NuCommandPalette, NuLayout, type NuCommand, type NuMenuItem } from 'nusa-admin'
 import { components, demoUrl, groups, guides, version } from './data'
 
+const base = import.meta.env.BASE_URL
 const guideIcons: Record<string, unknown> = { 'getting-started': Sparkles, cli: SquareTerminal, ai: Bot }
 const menu = computed<NuMenuItem[]>(() => [
   { label: 'Guide', header: true },
@@ -17,7 +18,7 @@ const menu = computed<NuMenuItem[]>(() => [
 const palette = ref(false)
 const commands: NuCommand[] = [
   { label: 'Open the live demo', group: 'Links', icon: Sparkles, href: demoUrl },
-  { label: 'llms.txt', group: 'Links', icon: Bot, href: '/llms.txt' },
+  { label: 'llms.txt', group: 'Links', icon: Bot, href: `${base}llms.txt` },
 ]
 </script>
 
@@ -35,7 +36,7 @@ const commands: NuCommand[] = [
     <RouterView :key="$route.path" />
     <template #footer>
       <span>Nusa Admin docs · generated from the kit source</span>
-      <span><a href="/llms.txt">llms.txt</a> · <a href="/llms-full.txt">llms-full.txt</a></span>
+      <span><a :href="`${base}llms.txt`">llms.txt</a> · <a :href="`${base}llms-full.txt`">llms-full.txt</a></span>
     </template>
   </NuLayout>
   <NuCommandPalette v-model="palette" :menu="menu" :commands="commands" placeholder="Search components and guides…" />

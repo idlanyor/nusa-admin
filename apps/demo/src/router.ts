@@ -10,7 +10,7 @@ const layoutExamples: RouteRecordRaw[] = [
 ].map((r) => ({ ...r, component: () => import('./pages/layout/Example.vue') }) as RouteRecordRaw)
 
 export const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   scrollBehavior: (_to, _from, saved) => saved ?? { top: 0 },
   routes: [
     {

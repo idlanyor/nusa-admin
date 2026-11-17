@@ -13,6 +13,16 @@
         if (JSON.parse(localStorage.getItem('nu-layout') || '{}').rtl) document.documentElement.dir = 'rtl'
       } catch (e) {}
     </script>
+    <script>
+      // GitHub Pages SPA fallback: 404.html sends deep links here as ?p=<path>&q=<query>.
+      ;(function () {
+        var s = new URLSearchParams(location.search)
+        var p = s.get('p')
+        if (p === null) return
+        var q = s.get('q')
+        history.replaceState(null, '', location.pathname.replace(/\/?$/, '/') + p.replace(/^\//, '') + (q ? '?' + q : '') + location.hash)
+      })()
+    </script>
   </head>
   <body>
     <div id="app"></div>

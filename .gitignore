@@ -15,3 +15,4 @@ packages/create-nusa-admin/templates/starter/src/pages/Settings.vue
 packages/create-nusa-admin/templates/starter/src/pages/auth
 packages/create-nusa-admin/templates/starter/src/pages/errors
 packages/mcp/data
+site

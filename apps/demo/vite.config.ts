@@ -7,6 +7,8 @@ const ui = (p: string) => fileURLToPath(new URL(`../../packages/ui/src/${p}`, im
 // In dev the demo consumes the kit straight from source (HMR, no rebuild).
 // A real consumer just installs `nusa-admin` and imports `nusa-admin/style.css`.
 export default defineConfig({
+  // Sub-path deploys (GitHub Pages: /<repo>/ and /<repo>/demo/)
+  base: process.env.BASE_PATH ?? '/',
   plugins: [vue()],
   resolve: {
     alias: [

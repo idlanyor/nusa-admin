@@ -1,0 +1,52 @@
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.4
+      - run: bun install --frozen-lockfile
+      - name: Work out the site URL
+        id: site
+        run: |
+          owner="${GITHUB_REPOSITORY_OWNER,,}"
+          repo="${GITHUB_REPOSITORY#*/}"
+          if [ "${repo,,}" = "${owner}.github.io" ]; then base="/"; else base="/${repo}/"; fi
+          echo "base=$base" >> "$GITHUB_OUTPUT"
+          echo "url=https://${owner}.github.io${base}" >> "$GITHUB_OUTPUT"
+      - name: Build docs + demo
+        run: scripts/build-pages.sh
+        env:
+          BASE_PATH: ${{ steps.site.outputs.base }}
+          SITE_URL: ${{ steps.site.outputs.url }}
+          OUT: site
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

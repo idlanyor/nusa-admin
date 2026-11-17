@@ -7,6 +7,7 @@ const repo = (p: string) => fileURLToPath(new URL(`../../${p}`, import.meta.url)
 
 /** /llms.txt (index) and /llms-full.txt (everything) built from the same metadata and guides. */
 function llmsTxt(): Plugin {
+  let base = '/'
   const build = () => {
     const meta = JSON.parse(readFileSync(repo('packages/ui/meta/components.json'), 'utf8'))
     const guides = readdirSync(repo('docs/guide'))
@@ -19,14 +20,14 @@ function llmsTxt(): Plugin {
       '> Vue 3 + Vite admin template kit: app shell, 71 Nu* components, SVG charts, light/dark themes, design tokens, i18n and RTL. Package: `nusa-admin`.',
       '',
       '## Guides',
-      ...guides.map((g) => `- [${title(g.body)}](/guide/${g.slug}): ${g.body.split('\n').find((l) => l && !l.startsWith('#')) ?? ''}`),
+      ...guides.map((g) => `- [${title(g.body)}](${base}guide/${g.slug}): ${g.body.split('\n').find((l) => l && !l.startsWith('#')) ?? ''}`),
       '',
       '## Components',
-      ...meta.components.map((c: any) => `- [${c.name}](/components/${c.name}): ${c.description}`),
+      ...meta.components.map((c: any) => `- [${c.name}](${base}components/${c.name}): ${c.description}`),
       '',
       '## Optional',
-      '- [Everything in one file](/llms-full.txt)',
-      '- [API: composables, helpers, tokens](/api)',
+      '- [Everything in one file](${base}llms-full.txt)',
+      '- [API: composables, helpers, tokens](${base}api)',
     ].join('\n')
     const comp = (c: any) =>
       [
@@ -51,12 +52,16 @@ function llmsTxt(): Plugin {
   }
   return {
     name: 'llms-txt',
+    configResolved(config) {
+      base = config.base
+    },
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
-        if (req.url !== '/llms.txt' && req.url !== '/llms-full.txt') return next()
+        const url = (req.url ?? '').replace(base, '/')
+        if (url !== '/llms.txt' && url !== '/llms-full.txt') return next()
         const { index, full } = build()
         res.setHeader('Content-Type', 'text/plain; charset=utf-8')
-        res.end(req.url === '/llms.txt' ? index : full)
+        res.end(url === '/llms.txt' ? index : full)
       })
     },
     generateBundle() {
@@ -68,6 +73,8 @@ function llmsTxt(): Plugin {
 }
 
 export default defineConfig({
+  // Sub-path deploys (GitHub Pages: /<repo>/ and /<repo>/demo/)
+  base: process.env.BASE_PATH ?? '/',
   plugins: [vue(), llmsTxt()],
   resolve: {
     alias: [
