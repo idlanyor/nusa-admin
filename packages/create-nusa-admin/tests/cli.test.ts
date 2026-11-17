@@ -66,6 +66,9 @@ describe('create-nusa-admin', () => {
       const mcp = JSON.parse(readFileSync(join(dir, '.mcp.json'), 'utf8')).mcpServers['nusa-admin']
       expect(mcp.command).toBe('node')
       expect(existsSync(resolve(dir, mcp.args[0])), 'local MCP server path').toBe(true)
+      // npm is strict about peer dependencies (bun only warns), so resolve with npm first.
+      const npmCheck = run('npm', ['install', '--dry-run', '--no-audit', '--no-fund'], dir)
+      expect(npmCheck.code, npmCheck.out).toBe(0)
       expect(run('bun', ['install'], dir).code).toBe(0)
       const tc = run('bun', ['run', 'typecheck'], dir)
       expect(tc.code, tc.out).toBe(0)
