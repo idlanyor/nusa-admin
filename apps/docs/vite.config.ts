@@ -10,7 +10,7 @@ function llmsTxt(): Plugin {
   let base = '/'
   const build = () => {
     const meta = JSON.parse(readFileSync(repo('packages/ui/meta/components.json'), 'utf8'))
-    const guides = readdirSync(repo('docs/guide'))
+    const guides = readdirSync(repo('docs/guide')).sort()
       .filter((f) => f.endsWith('.md'))
       .map((f) => ({ slug: f.replace(/\.md$/, ''), body: readFileSync(repo(`docs/guide/${f}`), 'utf8') }))
     const title = (b: string) => b.match(/^# (.+)$/m)?.[1] ?? ''

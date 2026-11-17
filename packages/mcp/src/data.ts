@@ -38,6 +38,7 @@ export function loadData(): { meta: Meta; guides: Guide[] } {
   const guideDir = dir ? join(dir, 'guide') : join(repo, 'docs/guide')
   const meta = JSON.parse(readFileSync(metaPath, 'utf8')) as Meta
   const guides = readdirSync(guideDir)
+    .sort()
     .filter((f) => f.endsWith('.md'))
     .map((f) => {
       const body = readFileSync(join(guideDir, f), 'utf8')

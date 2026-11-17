@@ -112,8 +112,9 @@ for (const m of router.matchAll(/path: '([^']+)',[^\n]*?import\('\.\/(pages\/[^'
 }
 routeOf.set('pages/Dashboard.vue', '/')
 
+/** Sorted so examples (and the generated files) are identical on every machine. */
 function walk(dir: string): string[] {
-  return readdirSync(dir).flatMap((f) => {
+  return readdirSync(dir).sort().flatMap((f) => {
     const p = join(dir, f)
     return statSync(p).isDirectory() ? walk(p) : p.endsWith('.vue') ? [p] : []
   })

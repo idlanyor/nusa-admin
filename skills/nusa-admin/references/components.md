@@ -125,10 +125,10 @@ Page title with optional subtitle, breadcrumb and action buttons (default slot).
 
 Slots: `default`
 
-Example (demo `/widgets`):
+Example (demo `/billing`):
 
 ```vue
-<NuPageHeader title="Widgets" subtitle="Ready-made blocks for dashboards." :breadcrumb="[{ label: 'Home', to: '/' }, { label: 'Widgets' }]" />
+<NuPageHeader title="Billing" subtitle="Payment methods, invoices and recent transactions." :breadcrumb="[{ label: 'Home', to: '/' }, { label: 'Billing' }]" />
 ```
 
 ## NuBreadcrumb
@@ -215,24 +215,18 @@ Centered card (or split screen) for sign-in, register and similar pages.
 
 Slots: `aside`, `brand`, `default`, `footer`
 
-Example (demo `/auth/lock`):
+Example (demo `/auth/forgot-password`):
 
 ```vue
-<NuAuthLayout title="Session locked" subtitle="Enter your password to pick up where you left off.">
-  <div class="nu-cluster" style="margin-bottom: 12px">
-    <NuAvatar :name="user?.name ?? 'Guest'" :size="40" />
-    <div>
-      <div class="nu-fw-600">{{ user?.name ?? 'Guest' }}</div>
-      <div class="nu-text-sm nu-text-muted">{{ user?.email }}</div>
-    </div>
-  </div>
-  <form class="nu-stack" style="--nu-gap: 12px" @submit.prevent="router.push(user ? '/' : '/auth/login')">
-    <NuInput v-model="password" label="Password" type="password" autocomplete="current-password" required>
-      <template #prefix><Lock /></template>
+<NuAuthLayout title="Reset password" subtitle="We'll email you a link to choose a new password.">
+  <NuAlert v-if="sent" color="success" title="Check your inbox">If an account exists for {{ email }}, a reset link is on its way.</NuAlert>
+  <form v-else class="nu-stack" style="--nu-gap: 12px" @submit.prevent="sent = true">
+    <NuInput v-model="email" label="Email" type="email" autocomplete="email" required>
+      <template #prefix><Mail /></template>
     </NuInput>
-    <NuButton type="submit" size="lg" block>Unlock</NuButton>
+    <NuButton type="submit" size="lg" block>Send reset link</NuButton>
   </form>
-  <template #footer>Not you? <RouterLink to="/auth/login">Sign in as someone else</RouterLink></template>
+  <template #footer><RouterLink to="/auth/login">Back to sign in</RouterLink></template>
 </NuAuthLayout>
 ```
 
@@ -294,10 +288,25 @@ Events: `refresh`, `remove`
 
 Slots: `header`, `tools`, `default`, `footer`
 
-Example (demo `/widgets`):
+Example (demo `/billing`):
 
 ```vue
-<NuCard title="Outline card" accent="primary" collapsible removable>Colored top border. Collapse or remove it with the tools.</NuCard>
+<NuCard title="Payment methods">
+  <template #tools><NuButton size="sm" :icon="Plus" @click="addCard = true">Add card</NuButton></template>
+  <div class="nu-row" style="--nu-gap: 12px">
+    <div v-for="c in cards" :key="c.last4" class="nu-col-md-6">
+      <div class="pay-method">
+        <CreditCard />
+        <div class="nu-grow">
+          <div class="nu-fw-600 nu-tabular">{{ c.brand }} •••• {{ c.last4 }}</div>
+          <div class="nu-text-sm nu-text-muted">Expires {{ c.exp }}</div>
+        </div>
+        <NuBadge v-if="c.primary" color="success">Primary</NuBadge>
+        <NuButton size="sm" variant="ghost" color="secondary" :icon="Pencil" square :aria-label="`Edit card ending ${c.last4}`" />
+      </div>
+    </div>
+  </div>
+</NuCard>
 ```
 
 ## NuStatCard
@@ -317,10 +326,12 @@ KPI tile: label, value, icon, delta vs a period, optional sparkline in the defau
 
 Slots: `default`
 
-Example (demo `/widgets`):
+Example (demo `/`):
 
 ```vue
-<NuStatCard label="Sales" value="$24,310" :icon="CircleDollarSign" color="success" :delta="3.2" delta-label="vs last month" />
+<NuStatCard label="Revenue" value="$84,600" :icon="CircleDollarSign" :delta="9.4" delta-label="vs last month">
+  <NuSparkline :data="revenue" label="Revenue, last 12 months" />
+</NuStatCard>
 ```
 
 ## NuSmallBox
@@ -356,10 +367,10 @@ AdminLTE "info box": colored icon block beside a label, value and optional progr
 | `progress` | `number \| undefined` |  | 0–100; shows a thin bar under the value. |
 | `description` | `string \| undefined` |  | Secondary text. |
 
-Example (demo `/widgets`):
+Example (demo `/billing`):
 
 ```vue
-<NuInfoBox label="Messages" value="1,410" :icon="MessageSquare" color="info" />
+<NuInfoBox label="Balance" value="$4,820.00" :icon="Wallet" color="success" description="Available for payout" />
 ```
 
 ## NuUserCard
@@ -393,16 +404,10 @@ Vertical timeline of events with icons/colors; items with `label` render as date
 
 Slots: `item`
 
-Example (demo `/ecommerce`):
+Example (demo `/`):
 
 ```vue
-<NuTimeline
-  :items="[
-    { title: 'Great light, sturdy base — Ayu', time: '★★★★★', description: 'The warm setting is perfect for reading.', color: 'success' },
-    { title: 'Good, but the cable is short — Budi', time: '★★★★', description: 'Bought an extension; otherwise excellent.', color: 'info' },
-    { title: 'Arrived scratched — Citra', time: '★★★', description: 'Support replaced it within a week.', color: 'warning' },
-  ]"
-/>
+<NuTimeline :items="activity" />
 ```
 
 ## NuTable
@@ -435,11 +440,19 @@ Events: `update:page`, `update:search`, `update:sort`, `update:selected`
 
 Slots: `bulk`, `toolbar`, `empty`
 
-Example (demo `/dashboard-2`):
+Example (demo `/`):
 
 ```vue
-<NuTable :columns="columns" :rows="orders.slice(0, 7)" row-key="id" :page-size="0">
-  <template #cell-status="{ row }"><NuBadge :color="statusColor[row.status as Order['status']]">{{ row.status }}</NuBadge></template>
+<NuTable :columns="columns" :rows="orders.slice(0, 6)" row-key="id" :page-size="0">
+  <template #cell-customer="{ row }">
+    <div class="nu-cluster">
+      <NuAvatar :name="row.customer" :size="28" />
+      <span>{{ row.customer }}</span>
+    </div>
+  </template>
+  <template #cell-status="{ row }">
+    <NuBadge :color="statusColor[row.status as Order['status']]" dot>{{ row.status }}</NuBadge>
+  </template>
 </NuTable>
 ```
 
@@ -472,14 +485,21 @@ Bordered list container for NuListItem rows.
 
 Slots: `default`
 
-Example (demo `/apps/mailbox/compose`):
+Example (demo `/billing`):
 
 ```vue
 <NuList>
-  <NuListItem :icon="Inbox" title="Inbox" to="/apps/mailbox" />
-  <NuListItem :icon="Send" title="Sent" to="/apps/mailbox" />
-  <NuListItem :icon="FileText" title="Drafts" to="/apps/mailbox" />
-  <NuListItem :icon="Trash2" title="Trash" to="/apps/mailbox" />
+  <NuListItem v-for="t in transactions" :key="t.name + t.date" :title="t.name" :subtitle="t.date">
+    <template #start>
+      <span class="tx-icon" :class="t.pending ? 'is-pending' : t.amount < 0 ? 'is-out' : 'is-in'">
+        <component :is="t.amount < 0 ? ArrowUpRight : ArrowDownLeft" />
+      </span>
+    </template>
+    <template #end>
+      <NuBadge v-if="t.pending" color="warning">Pending</NuBadge>
+      <strong class="nu-tabular" :style="{ color: t.amount < 0 ? 'var(--nu-text)' : 'var(--nu-success)' }">{{ money(t.amount) }}</strong>
+    </template>
+  </NuListItem>
 </NuList>
 ```
 
@@ -499,10 +519,20 @@ List row with icon/start slot, title, subtitle and end slot; renders as link or 
 
 Slots: `start`, `default`, `end`
 
-Example (demo `/apps/mailbox/compose`):
+Example (demo `/billing`):
 
 ```vue
-<NuListItem :icon="Inbox" title="Inbox" to="/apps/mailbox" />
+<NuListItem v-for="t in transactions" :key="t.name + t.date" :title="t.name" :subtitle="t.date">
+  <template #start>
+    <span class="tx-icon" :class="t.pending ? 'is-pending' : t.amount < 0 ? 'is-out' : 'is-in'">
+      <component :is="t.amount < 0 ? ArrowUpRight : ArrowDownLeft" />
+    </span>
+  </template>
+  <template #end>
+    <NuBadge v-if="t.pending" color="warning">Pending</NuBadge>
+    <strong class="nu-tabular" :style="{ color: t.amount < 0 ? 'var(--nu-text)' : 'var(--nu-success)' }">{{ money(t.amount) }}</strong>
+  </template>
+</NuListItem>
 ```
 
 ## NuDescriptions
@@ -514,20 +544,19 @@ Label/value pairs (definition list) in 1–3 columns, with per-item slots. Each 
 | `items`* | `NuDescriptionItem[]` |  | Items to render. |
 | `columns` | `1 \| 2 \| 3 \| undefined` | `1` |  |
 
-Example (demo `/forms/wizard`):
+Example (demo `/profile`):
 
 ```vue
 <NuDescriptions
-  :columns="2"
   :items="[
-    { label: 'Name', value: form.name },
     { label: 'Email', value: form.email },
-    { label: 'Company', value: form.company },
-    { label: 'Team size', value: form.size },
-    { label: 'Plan', value: form.plan },
-    { label: 'Billing', value: form.yearly ? 'Yearly' : 'Monthly' },
+    { label: 'Location', value: form.city },
+    { label: 'Joined', value: '12 March 2024' },
+    { label: 'Role', key: 'role' },
   ]"
-/>
+>
+  <template #role><NuBadge>Administrator</NuBadge></template>
+</NuDescriptions>
 ```
 
 ## NuCalendar
@@ -637,10 +666,10 @@ Horizontal rule with an optional centered label.
 
 Slots: `default`
 
-Example (demo `/ui/general`):
+Example (demo `/auth/login`):
 
 ```vue
-<NuDivider label="Sizes &amp; states" />
+<NuDivider label="or" />
 ```
 
 ## NuCallout
@@ -689,10 +718,10 @@ Chat message list with avatars and a send box; emits `send`.
 
 Events: `send`
 
-Example (demo `/widgets`):
+Example (demo `/dashboard-2`):
 
 ```vue
-<NuDirectChat :messages="chat" height="260px" @send="(text) => chat.push({ from: 'Ayu Lestari', text, me: true, time: 'now' })" />
+<NuDirectChat :messages="chat" height="250px" @send="send" />
 ```
 
 ## NuTodoList
@@ -728,10 +757,10 @@ Events: `dismiss`
 
 Slots: `icon`, `default`
 
-Example:
+Example (demo `/auth/forgot-password`):
 
 ```vue
-<NuAlert color="info">{{ meta.note }} This page forces the option through route meta; other pages keep your saved settings.</NuAlert>
+<NuAlert v-if="sent" color="success" title="Check your inbox">If an account exists for {{ email }}, a reset link is on its way.</NuAlert>
 ```
 
 ## NuBadge
@@ -747,10 +776,10 @@ Small label in soft, solid or outline style, optional dot or pill shape.
 
 Slots: `default`
 
-Example (demo `/invoice`):
+Example:
 
 ```vue
-<NuBadge color="success" dot>Paid</NuBadge>
+<NuBadge color="success" dot>{{ roleLabel[user.role] }}</NuBadge>
 ```
 
 ## NuProgress
@@ -767,10 +796,10 @@ Horizontal progress bar with optional label and value.
 | `showValue` | `boolean \| undefined` |  |  |
 | `labelHidden` | `boolean \| undefined` |  |  |
 
-Example (demo `/profile`):
+Example (demo `/`):
 
 ```vue
-<NuProgress label="Interface design" :value="92" show-value />
+<NuProgress v-for="g in goals" :key="g.label" :label="g.label" :value="g.value" :color="g.color" show-value />
 ```
 
 ## NuProgressRing
@@ -839,12 +868,10 @@ Empty state with icon, title, description and actions.
 
 Slots: `default`
 
-Example (demo `/forms/wizard`):
+Example (demo `/contacts`):
 
 ```vue
-<NuEmpty v-else title="All set" :description="`${form.company} was created on the ${form.plan} plan.`" :icon="PartyPopper">
-  <NuButton size="sm" variant="outline" color="secondary" @click="step = 0">Start over</NuButton>
-</NuEmpty>
+<NuEmpty title="No contacts found" description="Try another name, company or city." />
 ```
 
 ## NuTooltip
@@ -879,22 +906,21 @@ Events: `update:modelValue`
 
 Slots: `header`, `default`, `footer`
 
-Example (demo `/apps/calendar`):
+Example (demo `/billing`):
 
 ```vue
-<NuModal v-model="modal" title="New event" size="sm">
-  <form id="event-form" class="nu-stack" style="--nu-gap: 10px" @submit.prevent="save">
-    <NuInput v-model="draft.title" label="Title" required />
-    <NuInput v-model="draft.date" label="Date" type="date" required />
-    <NuSelect
-      v-model="draft.color"
-      label="Color"
-      :options="['primary', 'success', 'warning', 'danger', 'info', 'secondary'].map((c) => ({ label: c, value: c }))"
-    />
+<NuModal v-model="addCard" title="Add card" size="sm">
+  <form id="card-form" class="nu-stack" style="--nu-gap: 10px" @submit.prevent="addCard = false; toast.success('Card added (demo).')">
+    <NuInput label="Name on card" required autocomplete="cc-name" />
+    <NuInput label="Card number" required inputmode="numeric" autocomplete="cc-number" placeholder="0000 0000 0000 0000" />
+    <div class="nu-row" style="--nu-gap: 10px">
+      <div class="nu-col-6"><NuInput label="Expiry" required placeholder="MM/YY" autocomplete="cc-exp" /></div>
+      <div class="nu-col-6"><NuInput label="CVC" required inputmode="numeric" autocomplete="cc-csc" /></div>
+    </div>
   </form>
   <template #footer="{ close }">
     <NuButton variant="ghost" color="secondary" @click="close">Cancel</NuButton>
-    <NuButton type="submit" form="event-form">Add</NuButton>
+    <NuButton type="submit" form="card-form">Add card</NuButton>
   </template>
 </NuModal>
 ```
@@ -914,17 +940,19 @@ Events: `update:modelValue`
 
 Slots: `header`, `default`, `footer`
 
-Example (demo `/ui/feedback`):
+Example (demo `/users`):
 
 ```vue
-<NuDrawer v-model="drawer" title="Filters">
-  <div class="nu-stack" style="--nu-gap: 10px">
-    <NuInput label="Customer" placeholder="Any customer" />
-    <NuInput label="Min amount" type="number" placeholder="0" />
-  </div>
+<NuDrawer v-model="drawer" :title="editing ? 'Edit user' : 'Add user'">
+  <form id="user-form" class="nu-stack" style="--nu-gap: 10px" novalidate @submit.prevent="save">
+    <NuInput v-model="form.name" label="Full name" required autocomplete="name" />
+    <NuInput v-model="form.email" label="Email" type="email" required autocomplete="email" :error="error" />
+    <NuSelect v-model="form.role" label="Role" :options="roleOptions" />
+    <NuSwitch v-model="form.active" label="Active" />
+  </form>
   <template #footer="{ close }">
-    <NuButton variant="ghost" color="secondary" @click="close">Reset</NuButton>
-    <NuButton @click="close">Apply</NuButton>
+    <NuButton variant="ghost" color="secondary" @click="close">Cancel</NuButton>
+    <NuButton type="submit" form="user-form">{{ editing ? 'Save changes' : 'Add user' }}</NuButton>
   </template>
 </NuDrawer>
 ```
@@ -960,10 +988,10 @@ Button or link (to/href) in solid, soft, outline or ghost style, with icon and l
 
 Slots: `default`
 
-Example (demo `/widgets`):
+Example:
 
 ```vue
-<NuButton size="sm" variant="soft" color="danger" @click="toast.info('Footer action')">Action</NuButton>
+<NuButton size="sm" variant="soft" to="/layout/options" @click="controlPanel = false">All layout options</NuButton>
 ```
 
 ## NuIconButton
@@ -995,15 +1023,15 @@ Popover menu anchored to a trigger slot, with keyboard navigation.
 
 Slots: `trigger`, `default`
 
-Example (demo `/ui/navigation`):
+Example:
 
 ```vue
-<NuDropdown align="left">
-  <template #trigger><NuButton variant="outline" color="secondary">Actions</NuButton></template>
-  <NuDropdownItem :icon="User">Profile</NuDropdownItem>
-  <NuDropdownItem :icon="CreditCard">Billing</NuDropdownItem>
-  <div class="nu-dropdown__divider" />
-  <NuDropdownItem :icon="Trash2" danger>Delete</NuDropdownItem>
+<NuDropdown width="200px">
+  <template #trigger><NuIconButton :icon="Languages" label="Language" /></template>
+  <div class="nu-dropdown__header">Language</div>
+  <NuDropdownItem v-for="l in languages" :key="l.code" :class="{ 'is-current': language === l.code }" :aria-current="language === l.code || undefined" @click="setLocale(l.code)">
+    {{ l.label }}
+  </NuDropdownItem>
 </NuDropdown>
 ```
 
@@ -1021,10 +1049,12 @@ Menu row inside NuDropdown; renders as link or button.
 
 Slots: `default`, `end`
 
-Example (demo `/ui/navigation`):
+Example:
 
 ```vue
-<NuDropdownItem :icon="User">Profile</NuDropdownItem>
+<NuDropdownItem v-for="l in languages" :key="l.code" :class="{ 'is-current': language === l.code }" :aria-current="language === l.code || undefined" @click="setLocale(l.code)">
+  {{ l.label }}
+</NuDropdownItem>
 ```
 
 ## NuSegmented
@@ -1041,10 +1071,10 @@ Segmented control (radio group styled as buttons).
 
 Events: `update:modelValue`
 
-Example (demo `/forms/advanced`):
+Example (demo `/dashboard-3`):
 
 ```vue
-<NuSegmented v-model="billing" :options="[{ label: 'Monthly', value: 'monthly' }, { label: 'Yearly', value: 'yearly' }]" label="Billing period" />
+<NuSegmented v-model="range" size="sm" label="Range" :options="[{ label: 'Week', value: 'week' }, { label: 'Month', value: 'month' }]" />
 ```
 
 ## NuInput
@@ -1068,10 +1098,10 @@ Events: `update:modelValue`
 
 Slots: `prefix`, `suffix`
 
-Example (demo `/forms/wizard`):
+Example (demo `/billing`):
 
 ```vue
-<NuInput v-model="form.name" label="Full name" required :error="errors.name" autocomplete="name" />
+<NuInput label="Name on card" required autocomplete="cc-name" />
 ```
 
 ## NuTextarea
@@ -1091,10 +1121,10 @@ Multi-line text input with label, hint and error.
 
 Events: `update:modelValue`
 
-Example (demo `/forms/validation`):
+Example (demo `/contact`):
 
 ```vue
-<NuTextarea v-bind="field('bio')" label="Short bio" :rows="3" :hint="bioHint" />
+<NuTextarea v-bind="form.field('message')" label="Message" :rows="5" required />
 ```
 
 ## NuSelect
@@ -1115,14 +1145,10 @@ Native select with label, placeholder, hint and error.
 
 Events: `update:modelValue`
 
-Example (demo `/forms/wizard`):
+Example (demo `/contact`):
 
 ```vue
-<NuSelect
-  v-model="form.size"
-  label="Team size"
-  :options="[{ label: '1–10', value: '1-10' }, { label: '11–50', value: '11-50' }, { label: '51–200', value: '51-200' }, { label: '200+', value: '200+' }]"
-/>
+<NuSelect v-bind="form.field('topic')" label="Topic" :options="[{ label: 'Sales', value: 'sales' }, { label: 'Support', value: 'support' }, { label: 'Partnerships', value: 'partners' }]" />
 ```
 
 ## NuCombobox
@@ -1145,10 +1171,10 @@ Searchable select, single or multiple, keyboard friendly, clearable.
 
 Events: `update:modelValue`, `blur`
 
-Example (demo `/forms/validation`):
+Example (demo `/apps/mailbox/compose`):
 
 ```vue
-<NuCombobox v-bind="field('skills')" multiple label="Skills" placeholder="Choose skills" :options="['Vue', 'TypeScript', 'CSS', 'Node', 'Go', 'SQL'].map((s) => ({ label: s, value: s }))" />
+<NuCombobox v-bind="form.field('to')" :options="people" multiple label="To" placeholder="Choose recipients" search-placeholder="Search contacts" />
 ```
 
 ## NuDatePicker
@@ -1170,10 +1196,10 @@ Date input with a calendar popover; single date or `range`.
 
 Events: `update:modelValue`, `blur`
 
-Example (demo `/forms/validation`):
+Example (demo `/forms/advanced`):
 
 ```vue
-<NuDatePicker v-bind="field('start')" label="Start date" />
+<NuDatePicker v-model="day" label="Date" clearable />
 ```
 
 ## NuEditor
@@ -1192,10 +1218,10 @@ Lightweight rich-text editor (contenteditable) with a formatting toolbar; v-mode
 
 Events: `update:modelValue`
 
-Example (demo `/forms/editors`):
+Example (demo `/apps/mailbox/compose`):
 
 ```vue
-<NuEditor v-model="html" placeholder="Start writing…" min-height="220px" hint="Sanitize the HTML on the server before showing it to other users." />
+<NuEditor v-bind="form.field('body')" label="Message" placeholder="Write your message…" min-height="220px" />
 ```
 
 ## NuCodeEditor
@@ -1236,10 +1262,10 @@ Events: `update:modelValue`
 
 Slots: `default`
 
-Example (demo `/forms/validation`):
+Example (demo `/search`):
 
 ```vue
-<NuCheckbox v-bind="field('terms')">I accept the terms and privacy policy</NuCheckbox>
+<NuCheckbox v-for="(_, t) in types" :key="t" v-model="types[t]" :label="`${t}s`" />
 ```
 
 ## NuSwitch
@@ -1256,10 +1282,10 @@ Events: `update:modelValue`
 
 Slots: `default`
 
-Example (demo `/forms/wizard`):
+Example (demo `/profile`):
 
 ```vue
-<NuSwitch v-model="form.yearly" label="Bill yearly (2 months free)" />
+<NuSwitch v-model="prefs.mentions" label="Email me when someone mentions me" />
 ```
 
 ## NuRadioGroup
@@ -1278,11 +1304,11 @@ Radio buttons from an options array, stacked or inline.
 
 Events: `update:modelValue`
 
-Example (demo `/forms/wizard`):
+Example (demo `/forms/advanced`):
 
 ```vue
 <NuRadioGroup
-  v-model="form.plan"
+  v-model="plan"
   label="Plan"
   :options="[{ label: 'Starter — $19/mo', value: 'starter' }, { label: 'Team — $79/mo', value: 'team' }, { label: 'Business — $249/mo', value: 'business' }]"
 />
@@ -1368,10 +1394,10 @@ Drag-and-drop file picker with a file list; v-model is File[].
 
 Events: `update:modelValue`
 
-Example (demo `/forms/advanced`):
+Example (demo `/apps/mailbox/compose`):
 
 ```vue
-<NuFileUpload v-model="files" multiple hint="Any file type, several at once" />
+<NuFileUpload v-model="form.values.files" multiple label="Attach files" hint="Max 25 MB in total" />
 ```
 
 ## NuRating
@@ -1388,10 +1414,10 @@ Star rating input or read-only display.
 
 Events: `update:modelValue`
 
-Example (demo `/forms/advanced`):
+Example (demo `/ecommerce`):
 
 ```vue
-<NuRating v-model="score" />
+<NuRating :model-value="4" readonly :size="15" />
 ```
 
 ## NuChart
@@ -1407,13 +1433,15 @@ Dependency-free SVG line, area or bar chart with legend and hover tooltip.
 | `format` | `((value: number) => string) \| undefined` |  | Format y-axis ticks and tooltip values. |
 | `label` | `string \| undefined` |  | Accessible summary of what the chart shows. |
 
-Example (demo `/dashboard-3`):
+Example (demo `/`):
 
 ```vue
 <NuChart
-  :labels="visitors[range as 'week' | 'month'].labels"
-  :series="[{ name: 'This period', data: visitors[range as 'week' | 'month'].current }, { name: 'Last period', data: visitors[range as 'week' | 'month'].last }]"
-  :height="230"
+  type="area"
+  :labels="months"
+  :series="[{ name: 'Revenue', data: revenue }, { name: 'Expenses', data: expenses }]"
+  :format="(v) => `$${(v / 1000).toFixed(0)}K`"
+  label="Revenue versus expenses over the last 12 months"
 />
 ```
 
@@ -1429,7 +1457,7 @@ Donut chart with center total and a legend with shares.
 | `totalLabel` | `string \| undefined` | `"Total"` | Caption under the center total. |
 | `format` | `((value: number) => string) \| undefined` |  | Formats numbers for display. |
 
-Example (demo `/ui/charts`):
+Example (demo `/`):
 
 ```vue
 <NuDonut :segments="channels" total-label="Sessions" />
@@ -1447,10 +1475,10 @@ Tiny trend line for tiles and table cells.
 | `area` | `boolean \| undefined` | `true` |  |
 | `label` | `string \| undefined` |  | Visible label (also the accessible name). |
 
-Example (demo `/dashboard-3`):
+Example (demo `/`):
 
 ```vue
-<NuSparkline :data="o.good ? [3, 4, 3, 5, 6, 7] : [6, 5, 6, 4, 3, 3]" :color="o.good ? 'var(--nu-success)' : 'var(--nu-danger)'" :height="28" :area="false" />
+<NuSparkline :data="revenue" label="Revenue, last 12 months" />
 ```
 
 ## NuGeoMap
@@ -1486,10 +1514,10 @@ Avatar image or initials with optional status dot.
 | `status` | `"online" \| "away" \| "busy" \| "offline" \| undefined` |  |  |
 | `square` | `boolean \| undefined` |  | Icon-only square shape (provide aria-label). |
 
-Example (demo `/apps/chat`):
+Example:
 
 ```vue
-<NuAvatar :name="c.name" :status="c.status" :size="34" />
+<NuAvatar :name="user.name" :size="32" status="online" />
 ```
 
 ## NuAvatarGroup
@@ -1502,10 +1530,10 @@ Overlapping avatars with a "+N" counter.
 | `max` | `number \| undefined` | `4` | Maximum value. |
 | `size` | `number \| undefined` | `30` | Size: 'sm' \| 'md' \| 'lg'. |
 
-Example (demo `/apps/kanban`):
+Example (demo `/tables/data`):
 
 ```vue
-<NuAvatarGroup :names="task.people" :size="22" :max="3" />
+<NuAvatarGroup :names="row.team" :size="26" :max="3" />
 ```
 
 ## NuIcon

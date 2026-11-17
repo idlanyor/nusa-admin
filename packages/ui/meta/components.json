@@ -1,6 +1,6 @@
 {
   "package": "nusa-admin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "components": [
     {
       "name": "NuLayout",
@@ -363,14 +363,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/Widgets.vue",
-          "route": "/widgets",
-          "code": "<NuPageHeader title=\"Widgets\" subtitle=\"Ready-made blocks for dashboards.\" :breadcrumb=\"[{ label: 'Home', to: '/' }, { label: 'Widgets' }]\" />"
+          "file": "apps/demo/src/pages/Billing.vue",
+          "route": "/billing",
+          "code": "<NuPageHeader title=\"Billing\" subtitle=\"Payment methods, invoices and recent transactions.\" :breadcrumb=\"[{ label: 'Home', to: '/' }, { label: 'Billing' }]\" />"
         },
         {
-          "file": "apps/demo/src/pages/forms/Editors.vue",
-          "route": "/forms/editors",
-          "code": "<NuPageHeader title=\"Editors\" :breadcrumb=\"[{ label: 'Home', to: '/' }, { label: 'Forms' }, { label: 'Editors' }]\" />"
+          "file": "apps/demo/src/pages/Blank.vue",
+          "route": "/blank",
+          "code": "<NuPageHeader title=\"Blank page\" subtitle=\"Copy this file to start a new page.\" :breadcrumb=\"[{ label: 'Home', to: '/' }, { label: 'Blank' }]\" />"
         }
       ]
     },
@@ -587,14 +587,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/auth/LockScreen.vue",
-          "route": "/auth/lock",
-          "code": "<NuAuthLayout title=\"Session locked\" subtitle=\"Enter your password to pick up where you left off.\">\n  <div class=\"nu-cluster\" style=\"margin-bottom: 12px\">\n    <NuAvatar :name=\"user?.name ?? 'Guest'\" :size=\"40\" />\n    <div>\n      <div class=\"nu-fw-600\">{{ user?.name ?? 'Guest' }}</div>\n      <div class=\"nu-text-sm nu-text-muted\">{{ user?.email }}</div>\n    </div>\n  </div>\n  <form class=\"nu-stack\" style=\"--nu-gap: 12px\" @submit.prevent=\"router.push(user ? '/' : '/auth/login')\">\n    <NuInput v-model=\"password\" label=\"Password\" type=\"password\" autocomplete=\"current-password\" required>\n      <template #prefix><Lock /></template>\n    </NuInput>\n    <NuButton type=\"submit\" size=\"lg\" block>Unlock</NuButton>\n  </form>\n  <template #footer>Not you? <RouterLink to=\"/auth/login\">Sign in as someone else</RouterLink></template>\n</NuAuthLayout>"
-        },
-        {
           "file": "apps/demo/src/pages/auth/ForgotPassword.vue",
           "route": "/auth/forgot-password",
           "code": "<NuAuthLayout title=\"Reset password\" subtitle=\"We'll email you a link to choose a new password.\">\n  <NuAlert v-if=\"sent\" color=\"success\" title=\"Check your inbox\">If an account exists for {{ email }}, a reset link is on its way.</NuAlert>\n  <form v-else class=\"nu-stack\" style=\"--nu-gap: 12px\" @submit.prevent=\"sent = true\">\n    <NuInput v-model=\"email\" label=\"Email\" type=\"email\" autocomplete=\"email\" required>\n      <template #prefix><Mail /></template>\n    </NuInput>\n    <NuButton type=\"submit\" size=\"lg\" block>Send reset link</NuButton>\n  </form>\n  <template #footer><RouterLink to=\"/auth/login\">Back to sign in</RouterLink></template>\n</NuAuthLayout>"
+        },
+        {
+          "file": "apps/demo/src/pages/auth/LockScreen.vue",
+          "route": "/auth/lock",
+          "code": "<NuAuthLayout title=\"Session locked\" subtitle=\"Enter your password to pick up where you left off.\">\n  <div class=\"nu-cluster\" style=\"margin-bottom: 12px\">\n    <NuAvatar :name=\"user?.name ?? 'Guest'\" :size=\"40\" />\n    <div>\n      <div class=\"nu-fw-600\">{{ user?.name ?? 'Guest' }}</div>\n      <div class=\"nu-text-sm nu-text-muted\">{{ user?.email }}</div>\n    </div>\n  </div>\n  <form class=\"nu-stack\" style=\"--nu-gap: 12px\" @submit.prevent=\"router.push(user ? '/' : '/auth/login')\">\n    <NuInput v-model=\"password\" label=\"Password\" type=\"password\" autocomplete=\"current-password\" required>\n      <template #prefix><Lock /></template>\n    </NuInput>\n    <NuButton type=\"submit\" size=\"lg\" block>Unlock</NuButton>\n  </form>\n  <template #footer>Not you? <RouterLink to=\"/auth/login\">Sign in as someone else</RouterLink></template>\n</NuAuthLayout>"
         }
       ]
     },
@@ -784,14 +784,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/Widgets.vue",
-          "route": "/widgets",
-          "code": "<NuCard title=\"Outline card\" accent=\"primary\" collapsible removable>Colored top border. Collapse or remove it with the tools.</NuCard>"
+          "file": "apps/demo/src/pages/Billing.vue",
+          "route": "/billing",
+          "code": "<NuCard title=\"Payment methods\">\n  <template #tools><NuButton size=\"sm\" :icon=\"Plus\" @click=\"addCard = true\">Add card</NuButton></template>\n  <div class=\"nu-row\" style=\"--nu-gap: 12px\">\n    <div v-for=\"c in cards\" :key=\"c.last4\" class=\"nu-col-md-6\">\n      <div class=\"pay-method\">\n        <CreditCard />\n        <div class=\"nu-grow\">\n          <div class=\"nu-fw-600 nu-tabular\">{{ c.brand }} •••• {{ c.last4 }}</div>\n          <div class=\"nu-text-sm nu-text-muted\">Expires {{ c.exp }}</div>\n        </div>\n        <NuBadge v-if=\"c.primary\" color=\"success\">Primary</NuBadge>\n        <NuButton size=\"sm\" variant=\"ghost\" color=\"secondary\" :icon=\"Pencil\" square :aria-label=\"`Edit card ending ${c.last4}`\" />\n      </div>\n    </div>\n  </div>\n</NuCard>"
         },
         {
-          "file": "apps/demo/src/pages/forms/Editors.vue",
-          "route": "/forms/editors",
-          "code": "<NuCard title=\"Rich text (NuEditor)\" subtitle=\"contenteditable with a toolbar; v-model is HTML\">\n  <NuEditor v-model=\"html\" placeholder=\"Start writing…\" min-height=\"220px\" hint=\"Sanitize the HTML on the server before showing it to other users.\" />\n</NuCard>"
+          "file": "apps/demo/src/pages/Blank.vue",
+          "route": "/blank",
+          "code": "<NuCard title=\"Card title\">\n  Start building here. Add a route in <code>router.ts</code> and an entry in <code>menu.ts</code>.\n</NuCard>"
         }
       ]
     },
@@ -863,14 +863,14 @@
       "exposed": [],
       "examples": [
         {
+          "file": "apps/demo/src/pages/Dashboard.vue",
+          "route": "/",
+          "code": "<NuStatCard label=\"Revenue\" value=\"$84,600\" :icon=\"CircleDollarSign\" :delta=\"9.4\" delta-label=\"vs last month\">\n  <NuSparkline :data=\"revenue\" label=\"Revenue, last 12 months\" />\n</NuStatCard>"
+        },
+        {
           "file": "apps/demo/src/pages/Widgets.vue",
           "route": "/widgets",
           "code": "<NuStatCard label=\"Sales\" value=\"$24,310\" :icon=\"CircleDollarSign\" color=\"success\" :delta=\"3.2\" delta-label=\"vs last month\" />"
-        },
-        {
-          "file": "apps/demo/src/pages/ui/DataDisplay.vue",
-          "route": "/ui/data-display",
-          "code": "<NuStatCard label=\"Soft stat\" value=\"1,284\" :icon=\"ShoppingCart\" :delta=\"4.1\" delta-label=\"vs last month\" />"
         }
       ]
     },
@@ -984,14 +984,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/Widgets.vue",
-          "route": "/widgets",
-          "code": "<NuInfoBox label=\"Messages\" value=\"1,410\" :icon=\"MessageSquare\" color=\"info\" />"
+          "file": "apps/demo/src/pages/Billing.vue",
+          "route": "/billing",
+          "code": "<NuInfoBox label=\"Balance\" value=\"$4,820.00\" :icon=\"Wallet\" color=\"success\" description=\"Available for payout\" />"
         },
         {
-          "file": "apps/demo/src/pages/ui/DataDisplay.vue",
-          "route": "/ui/data-display",
-          "code": "<NuInfoBox label=\"Revenue\" value=\"$84,600\" :icon=\"CircleDollarSign\" />"
+          "file": "apps/demo/src/pages/Dashboard2.vue",
+          "route": "/dashboard-2",
+          "code": "<NuInfoBox label=\"CPU traffic\" value=\"10%\" :icon=\"Cog\" color=\"info\" />"
         }
       ]
     },
@@ -1082,14 +1082,14 @@
       "exposed": [],
       "examples": [
         {
+          "file": "apps/demo/src/pages/Dashboard.vue",
+          "route": "/",
+          "code": "<NuTimeline :items=\"activity\" />"
+        },
+        {
           "file": "apps/demo/src/pages/Ecommerce.vue",
           "route": "/ecommerce",
           "code": "<NuTimeline\n  :items=\"[\n    { title: 'Great light, sturdy base — Ayu', time: '★★★★★', description: 'The warm setting is perfect for reading.', color: 'success' },\n    { title: 'Good, but the cable is short — Budi', time: '★★★★', description: 'Bought an extension; otherwise excellent.', color: 'info' },\n    { title: 'Arrived scratched — Citra', time: '★★★', description: 'Support replaced it within a week.', color: 'warning' },\n  ]\"\n/>"
-        },
-        {
-          "file": "apps/demo/src/pages/apps/Calendar.vue",
-          "route": "/apps/calendar",
-          "code": "<NuTimeline v-if=\"dayEvents.length\" :items=\"dayEvents.map((e) => ({ title: e.title, color: e.color }))\" />"
         }
       ]
     },
@@ -1262,14 +1262,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/Dashboard2.vue",
-          "route": "/dashboard-2",
-          "code": "<NuTable :columns=\"columns\" :rows=\"orders.slice(0, 7)\" row-key=\"id\" :page-size=\"0\">\n  <template #cell-status=\"{ row }\"><NuBadge :color=\"statusColor[row.status as Order['status']]\">{{ row.status }}</NuBadge></template>\n</NuTable>"
-        },
-        {
           "file": "apps/demo/src/pages/Dashboard.vue",
           "route": "/",
           "code": "<NuTable :columns=\"columns\" :rows=\"orders.slice(0, 6)\" row-key=\"id\" :page-size=\"0\">\n  <template #cell-customer=\"{ row }\">\n    <div class=\"nu-cluster\">\n      <NuAvatar :name=\"row.customer\" :size=\"28\" />\n      <span>{{ row.customer }}</span>\n    </div>\n  </template>\n  <template #cell-status=\"{ row }\">\n    <NuBadge :color=\"statusColor[row.status as Order['status']]\" dot>{{ row.status }}</NuBadge>\n  </template>\n</NuTable>"
+        },
+        {
+          "file": "apps/demo/src/pages/Dashboard2.vue",
+          "route": "/dashboard-2",
+          "code": "<NuTable :columns=\"columns\" :rows=\"orders.slice(0, 7)\" row-key=\"id\" :page-size=\"0\">\n  <template #cell-status=\"{ row }\"><NuBadge :color=\"statusColor[row.status as Order['status']]\">{{ row.status }}</NuBadge></template>\n</NuTable>"
         }
       ]
     },
@@ -1353,14 +1353,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/apps/Compose.vue",
-          "route": "/apps/mailbox/compose",
-          "code": "<NuList>\n  <NuListItem :icon=\"Inbox\" title=\"Inbox\" to=\"/apps/mailbox\" />\n  <NuListItem :icon=\"Send\" title=\"Sent\" to=\"/apps/mailbox\" />\n  <NuListItem :icon=\"FileText\" title=\"Drafts\" to=\"/apps/mailbox\" />\n  <NuListItem :icon=\"Trash2\" title=\"Trash\" to=\"/apps/mailbox\" />\n</NuList>"
+          "file": "apps/demo/src/pages/Billing.vue",
+          "route": "/billing",
+          "code": "<NuList>\n  <NuListItem v-for=\"t in transactions\" :key=\"t.name + t.date\" :title=\"t.name\" :subtitle=\"t.date\">\n    <template #start>\n      <span class=\"tx-icon\" :class=\"t.pending ? 'is-pending' : t.amount < 0 ? 'is-out' : 'is-in'\">\n        <component :is=\"t.amount < 0 ? ArrowUpRight : ArrowDownLeft\" />\n      </span>\n    </template>\n    <template #end>\n      <NuBadge v-if=\"t.pending\" color=\"warning\">Pending</NuBadge>\n      <strong class=\"nu-tabular\" :style=\"{ color: t.amount < 0 ? 'var(--nu-text)' : 'var(--nu-success)' }\">{{ money(t.amount) }}</strong>\n    </template>\n  </NuListItem>\n</NuList>"
         },
         {
-          "file": "apps/demo/src/pages/apps/Mailbox.vue",
-          "route": "/apps/mailbox",
-          "code": "<NuList>\n  <NuListItem v-for=\"f in folders\" :key=\"f.key\" :icon=\"f.icon\" :title=\"f.label\" clickable :active=\"folder === f.key\" @click=\"folder = f.key; checked = []\">\n    <template v-if=\"count(f.key)\" #end><NuBadge :color=\"f.key === 'inbox' ? 'primary' : 'secondary'\">{{ count(f.key) }}</NuBadge></template>\n  </NuListItem>\n</NuList>"
+          "file": "apps/demo/src/pages/Dashboard2.vue",
+          "route": "/dashboard-2",
+          "code": "<NuList>\n  <NuListItem v-for=\"(p, i) in products\" :key=\"p.name\" :title=\"p.name\" :subtitle=\"p.note\">\n    <template #start><img class=\"product-thumb\" :src=\"placeholderImage(i + 2, 80, 80)\" alt=\"\" /></template>\n    <template #end><NuBadge :color=\"p.tag\">{{ p.price }}</NuBadge></template>\n  </NuListItem>\n</NuList>"
         }
       ]
     },
@@ -1434,14 +1434,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/apps/Compose.vue",
-          "route": "/apps/mailbox/compose",
-          "code": "<NuListItem :icon=\"Inbox\" title=\"Inbox\" to=\"/apps/mailbox\" />"
+          "file": "apps/demo/src/pages/Billing.vue",
+          "route": "/billing",
+          "code": "<NuListItem v-for=\"t in transactions\" :key=\"t.name + t.date\" :title=\"t.name\" :subtitle=\"t.date\">\n  <template #start>\n    <span class=\"tx-icon\" :class=\"t.pending ? 'is-pending' : t.amount < 0 ? 'is-out' : 'is-in'\">\n      <component :is=\"t.amount < 0 ? ArrowUpRight : ArrowDownLeft\" />\n    </span>\n  </template>\n  <template #end>\n    <NuBadge v-if=\"t.pending\" color=\"warning\">Pending</NuBadge>\n    <strong class=\"nu-tabular\" :style=\"{ color: t.amount < 0 ? 'var(--nu-text)' : 'var(--nu-success)' }\">{{ money(t.amount) }}</strong>\n  </template>\n</NuListItem>"
         },
         {
-          "file": "apps/demo/src/pages/apps/Mailbox.vue",
-          "route": "/apps/mailbox",
-          "code": "<NuListItem v-for=\"f in folders\" :key=\"f.key\" :icon=\"f.icon\" :title=\"f.label\" clickable :active=\"folder === f.key\" @click=\"folder = f.key; checked = []\">\n  <template v-if=\"count(f.key)\" #end><NuBadge :color=\"f.key === 'inbox' ? 'primary' : 'secondary'\">{{ count(f.key) }}</NuBadge></template>\n</NuListItem>"
+          "file": "apps/demo/src/pages/Dashboard2.vue",
+          "route": "/dashboard-2",
+          "code": "<NuListItem v-for=\"(p, i) in products\" :key=\"p.name\" :title=\"p.name\" :subtitle=\"p.note\">\n  <template #start><img class=\"product-thumb\" :src=\"placeholderImage(i + 2, 80, 80)\" alt=\"\" /></template>\n  <template #end><NuBadge :color=\"p.tag\">{{ p.price }}</NuBadge></template>\n</NuListItem>"
         }
       ]
     },
@@ -1470,14 +1470,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/forms/Wizard.vue",
-          "route": "/forms/wizard",
-          "code": "<NuDescriptions\n  :columns=\"2\"\n  :items=\"[\n    { label: 'Name', value: form.name },\n    { label: 'Email', value: form.email },\n    { label: 'Company', value: form.company },\n    { label: 'Team size', value: form.size },\n    { label: 'Plan', value: form.plan },\n    { label: 'Billing', value: form.yearly ? 'Yearly' : 'Monthly' },\n  ]\"\n/>"
-        },
-        {
           "file": "apps/demo/src/pages/Profile.vue",
           "route": "/profile",
           "code": "<NuDescriptions\n  :items=\"[\n    { label: 'Email', value: form.email },\n    { label: 'Location', value: form.city },\n    { label: 'Joined', value: '12 March 2024' },\n    { label: 'Role', key: 'role' },\n  ]\"\n>\n  <template #role><NuBadge>Administrator</NuBadge></template>\n</NuDescriptions>"
+        },
+        {
+          "file": "apps/demo/src/pages/forms/Wizard.vue",
+          "route": "/forms/wizard",
+          "code": "<NuDescriptions\n  :columns=\"2\"\n  :items=\"[\n    { label: 'Name', value: form.name },\n    { label: 'Email', value: form.email },\n    { label: 'Company', value: form.company },\n    { label: 'Team size', value: form.size },\n    { label: 'Plan', value: form.plan },\n    { label: 'Billing', value: form.yearly ? 'Yearly' : 'Monthly' },\n  ]\"\n/>"
         }
       ]
     },
@@ -1730,14 +1730,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/ui/General.vue",
-          "route": "/ui/general",
-          "code": "<NuDivider label=\"Sizes &amp; states\" />"
-        },
-        {
           "file": "apps/demo/src/pages/auth/Login.vue",
           "route": "/auth/login",
           "code": "<NuDivider label=\"or\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/ui/General.vue",
+          "route": "/ui/general",
+          "code": "<NuDivider label=\"Sizes &amp; states\" />"
         }
       ]
     },
@@ -1865,14 +1865,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/Widgets.vue",
-          "route": "/widgets",
-          "code": "<NuDirectChat :messages=\"chat\" height=\"260px\" @send=\"(text) => chat.push({ from: 'Ayu Lestari', text, me: true, time: 'now' })\" />"
-        },
-        {
           "file": "apps/demo/src/pages/Dashboard2.vue",
           "route": "/dashboard-2",
           "code": "<NuDirectChat :messages=\"chat\" height=\"250px\" @send=\"send\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/Widgets.vue",
+          "route": "/widgets",
+          "code": "<NuDirectChat :messages=\"chat\" height=\"260px\" @send=\"(text) => chat.push({ from: 'Ayu Lestari', text, me: true, time: 'now' })\" />"
         }
       ]
     },
@@ -1979,13 +1979,13 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/layout/Example.vue",
-          "code": "<NuAlert color=\"info\">{{ meta.note }} This page forces the option through route meta; other pages keep your saved settings.</NuAlert>"
+          "file": "apps/demo/src/pages/auth/ForgotPassword.vue",
+          "route": "/auth/forgot-password",
+          "code": "<NuAlert v-if=\"sent\" color=\"success\" title=\"Check your inbox\">If an account exists for {{ email }}, a reset link is on its way.</NuAlert>"
         },
         {
-          "file": "apps/demo/src/pages/layout/Options.vue",
-          "route": "/layout/options",
-          "code": "<NuAlert color=\"info\" title=\"Per page or per app\">\n  These switches change the saved default. A page can force its own layout by passing props to <code>NuLayout</code> — the example pages in the menu do that through route meta.\n</NuAlert>"
+          "file": "apps/demo/src/pages/layout/Example.vue",
+          "code": "<NuAlert color=\"info\">{{ meta.note }} This page forces the option through route meta; other pages keep your saved settings.</NuAlert>"
         }
       ]
     },
@@ -2033,14 +2033,13 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/Invoice.vue",
-          "route": "/invoice",
-          "code": "<NuBadge color=\"success\" dot>Paid</NuBadge>"
+          "file": "apps/demo/src/layouts/AdminShell.vue",
+          "code": "<NuBadge color=\"success\" dot>{{ roleLabel[user.role] }}</NuBadge>"
         },
         {
-          "file": "apps/demo/src/pages/Ecommerce.vue",
-          "route": "/ecommerce",
-          "code": "<NuBadge color=\"success\">In stock</NuBadge>"
+          "file": "apps/demo/src/pages/Billing.vue",
+          "route": "/billing",
+          "code": "<NuBadge v-if=\"c.primary\" color=\"success\">Primary</NuBadge>"
         }
       ]
     },
@@ -2101,14 +2100,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/Profile.vue",
-          "route": "/profile",
-          "code": "<NuProgress label=\"Interface design\" :value=\"92\" show-value />"
+          "file": "apps/demo/src/pages/Dashboard.vue",
+          "route": "/",
+          "code": "<NuProgress v-for=\"g in goals\" :key=\"g.label\" :label=\"g.label\" :value=\"g.value\" :color=\"g.color\" show-value />"
         },
         {
-          "file": "apps/demo/src/pages/ui/General.vue",
-          "route": "/ui/general",
-          "code": "<NuProgress label=\"Primary\" :value=\"72\" show-value />"
+          "file": "apps/demo/src/pages/Dashboard2.vue",
+          "route": "/dashboard-2",
+          "code": "<NuProgress label=\"Add products to cart\" :value=\"160\" :max=\"200\" show-value />"
         }
       ]
     },
@@ -2295,9 +2294,9 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/forms/Wizard.vue",
-          "route": "/forms/wizard",
-          "code": "<NuEmpty v-else title=\"All set\" :description=\"`${form.company} was created on the ${form.plan} plan.`\" :icon=\"PartyPopper\">\n  <NuButton size=\"sm\" variant=\"outline\" color=\"secondary\" @click=\"step = 0\">Start over</NuButton>\n</NuEmpty>"
+          "file": "apps/demo/src/pages/Contacts.vue",
+          "route": "/contacts",
+          "code": "<NuEmpty title=\"No contacts found\" description=\"Try another name, company or city.\" />"
         },
         {
           "file": "apps/demo/src/pages/Faq.vue",
@@ -2403,14 +2402,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/apps/Calendar.vue",
-          "route": "/apps/calendar",
-          "code": "<NuModal v-model=\"modal\" title=\"New event\" size=\"sm\">\n  <form id=\"event-form\" class=\"nu-stack\" style=\"--nu-gap: 10px\" @submit.prevent=\"save\">\n    <NuInput v-model=\"draft.title\" label=\"Title\" required />\n    <NuInput v-model=\"draft.date\" label=\"Date\" type=\"date\" required />\n    <NuSelect\n      v-model=\"draft.color\"\n      label=\"Color\"\n      :options=\"['primary', 'success', 'warning', 'danger', 'info', 'secondary'].map((c) => ({ label: c, value: c }))\"\n    />\n  </form>\n  <template #footer=\"{ close }\">\n    <NuButton variant=\"ghost\" color=\"secondary\" @click=\"close\">Cancel</NuButton>\n    <NuButton type=\"submit\" form=\"event-form\">Add</NuButton>\n  </template>\n</NuModal>"
+          "file": "apps/demo/src/pages/Billing.vue",
+          "route": "/billing",
+          "code": "<NuModal v-model=\"addCard\" title=\"Add card\" size=\"sm\">\n  <form id=\"card-form\" class=\"nu-stack\" style=\"--nu-gap: 10px\" @submit.prevent=\"addCard = false; toast.success('Card added (demo).')\">\n    <NuInput label=\"Name on card\" required autocomplete=\"cc-name\" />\n    <NuInput label=\"Card number\" required inputmode=\"numeric\" autocomplete=\"cc-number\" placeholder=\"0000 0000 0000 0000\" />\n    <div class=\"nu-row\" style=\"--nu-gap: 10px\">\n      <div class=\"nu-col-6\"><NuInput label=\"Expiry\" required placeholder=\"MM/YY\" autocomplete=\"cc-exp\" /></div>\n      <div class=\"nu-col-6\"><NuInput label=\"CVC\" required inputmode=\"numeric\" autocomplete=\"cc-csc\" /></div>\n    </div>\n  </form>\n  <template #footer=\"{ close }\">\n    <NuButton variant=\"ghost\" color=\"secondary\" @click=\"close\">Cancel</NuButton>\n    <NuButton type=\"submit\" form=\"card-form\">Add card</NuButton>\n  </template>\n</NuModal>"
         },
         {
-          "file": "apps/demo/src/pages/apps/Mailbox.vue",
-          "route": "/apps/mailbox",
-          "code": "<NuModal v-model=\"compose\" title=\"New message\">\n  <form id=\"compose-form\" class=\"nu-stack\" style=\"--nu-gap: 10px\" @submit.prevent=\"send\">\n    <NuInput label=\"To\" type=\"email\" placeholder=\"name@example.com\" required />\n    <NuInput label=\"Subject\" required />\n    <NuTextarea label=\"Message\" :rows=\"6\" />\n  </form>\n  <template #footer=\"{ close }\">\n    <NuButton variant=\"ghost\" color=\"secondary\" @click=\"close\">Discard</NuButton>\n    <NuButton type=\"submit\" form=\"compose-form\" :icon=\"Send\">Send</NuButton>\n  </template>\n</NuModal>"
+          "file": "apps/demo/src/pages/Users.vue",
+          "route": "/users",
+          "code": "<NuModal :model-value=\"!!removing\" title=\"Remove user?\" size=\"sm\" @update:model-value=\"!$event && (removing = null)\">\n  <p>{{ removing?.name }} will lose access immediately.</p>\n  <template #footer>\n    <NuButton variant=\"ghost\" color=\"secondary\" @click=\"removing = null\">Cancel</NuButton>\n    <NuButton color=\"danger\" @click=\"remove\">Remove</NuButton>\n  </template>\n</NuModal>"
         }
       ]
     },
@@ -2475,14 +2474,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/ui/Feedback.vue",
-          "route": "/ui/feedback",
-          "code": "<NuDrawer v-model=\"drawer\" title=\"Filters\">\n  <div class=\"nu-stack\" style=\"--nu-gap: 10px\">\n    <NuInput label=\"Customer\" placeholder=\"Any customer\" />\n    <NuInput label=\"Min amount\" type=\"number\" placeholder=\"0\" />\n  </div>\n  <template #footer=\"{ close }\">\n    <NuButton variant=\"ghost\" color=\"secondary\" @click=\"close\">Reset</NuButton>\n    <NuButton @click=\"close\">Apply</NuButton>\n  </template>\n</NuDrawer>"
-        },
-        {
           "file": "apps/demo/src/pages/Users.vue",
           "route": "/users",
           "code": "<NuDrawer v-model=\"drawer\" :title=\"editing ? 'Edit user' : 'Add user'\">\n  <form id=\"user-form\" class=\"nu-stack\" style=\"--nu-gap: 10px\" novalidate @submit.prevent=\"save\">\n    <NuInput v-model=\"form.name\" label=\"Full name\" required autocomplete=\"name\" />\n    <NuInput v-model=\"form.email\" label=\"Email\" type=\"email\" required autocomplete=\"email\" :error=\"error\" />\n    <NuSelect v-model=\"form.role\" label=\"Role\" :options=\"roleOptions\" />\n    <NuSwitch v-model=\"form.active\" label=\"Active\" />\n  </form>\n  <template #footer=\"{ close }\">\n    <NuButton variant=\"ghost\" color=\"secondary\" @click=\"close\">Cancel</NuButton>\n    <NuButton type=\"submit\" form=\"user-form\">{{ editing ? 'Save changes' : 'Add user' }}</NuButton>\n  </template>\n</NuDrawer>"
+        },
+        {
+          "file": "apps/demo/src/pages/ui/Feedback.vue",
+          "route": "/ui/feedback",
+          "code": "<NuDrawer v-model=\"drawer\" title=\"Filters\">\n  <div class=\"nu-stack\" style=\"--nu-gap: 10px\">\n    <NuInput label=\"Customer\" placeholder=\"Any customer\" />\n    <NuInput label=\"Min amount\" type=\"number\" placeholder=\"0\" />\n  </div>\n  <template #footer=\"{ close }\">\n    <NuButton variant=\"ghost\" color=\"secondary\" @click=\"close\">Reset</NuButton>\n    <NuButton @click=\"close\">Apply</NuButton>\n  </template>\n</NuDrawer>"
         }
       ]
     },
@@ -2590,14 +2589,13 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/Widgets.vue",
-          "route": "/widgets",
-          "code": "<NuButton size=\"sm\" variant=\"soft\" color=\"danger\" @click=\"toast.info('Footer action')\">Action</NuButton>"
+          "file": "apps/demo/src/layouts/AdminShell.vue",
+          "code": "<NuButton size=\"sm\" variant=\"soft\" to=\"/layout/options\" @click=\"controlPanel = false\">All layout options</NuButton>"
         },
         {
-          "file": "apps/demo/src/pages/forms/Wizard.vue",
-          "route": "/forms/wizard",
-          "code": "<NuButton variant=\"outline\" color=\"secondary\" :disabled=\"step === 0\" @click=\"step--\">Back</NuButton>"
+          "file": "apps/demo/src/pages/Billing.vue",
+          "route": "/billing",
+          "code": "<NuButton size=\"sm\" :icon=\"Plus\" @click=\"addCard = true\">Add card</NuButton>"
         }
       ]
     },
@@ -2685,13 +2683,13 @@
       ],
       "examples": [
         {
+          "file": "apps/demo/src/layouts/AdminShell.vue",
+          "code": "<NuDropdown width=\"200px\">\n  <template #trigger><NuIconButton :icon=\"Languages\" label=\"Language\" /></template>\n  <div class=\"nu-dropdown__header\">Language</div>\n  <NuDropdownItem v-for=\"l in languages\" :key=\"l.code\" :class=\"{ 'is-current': language === l.code }\" :aria-current=\"language === l.code || undefined\" @click=\"setLocale(l.code)\">\n    {{ l.label }}\n  </NuDropdownItem>\n</NuDropdown>"
+        },
+        {
           "file": "apps/demo/src/pages/ui/Navigation.vue",
           "route": "/ui/navigation",
           "code": "<NuDropdown align=\"left\">\n  <template #trigger><NuButton variant=\"outline\" color=\"secondary\">Actions</NuButton></template>\n  <NuDropdownItem :icon=\"User\">Profile</NuDropdownItem>\n  <NuDropdownItem :icon=\"CreditCard\">Billing</NuDropdownItem>\n  <div class=\"nu-dropdown__divider\" />\n  <NuDropdownItem :icon=\"Trash2\" danger>Delete</NuDropdownItem>\n</NuDropdown>"
-        },
-        {
-          "file": "apps/demo/src/layouts/AdminShell.vue",
-          "code": "<NuDropdown width=\"200px\">\n  <template #trigger><NuIconButton :icon=\"Languages\" label=\"Language\" /></template>\n  <div class=\"nu-dropdown__header\">Language</div>\n  <NuDropdownItem v-for=\"l in languages\" :key=\"l.code\" :class=\"{ 'is-current': language === l.code }\" :aria-current=\"language === l.code || undefined\" @click=\"setLocale(l.code)\">\n    {{ l.label }}\n  </NuDropdownItem>\n</NuDropdown>"
         }
       ]
     },
@@ -2748,13 +2746,13 @@
       "exposed": [],
       "examples": [
         {
+          "file": "apps/demo/src/layouts/AdminShell.vue",
+          "code": "<NuDropdownItem v-for=\"l in languages\" :key=\"l.code\" :class=\"{ 'is-current': language === l.code }\" :aria-current=\"language === l.code || undefined\" @click=\"setLocale(l.code)\">\n  {{ l.label }}\n</NuDropdownItem>"
+        },
+        {
           "file": "apps/demo/src/pages/ui/Navigation.vue",
           "route": "/ui/navigation",
           "code": "<NuDropdownItem :icon=\"User\">Profile</NuDropdownItem>"
-        },
-        {
-          "file": "apps/demo/src/layouts/AdminShell.vue",
-          "code": "<NuDropdownItem v-for=\"l in languages\" :key=\"l.code\" :class=\"{ 'is-current': language === l.code }\" :aria-current=\"language === l.code || undefined\" @click=\"setLocale(l.code)\">\n  {{ l.label }}\n</NuDropdownItem>"
         }
       ]
     },
@@ -2807,14 +2805,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/forms/Advanced.vue",
-          "route": "/forms/advanced",
-          "code": "<NuSegmented v-model=\"billing\" :options=\"[{ label: 'Monthly', value: 'monthly' }, { label: 'Yearly', value: 'yearly' }]\" label=\"Billing period\" />"
+          "file": "apps/demo/src/pages/Dashboard3.vue",
+          "route": "/dashboard-3",
+          "code": "<NuSegmented v-model=\"range\" size=\"sm\" label=\"Range\" :options=\"[{ label: 'Week', value: 'week' }, { label: 'Month', value: 'month' }]\" />"
         },
         {
-          "file": "apps/demo/src/pages/layout/Options.vue",
-          "route": "/layout/options",
-          "code": "<NuSegmented :model-value=\"layout.sidebarVariant\" size=\"sm\" label=\"Sidebar style\" :options=\"[{ label: 'Dark', value: 'dark' }, { label: 'Light', value: 'light' }]\" @update:model-value=\"setSidebarVariant($event as 'dark' | 'light')\" />"
+          "file": "apps/demo/src/pages/Ecommerce.vue",
+          "route": "/ecommerce",
+          "code": "<NuSegmented v-model=\"color\" label=\"Color\" :options=\"[{ label: 'Graphite', value: 'graphite' }, { label: 'Sand', value: 'sand' }, { label: 'Sage', value: 'sage' }]\" />"
         }
       ]
     },
@@ -2909,14 +2907,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/forms/Wizard.vue",
-          "route": "/forms/wizard",
-          "code": "<NuInput v-model=\"form.name\" label=\"Full name\" required :error=\"errors.name\" autocomplete=\"name\" />"
+          "file": "apps/demo/src/pages/Billing.vue",
+          "route": "/billing",
+          "code": "<NuInput label=\"Name on card\" required autocomplete=\"cc-name\" />"
         },
         {
-          "file": "apps/demo/src/pages/forms/Validation.vue",
-          "route": "/forms/validation",
-          "code": "<NuInput v-bind=\"field('name')\" label=\"Full name\" required autocomplete=\"name\" />"
+          "file": "apps/demo/src/pages/ContactUs.vue",
+          "route": "/contact",
+          "code": "<NuInput v-bind=\"form.field('name')\" label=\"Name\" required autocomplete=\"name\" />"
         }
       ]
     },
@@ -2987,14 +2985,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/forms/Validation.vue",
-          "route": "/forms/validation",
-          "code": "<NuTextarea v-bind=\"field('bio')\" label=\"Short bio\" :rows=\"3\" :hint=\"bioHint\" />"
+          "file": "apps/demo/src/pages/ContactUs.vue",
+          "route": "/contact",
+          "code": "<NuTextarea v-bind=\"form.field('message')\" label=\"Message\" :rows=\"5\" required />"
         },
         {
-          "file": "apps/demo/src/pages/forms/Basic.vue",
-          "route": "/forms/basic",
-          "code": "<NuTextarea v-model=\"form.bio\" label=\"Bio\" placeholder=\"A short introduction\" hint=\"Shown on the public profile.\" />"
+          "file": "apps/demo/src/pages/Profile.vue",
+          "route": "/profile",
+          "code": "<NuTextarea v-model=\"form.bio\" label=\"Bio\" :rows=\"3\" />"
         }
       ]
     },
@@ -3071,14 +3069,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/forms/Wizard.vue",
-          "route": "/forms/wizard",
-          "code": "<NuSelect\n  v-model=\"form.size\"\n  label=\"Team size\"\n  :options=\"[{ label: '1–10', value: '1-10' }, { label: '11–50', value: '11-50' }, { label: '51–200', value: '51-200' }, { label: '200+', value: '200+' }]\"\n/>"
+          "file": "apps/demo/src/pages/ContactUs.vue",
+          "route": "/contact",
+          "code": "<NuSelect v-bind=\"form.field('topic')\" label=\"Topic\" :options=\"[{ label: 'Sales', value: 'sales' }, { label: 'Support', value: 'support' }, { label: 'Partnerships', value: 'partners' }]\" />"
         },
         {
-          "file": "apps/demo/src/pages/forms/Validation.vue",
-          "route": "/forms/validation",
-          "code": "<NuSelect v-bind=\"field('country')\" label=\"Country\" placeholder=\"Choose a country\" required :options=\"[{ label: 'Indonesia', value: 'id' }, { label: 'Malaysia', value: 'my' }, { label: 'Singapore', value: 'sg' }]\" />"
+          "file": "apps/demo/src/pages/Search.vue",
+          "route": "/search",
+          "code": "<NuSelect v-model=\"sort\" label=\"Sort by\" :options=\"[{ label: 'Relevance', value: 'relevance' }, { label: 'Title A–Z', value: 'az' }]\" />"
         }
       ]
     },
@@ -3172,9 +3170,9 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/forms/Validation.vue",
-          "route": "/forms/validation",
-          "code": "<NuCombobox v-bind=\"field('skills')\" multiple label=\"Skills\" placeholder=\"Choose skills\" :options=\"['Vue', 'TypeScript', 'CSS', 'Node', 'Go', 'SQL'].map((s) => ({ label: s, value: s }))\" />"
+          "file": "apps/demo/src/pages/apps/Compose.vue",
+          "route": "/apps/mailbox/compose",
+          "code": "<NuCombobox v-bind=\"form.field('to')\" :options=\"people\" multiple label=\"To\" placeholder=\"Choose recipients\" search-placeholder=\"Search contacts\" />"
         },
         {
           "file": "apps/demo/src/pages/forms/Advanced.vue",
@@ -3268,14 +3266,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/forms/Validation.vue",
-          "route": "/forms/validation",
-          "code": "<NuDatePicker v-bind=\"field('start')\" label=\"Start date\" />"
-        },
-        {
           "file": "apps/demo/src/pages/forms/Advanced.vue",
           "route": "/forms/advanced",
           "code": "<NuDatePicker v-model=\"day\" label=\"Date\" clearable />"
+        },
+        {
+          "file": "apps/demo/src/pages/forms/Validation.vue",
+          "route": "/forms/validation",
+          "code": "<NuDatePicker v-bind=\"field('start')\" label=\"Start date\" />"
         }
       ]
     },
@@ -3341,14 +3339,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/forms/Editors.vue",
-          "route": "/forms/editors",
-          "code": "<NuEditor v-model=\"html\" placeholder=\"Start writing…\" min-height=\"220px\" hint=\"Sanitize the HTML on the server before showing it to other users.\" />"
-        },
-        {
           "file": "apps/demo/src/pages/apps/Compose.vue",
           "route": "/apps/mailbox/compose",
           "code": "<NuEditor v-bind=\"form.field('body')\" label=\"Message\" placeholder=\"Write your message…\" min-height=\"220px\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/forms/Editors.vue",
+          "route": "/forms/editors",
+          "code": "<NuEditor v-model=\"html\" placeholder=\"Start writing…\" min-height=\"220px\" hint=\"Sanitize the HTML on the server before showing it to other users.\" />"
         }
       ]
     },
@@ -3476,14 +3474,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/forms/Validation.vue",
-          "route": "/forms/validation",
-          "code": "<NuCheckbox v-bind=\"field('terms')\">I accept the terms and privacy policy</NuCheckbox>"
+          "file": "apps/demo/src/pages/Search.vue",
+          "route": "/search",
+          "code": "<NuCheckbox v-for=\"(_, t) in types\" :key=\"t\" v-model=\"types[t]\" :label=\"`${t}s`\" />"
         },
         {
-          "file": "apps/demo/src/pages/forms/Basic.vue",
-          "route": "/forms/basic",
-          "code": "<NuCheckbox v-model=\"form.terms\">I confirm this person agreed to the terms</NuCheckbox>"
+          "file": "apps/demo/src/pages/apps/Mailbox.vue",
+          "route": "/apps/mailbox",
+          "code": "<NuCheckbox :model-value=\"checked.includes(m.id)\" :aria-label=\"`Select ${m.subject}`\" @update:model-value=\"toggle(m.id, $event)\" />"
         }
       ]
     },
@@ -3530,14 +3528,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/forms/Wizard.vue",
-          "route": "/forms/wizard",
-          "code": "<NuSwitch v-model=\"form.yearly\" label=\"Bill yearly (2 months free)\" />"
+          "file": "apps/demo/src/pages/Profile.vue",
+          "route": "/profile",
+          "code": "<NuSwitch v-model=\"prefs.mentions\" label=\"Email me when someone mentions me\" />"
         },
         {
-          "file": "apps/demo/src/pages/forms/Basic.vue",
-          "route": "/forms/basic",
-          "code": "<NuSwitch v-model=\"form.newsletter\" label=\"Send product updates by email\" />"
+          "file": "apps/demo/src/pages/Settings.vue",
+          "route": "/settings",
+          "code": "<NuSwitch\n  :model-value=\"layout.sidebarVariant === 'light'\"\n  label=\"Light sidebar\"\n  @update:model-value=\"setSidebarVariant($event ? 'light' : 'dark')\"\n/>"
         }
       ]
     },
@@ -3601,9 +3599,9 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/forms/Wizard.vue",
-          "route": "/forms/wizard",
-          "code": "<NuRadioGroup\n  v-model=\"form.plan\"\n  label=\"Plan\"\n  :options=\"[{ label: 'Starter — $19/mo', value: 'starter' }, { label: 'Team — $79/mo', value: 'team' }, { label: 'Business — $249/mo', value: 'business' }]\"\n/>"
+          "file": "apps/demo/src/pages/forms/Advanced.vue",
+          "route": "/forms/advanced",
+          "code": "<NuRadioGroup\n  v-model=\"plan\"\n  label=\"Plan\"\n  :options=\"[{ label: 'Starter — $19/mo', value: 'starter' }, { label: 'Team — $79/mo', value: 'team' }, { label: 'Business — $249/mo', value: 'business' }]\"\n/>"
         },
         {
           "file": "apps/demo/src/pages/forms/Validation.vue",
@@ -3872,14 +3870,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/forms/Advanced.vue",
-          "route": "/forms/advanced",
-          "code": "<NuFileUpload v-model=\"files\" multiple hint=\"Any file type, several at once\" />"
-        },
-        {
           "file": "apps/demo/src/pages/apps/Compose.vue",
           "route": "/apps/mailbox/compose",
           "code": "<NuFileUpload v-model=\"form.values.files\" multiple label=\"Attach files\" hint=\"Max 25 MB in total\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/forms/Advanced.vue",
+          "route": "/forms/advanced",
+          "code": "<NuFileUpload v-model=\"files\" multiple hint=\"Any file type, several at once\" />"
         }
       ]
     },
@@ -3934,14 +3932,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/forms/Advanced.vue",
-          "route": "/forms/advanced",
-          "code": "<NuRating v-model=\"score\" />"
-        },
-        {
           "file": "apps/demo/src/pages/Ecommerce.vue",
           "route": "/ecommerce",
           "code": "<NuRating :model-value=\"4\" readonly :size=\"15\" />"
+        },
+        {
+          "file": "apps/demo/src/pages/forms/Advanced.vue",
+          "route": "/forms/advanced",
+          "code": "<NuRating v-model=\"score\" />"
         }
       ]
     },
@@ -3995,14 +3993,14 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/Dashboard3.vue",
-          "route": "/dashboard-3",
-          "code": "<NuChart\n  :labels=\"visitors[range as 'week' | 'month'].labels\"\n  :series=\"[{ name: 'This period', data: visitors[range as 'week' | 'month'].current }, { name: 'Last period', data: visitors[range as 'week' | 'month'].last }]\"\n  :height=\"230\"\n/>"
+          "file": "apps/demo/src/pages/Dashboard.vue",
+          "route": "/",
+          "code": "<NuChart\n  type=\"area\"\n  :labels=\"months\"\n  :series=\"[{ name: 'Revenue', data: revenue }, { name: 'Expenses', data: expenses }]\"\n  :format=\"(v) => `$${(v / 1000).toFixed(0)}K`\"\n  label=\"Revenue versus expenses over the last 12 months\"\n/>"
         },
         {
-          "file": "apps/demo/src/pages/ui/Charts.vue",
-          "route": "/ui/charts",
-          "code": "<NuChart :labels=\"months\" :series=\"[{ name: 'Revenue', data: revenue }, { name: 'Expenses', data: expenses }]\" :format=\"usdK\" />"
+          "file": "apps/demo/src/pages/Dashboard2.vue",
+          "route": "/dashboard-2",
+          "code": "<NuChart type=\"area\" :labels=\"months\" :series=\"[{ name: 'Revenue', data: revenue }, { name: 'Expenses', data: expenses }]\" :format=\"(v) => `$${(v / 1000).toFixed(0)}K`\" :height=\"240\" />"
         }
       ]
     },
@@ -4051,8 +4049,8 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/ui/Charts.vue",
-          "route": "/ui/charts",
+          "file": "apps/demo/src/pages/Dashboard.vue",
+          "route": "/",
           "code": "<NuDonut :segments=\"channels\" total-label=\"Sessions\" />"
         },
         {
@@ -4107,14 +4105,14 @@
       "exposed": [],
       "examples": [
         {
+          "file": "apps/demo/src/pages/Dashboard.vue",
+          "route": "/",
+          "code": "<NuSparkline :data=\"revenue\" label=\"Revenue, last 12 months\" />"
+        },
+        {
           "file": "apps/demo/src/pages/Dashboard3.vue",
           "route": "/dashboard-3",
           "code": "<NuSparkline :data=\"o.good ? [3, 4, 3, 5, 6, 7] : [6, 5, 6, 4, 3, 3]\" :color=\"o.good ? 'var(--nu-success)' : 'var(--nu-danger)'\" :height=\"28\" :area=\"false\" />"
-        },
-        {
-          "file": "apps/demo/src/pages/ui/Charts.vue",
-          "route": "/ui/charts",
-          "code": "<NuSparkline :data=\"revenue\" />"
         }
       ]
     },
@@ -4231,14 +4229,13 @@
       "exposed": [],
       "examples": [
         {
-          "file": "apps/demo/src/pages/apps/Chat.vue",
-          "route": "/apps/chat",
-          "code": "<NuAvatar :name=\"c.name\" :status=\"c.status\" :size=\"34\" />"
+          "file": "apps/demo/src/layouts/AdminShell.vue",
+          "code": "<NuAvatar :name=\"user.name\" :size=\"32\" status=\"online\" />"
         },
         {
-          "file": "apps/demo/src/pages/apps/Mailbox.vue",
-          "route": "/apps/mailbox",
-          "code": "<NuAvatar :name=\"current.from\" :size=\"28\" />"
+          "file": "apps/demo/src/pages/Contacts.vue",
+          "route": "/contacts",
+          "code": "<NuAvatar :name=\"c.name\" :size=\"64\" />"
         }
       ]
     },
@@ -4274,14 +4271,14 @@
       "exposed": [],
       "examples": [
         {
+          "file": "apps/demo/src/pages/Tables.vue",
+          "route": "/tables/data",
+          "code": "<NuAvatarGroup :names=\"row.team\" :size=\"26\" :max=\"3\" />"
+        },
+        {
           "file": "apps/demo/src/pages/apps/Kanban.vue",
           "route": "/apps/kanban",
           "code": "<NuAvatarGroup :names=\"task.people\" :size=\"22\" :max=\"3\" />"
-        },
-        {
-          "file": "apps/demo/src/pages/ui/General.vue",
-          "route": "/ui/general",
-          "code": "<NuAvatarGroup :names=\"['Ayu Lestari', 'Budi Santoso', 'Citra Dewi', 'Dimas Pratama', 'Eka Putri', 'Fajar Nugroho']\" />"
         }
       ]
     },
