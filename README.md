@@ -7,6 +7,8 @@
 
 # Nusa Admin
 
+**Docs:** https://idlanyor.github.io/nusa-admin/ · **Live demo:** https://idlanyor.github.io/nusa-admin/demo/ · **npm:** [nusa-admin](https://www.npmjs.com/package/nusa-admin)
+
 A reusable admin template kit for **Vue 3 + Vite**, run with **Bun**. Think AdminLTE, but as typed Vue
 components with no CSS framework and no jQuery: one layout shell, 71 components, dependency-free SVG
 charts, light/dark themes, and a single file of design tokens to re-skin it.

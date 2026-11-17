@@ -9,6 +9,15 @@
     "email": "roy@irengcloud.com",
     "url": "https://roynaldi.website"
   },
+  "homepage": "https://idlanyor.github.io/nusa-admin/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idlanyor/nusa-admin.git",
+    "directory": "packages/ui"
+  },
+  "bugs": {
+    "url": "https://github.com/idlanyor/nusa-admin/issues"
+  },
   "files": [
     "dist",
     "brand"
