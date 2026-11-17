@@ -5,7 +5,7 @@ description: Build and edit admin/dashboard UIs with the Nusa Admin Vue 3 kit (`
 
 # Nusa Admin
 
-Nusa Admin is a Vue 3 + Vite admin template kit: an app shell (`NuLayout`), 71 `Nu*` components, SVG charts, light/dark themes and CSS design tokens. No CSS framework and no jQuery — styling comes from the kit's tokens and a few utility classes.
+Nusa Admin is a Vue 3 + Vite admin template kit: an app shell (`NuLayout`), 77 `Nu*` components, SVG charts, light/dark themes and CSS design tokens. No CSS framework and no jQuery — styling comes from the kit's tokens and a few utility classes.
 
 Building with the kit's own pieces keeps pages consistent with the rest of the app (density, dark mode, RTL, accessibility, translations), so reach for a `Nu*` component before writing custom markup or CSS.
 

@@ -120,6 +120,8 @@ const notifications = [
           <div>{{ n.title }}</div>
           <div class="nu-text-sm nu-text-muted">{{ n.time }}</div>
         </NuDropdownItem>
+        <div class="nu-dropdown__divider" />
+        <NuDropdownItem to="/notifications">See all notifications</NuDropdownItem>
       </NuDropdown>
     </template>
 

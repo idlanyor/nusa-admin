@@ -115,3 +115,18 @@ ${label ? `<text x="50%" y="52%" fill="#fff" fill-opacity=".85" font-family="sys
 </svg>`
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`
 }
+
+/** Deterministic pseudo-random activity counts for the last `days` days (for heatmaps). */
+export function activity(days = 182, seed = 7) {
+  const out: Record<string, number> = {}
+  let x = seed
+  const d = new Date()
+  for (let i = 0; i < days; i++) {
+    x = (x * 9301 + 49297) % 233280
+    const weekend = d.getDay() === 0 || d.getDay() === 6
+    const v = Math.floor((x / 233280) * (weekend ? 4 : 12))
+    out[`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`] = v < 2 ? 0 : v
+    d.setDate(d.getDate() - 1)
+  }
+  return out
+}

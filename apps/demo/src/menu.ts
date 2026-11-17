@@ -1,4 +1,5 @@
 import {
+  Bell, FolderOpen, History, ShieldCheck,
   AppWindow, CalendarDays, CircleHelp, Contact, CreditCard, File, FileText, FolderKanban, Images, KanbanSquare,
   LayoutDashboard, LayoutGrid, LayoutTemplate, Layers, Lock, Mail, MessagesSquare, Puzzle, ReceiptText, Search,
   Settings, ShoppingBag, Table2, Tags, TriangleAlert, UserRound, Users,
@@ -45,6 +46,7 @@ export const menu: NuMenuItem[] = [
     ],
   },
   { label: 'Chat', icon: MessagesSquare, to: '/apps/chat' },
+  { label: 'File manager', icon: FolderOpen, to: '/apps/files' },
   { label: 'Gallery', icon: Images, to: '/apps/gallery' },
 
   { label: 'Interface', header: true },
@@ -54,6 +56,7 @@ export const menu: NuMenuItem[] = [
     children: [
       { label: 'General', to: '/ui/general' },
       { label: 'Icons', to: '/ui/icons' },
+      { label: 'More inputs', to: '/ui/more-inputs' },
       { label: 'Feedback & modals', to: '/ui/feedback' },
       { label: 'Navigation & tabs', to: '/ui/navigation' },
       { label: 'Timeline', to: '/ui/timeline' },
@@ -86,6 +89,9 @@ export const menu: NuMenuItem[] = [
   { label: 'Examples', header: true },
   { label: 'Projects', icon: FolderKanban, to: '/projects' },
   { label: 'Users', icon: Users, to: '/users', meta: { roles: ['admin'] } },
+  { label: 'Roles & permissions', icon: ShieldCheck, to: '/roles', meta: { roles: ['admin'] } },
+  { label: 'Audit log', icon: History, to: '/audit-log', meta: { roles: ['admin'] } },
+  { label: 'Notifications', icon: Bell, to: '/notifications', badge: 3, badgeColor: 'danger' },
   { label: 'Contacts', icon: Contact, to: '/contacts' },
   { label: 'Profile', icon: UserRound, to: '/profile' },
   { label: 'E-commerce', icon: ShoppingBag, to: '/ecommerce' },
@@ -112,6 +118,7 @@ export const menu: NuMenuItem[] = [
       { label: 'Register v2', to: '/auth/register-2' },
       { label: 'Forgot password', to: '/auth/forgot-password' },
       { label: 'Recover password', to: '/auth/recover-password' },
+      { label: 'Two-step verification', to: '/auth/two-factor' },
       { label: 'Lock screen', to: '/auth/lock' },
     ],
   },

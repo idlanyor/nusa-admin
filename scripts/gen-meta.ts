@@ -13,12 +13,12 @@ const demo = join(root, 'apps/demo/src')
 
 const GROUPS: Record<string, string[]> = {
   Layout: ['NuLayout', 'NuSidebar', 'NuSidebarMenuItem', 'NuTopNav', 'NuNavbar', 'NuPageHeader', 'NuBreadcrumb', 'NuCustomizer', 'NuCommandPalette', 'NuAuthLayout', 'NuErrorPage', 'NuRouteProgress'],
-  Content: ['NuCard', 'NuStatCard', 'NuSmallBox', 'NuInfoBox', 'NuUserCard', 'NuTimeline', 'NuTable', 'NuPagination', 'NuList', 'NuListItem', 'NuDescriptions', 'NuCalendar', 'NuAccordion', 'NuTabs', 'NuSteps', 'NuDivider', 'NuCallout', 'NuRibbon'],
+  Content: ['NuCard', 'NuStatCard', 'NuSmallBox', 'NuInfoBox', 'NuUserCard', 'NuTimeline', 'NuTreeView', 'NuTable', 'NuPagination', 'NuList', 'NuListItem', 'NuDescriptions', 'NuCalendar', 'NuAccordion', 'NuTabs', 'NuSteps', 'NuDivider', 'NuCallout', 'NuRibbon'],
   Apps: ['NuDirectChat', 'NuTodoList'],
-  Feedback: ['NuAlert', 'NuBadge', 'NuProgress', 'NuProgressRing', 'NuSpinner', 'NuSkeleton', 'NuEmpty', 'NuTooltip', 'NuModal', 'NuDrawer', 'NuToastHost'],
+  Feedback: ['NuPopover', 'NuAlert', 'NuBadge', 'NuProgress', 'NuProgressRing', 'NuSpinner', 'NuSkeleton', 'NuEmpty', 'NuTooltip', 'NuModal', 'NuDrawer', 'NuToastHost'],
   Actions: ['NuButton', 'NuIconButton', 'NuDropdown', 'NuDropdownItem', 'NuSegmented'],
-  Forms: ['NuInput', 'NuTextarea', 'NuSelect', 'NuCombobox', 'NuDatePicker', 'NuEditor', 'NuCodeEditor', 'NuCheckbox', 'NuSwitch', 'NuRadioGroup', 'NuSlider', 'NuTagInput', 'NuTransfer', 'NuFileUpload', 'NuRating'],
-  Charts: ['NuChart', 'NuDonut', 'NuSparkline', 'NuGeoMap'],
+  Forms: ['NuInput', 'NuNumberInput', 'NuPinInput', 'NuColorPicker', 'NuTextarea', 'NuSelect', 'NuCombobox', 'NuDatePicker', 'NuEditor', 'NuCodeEditor', 'NuCheckbox', 'NuSwitch', 'NuRadioGroup', 'NuSlider', 'NuTagInput', 'NuTransfer', 'NuFileUpload', 'NuRating'],
+  Charts: ['NuChart', 'NuDonut', 'NuSparkline', 'NuGeoMap', 'NuHeatmap'],
   Misc: ['NuAvatar', 'NuAvatarGroup', 'NuIcon', 'NuLogo'],
 }
 
@@ -93,6 +93,12 @@ const DESCRIPTIONS: Record<string, string> = {
   NuAvatar: 'Avatar image or initials with optional status dot.',
   NuAvatarGroup: 'Overlapping avatars with a "+N" counter.',
   NuIcon: 'The small built-in icon set the kit uses internally.',
+  NuPopover: 'Click-to-open panel anchored to a trigger, for rich content such as quick forms or details.',
+  NuNumberInput: 'Number field with −/+ steppers, arrow-key stepping, min/max clamping and prefix/suffix text.',
+  NuPinInput: 'One-time code / PIN boxes with auto-advance, Backspace, paste-to-fill and a `complete` event.',
+  NuTreeView: 'Expandable tree (folders, categories, org charts) with full keyboard support; v-model is the selected id.',
+  NuColorPicker: 'Color swatches plus a native picker and hex field; v-model is #rrggbb.',
+  NuHeatmap: 'Calendar heatmap (a cell per day, weeks as columns) for activity or contributions.',
   NuLogo: 'The Nusa Admin mark (three islands forming an N), as a brand-colored tile or a bare mark in the current text color.',
 }
 

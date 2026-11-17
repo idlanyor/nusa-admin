@@ -42,6 +42,12 @@ import NuTransfer from './components/NuTransfer.vue'
 import NuGeoMap from './components/NuGeoMap.vue'
 import NuCommandPalette from './components/NuCommandPalette.vue'
 import NuLogo from './components/NuLogo.vue'
+import NuPopover from './components/NuPopover.vue'
+import NuNumberInput from './components/NuNumberInput.vue'
+import NuPinInput from './components/NuPinInput.vue'
+import NuTreeView from './components/NuTreeView.vue'
+import NuColorPicker from './components/NuColorPicker.vue'
+import NuHeatmap from './components/NuHeatmap.vue'
 import NuAlert from './components/NuAlert.vue'
 import NuAvatar from './components/NuAvatar.vue'
 import NuBadge from './components/NuBadge.vue'
@@ -83,7 +89,7 @@ export {
   NuProgress, NuSelect, NuSidebar, NuSidebarMenuItem, NuSparkline, NuStatCard, NuSwitch, NuTable, NuTabs, NuTextarea,
   NuTimeline, NuToastHost,
   NuAccordion, NuAuthLayout, NuAvatarGroup, NuBreadcrumb, NuCalendar, NuCustomizer, NuDescriptions, NuDivider, NuDrawer, NuEmpty, NuErrorPage, NuFileUpload, NuInfoBox, NuList, NuListItem, NuProgressRing, NuRadioGroup, NuRating, NuSegmented, NuSkeleton, NuSlider, NuSpinner, NuSteps, NuTagInput, NuTooltip,
-  NuCallout, NuCombobox, NuDatePicker, NuDirectChat, NuEditor, NuRibbon, NuRouteProgress, NuSmallBox, NuTodoList, NuTopNav, NuUserCard, NuCodeEditor, NuTransfer, NuGeoMap, NuCommandPalette, NuLogo,
+  NuCallout, NuCombobox, NuDatePicker, NuDirectChat, NuEditor, NuRibbon, NuRouteProgress, NuSmallBox, NuTodoList, NuTopNav, NuUserCard, NuCodeEditor, NuTransfer, NuGeoMap, NuCommandPalette, NuLogo, NuPopover, NuNumberInput, NuPinInput, NuTreeView, NuColorPicker, NuHeatmap,
 }
 
 export { useTheme, useLayout }
@@ -109,6 +115,7 @@ export type { NuTodo } from './components/NuTodoList.vue'
 export type { NuTableSort } from './components/NuTable.vue'
 export type { NuGeoFeature } from './components/NuGeoMap.vue'
 export type { NuCommand } from './components/NuCommandPalette.vue'
+export type { NuTreeNode } from './components/NuTreeView.vue'
 export type { NuChatMessage } from './components/NuDirectChat.vue'
 export type * from './types'
 
@@ -118,7 +125,7 @@ const components = {
   NuProgress, NuSelect, NuSidebar, NuSidebarMenuItem, NuSparkline, NuStatCard, NuSwitch, NuTable, NuTabs, NuTextarea,
   NuTimeline, NuToastHost,
   NuAccordion, NuAuthLayout, NuAvatarGroup, NuBreadcrumb, NuCalendar, NuCustomizer, NuDescriptions, NuDivider, NuDrawer, NuEmpty, NuErrorPage, NuFileUpload, NuInfoBox, NuList, NuListItem, NuProgressRing, NuRadioGroup, NuRating, NuSegmented, NuSkeleton, NuSlider, NuSpinner, NuSteps, NuTagInput, NuTooltip,
-  NuCallout, NuCombobox, NuDatePicker, NuDirectChat, NuEditor, NuRibbon, NuRouteProgress, NuSmallBox, NuTodoList, NuTopNav, NuUserCard, NuCodeEditor, NuTransfer, NuGeoMap, NuCommandPalette, NuLogo,
+  NuCallout, NuCombobox, NuDatePicker, NuDirectChat, NuEditor, NuRibbon, NuRouteProgress, NuSmallBox, NuTodoList, NuTopNav, NuUserCard, NuCodeEditor, NuTransfer, NuGeoMap, NuCommandPalette, NuLogo, NuPopover, NuNumberInput, NuPinInput, NuTreeView, NuColorPicker, NuHeatmap,
 }
 
 export interface NusaAdminOptions {

@@ -10,14 +10,14 @@
 **Docs:** https://idlanyor.github.io/nusa-admin/ · **Live demo:** https://idlanyor.github.io/nusa-admin/demo/ · **npm:** [nusa-admin](https://www.npmjs.com/package/nusa-admin)
 
 A reusable admin template kit for **Vue 3 + Vite**, run with **Bun**. Think AdminLTE, but as typed Vue
-components with no CSS framework and no jQuery: one layout shell, 71 components, dependency-free SVG
+components with no CSS framework and no jQuery: one layout shell, 77 components, dependency-free SVG
 charts, light/dark themes, and a single file of design tokens to re-skin it.
 
 ```
 packages/ui                 → the kit (npm `nusa-admin`): components, composables, styles, meta/components.json
 packages/create-nusa-admin  → the CLI (npm `create-nusa-admin`): starter and full templates
 packages/mcp                → MCP server for AI assistants (npm `nusa-admin-mcp`)
-apps/demo                   → the demo app (60 routes: dashboards, apps, forms, tables, examples, auth, errors)
+apps/demo                   → the demo app (65 routes: dashboards, apps, forms, tables, examples, auth, errors)
 apps/docs                   → the documentation site (built with the kit), plus /llms.txt
 docs/guide                  → guides in Markdown (shared by the docs site, the MCP server and llms.txt)
 skills/nusa-admin           → Claude Code skill (SKILL.md + generated references)
@@ -177,7 +177,7 @@ plus your own commands, and can turn the typed text into a final command via `fa
 
 Theme, layout and language preferences persist in `localStorage` (`nu-theme`, `nu-layout`, `nu-locale`).
 
-### Demo pages (60 routes)
+### Demo pages (65 routes)
 
 The demo signs you in with a mock session (pick Admin, Editor or Viewer on the sign-in page); a router guard redirects
 to sign-in and back, admin-only pages return 403 for other roles, and the menu hides what the role can't open. Replace

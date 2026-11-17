@@ -5,12 +5,12 @@ Generated from the kit source by `bun run meta` — do not edit by hand. `*` mar
 ## Contents
 
 - **Layout:** [NuLayout](#nulayout), [NuSidebar](#nusidebar), [NuSidebarMenuItem](#nusidebarmenuitem), [NuTopNav](#nutopnav), [NuNavbar](#nunavbar), [NuPageHeader](#nupageheader), [NuBreadcrumb](#nubreadcrumb), [NuCustomizer](#nucustomizer), [NuCommandPalette](#nucommandpalette), [NuAuthLayout](#nuauthlayout), [NuErrorPage](#nuerrorpage), [NuRouteProgress](#nurouteprogress)
-- **Content:** [NuCard](#nucard), [NuStatCard](#nustatcard), [NuSmallBox](#nusmallbox), [NuInfoBox](#nuinfobox), [NuUserCard](#nuusercard), [NuTimeline](#nutimeline), [NuTable](#nutable), [NuPagination](#nupagination), [NuList](#nulist), [NuListItem](#nulistitem), [NuDescriptions](#nudescriptions), [NuCalendar](#nucalendar), [NuAccordion](#nuaccordion), [NuTabs](#nutabs), [NuSteps](#nusteps), [NuDivider](#nudivider), [NuCallout](#nucallout), [NuRibbon](#nuribbon)
+- **Content:** [NuCard](#nucard), [NuStatCard](#nustatcard), [NuSmallBox](#nusmallbox), [NuInfoBox](#nuinfobox), [NuUserCard](#nuusercard), [NuTimeline](#nutimeline), [NuTreeView](#nutreeview), [NuTable](#nutable), [NuPagination](#nupagination), [NuList](#nulist), [NuListItem](#nulistitem), [NuDescriptions](#nudescriptions), [NuCalendar](#nucalendar), [NuAccordion](#nuaccordion), [NuTabs](#nutabs), [NuSteps](#nusteps), [NuDivider](#nudivider), [NuCallout](#nucallout), [NuRibbon](#nuribbon)
 - **Apps:** [NuDirectChat](#nudirectchat), [NuTodoList](#nutodolist)
-- **Feedback:** [NuAlert](#nualert), [NuBadge](#nubadge), [NuProgress](#nuprogress), [NuProgressRing](#nuprogressring), [NuSpinner](#nuspinner), [NuSkeleton](#nuskeleton), [NuEmpty](#nuempty), [NuTooltip](#nutooltip), [NuModal](#numodal), [NuDrawer](#nudrawer), [NuToastHost](#nutoasthost)
+- **Feedback:** [NuPopover](#nupopover), [NuAlert](#nualert), [NuBadge](#nubadge), [NuProgress](#nuprogress), [NuProgressRing](#nuprogressring), [NuSpinner](#nuspinner), [NuSkeleton](#nuskeleton), [NuEmpty](#nuempty), [NuTooltip](#nutooltip), [NuModal](#numodal), [NuDrawer](#nudrawer), [NuToastHost](#nutoasthost)
 - **Actions:** [NuButton](#nubutton), [NuIconButton](#nuiconbutton), [NuDropdown](#nudropdown), [NuDropdownItem](#nudropdownitem), [NuSegmented](#nusegmented)
-- **Forms:** [NuInput](#nuinput), [NuTextarea](#nutextarea), [NuSelect](#nuselect), [NuCombobox](#nucombobox), [NuDatePicker](#nudatepicker), [NuEditor](#nueditor), [NuCodeEditor](#nucodeeditor), [NuCheckbox](#nucheckbox), [NuSwitch](#nuswitch), [NuRadioGroup](#nuradiogroup), [NuSlider](#nuslider), [NuTagInput](#nutaginput), [NuTransfer](#nutransfer), [NuFileUpload](#nufileupload), [NuRating](#nurating)
-- **Charts:** [NuChart](#nuchart), [NuDonut](#nudonut), [NuSparkline](#nusparkline), [NuGeoMap](#nugeomap)
+- **Forms:** [NuInput](#nuinput), [NuNumberInput](#nunumberinput), [NuPinInput](#nupininput), [NuColorPicker](#nucolorpicker), [NuTextarea](#nutextarea), [NuSelect](#nuselect), [NuCombobox](#nucombobox), [NuDatePicker](#nudatepicker), [NuEditor](#nueditor), [NuCodeEditor](#nucodeeditor), [NuCheckbox](#nucheckbox), [NuSwitch](#nuswitch), [NuRadioGroup](#nuradiogroup), [NuSlider](#nuslider), [NuTagInput](#nutaginput), [NuTransfer](#nutransfer), [NuFileUpload](#nufileupload), [NuRating](#nurating)
+- **Charts:** [NuChart](#nuchart), [NuDonut](#nudonut), [NuSparkline](#nusparkline), [NuGeoMap](#nugeomap), [NuHeatmap](#nuheatmap)
 - **Misc:** [NuAvatar](#nuavatar), [NuAvatarGroup](#nuavatargroup), [NuIcon](#nuicon), [NuLogo](#nulogo)
 
 ## NuLayout
@@ -125,10 +125,10 @@ Page title with optional subtitle, breadcrumb and action buttons (default slot).
 
 Slots: `default`
 
-Example (demo `/billing`):
+Example (demo `/audit-log`):
 
 ```vue
-<NuPageHeader title="Billing" subtitle="Payment methods, invoices and recent transactions." :breadcrumb="[{ label: 'Home', to: '/' }, { label: 'Billing' }]" />
+<NuPageHeader title="Audit log" subtitle="Who did what, and when." :breadcrumb="[{ label: 'Home', to: '/' }, { label: 'Audit log' }]" />
 ```
 
 ## NuBreadcrumb
@@ -288,24 +288,11 @@ Events: `refresh`, `remove`
 
 Slots: `header`, `tools`, `default`, `footer`
 
-Example (demo `/billing`):
+Example (demo `/audit-log`):
 
 ```vue
-<NuCard title="Payment methods">
-  <template #tools><NuButton size="sm" :icon="Plus" @click="addCard = true">Add card</NuButton></template>
-  <div class="nu-row" style="--nu-gap: 12px">
-    <div v-for="c in cards" :key="c.last4" class="nu-col-md-6">
-      <div class="pay-method">
-        <CreditCard />
-        <div class="nu-grow">
-          <div class="nu-fw-600 nu-tabular">{{ c.brand }} •••• {{ c.last4 }}</div>
-          <div class="nu-text-sm nu-text-muted">Expires {{ c.exp }}</div>
-        </div>
-        <NuBadge v-if="c.primary" color="success">Primary</NuBadge>
-        <NuButton size="sm" variant="ghost" color="secondary" :icon="Pencil" square :aria-label="`Edit card ending ${c.last4}`" />
-      </div>
-    </div>
-  </div>
+<NuCard title="Activity" subtitle="Events per day, last 26 weeks">
+  <NuHeatmap :values="heat" unit="events" label="Audit events" />
 </NuCard>
 ```
 
@@ -410,6 +397,25 @@ Example (demo `/`):
 <NuTimeline :items="activity" />
 ```
 
+## NuTreeView
+
+Expandable tree (folders, categories, org charts) with full keyboard support; v-model is the selected id.
+
+| Prop | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `nodes`* | `NuTreeNode[]` |  |  |
+| `defaultExpanded` | `(string \| number)[] \| undefined` |  |  |
+| `label` | `string \| undefined` | `"Tree"` | Visible label (also the accessible name). |
+| `modelValue` | `string \| number \| null \| undefined` | `null` | Bound value (use v-model). |
+
+Events: `update:modelValue`, `select`
+
+Example (demo `/apps/files`):
+
+```vue
+<NuTreeView v-model="folder" :nodes="folders" :default-expanded="['projects', 'finance']" label="Folders" />
+```
+
 ## NuTable
 
 Data table: search, sort, pagination, cell slots, row selection with bulk actions, CSV export, server mode. Each column can be customised with a `cell-<key>` slot receiving `{ row, value }`.
@@ -440,19 +446,14 @@ Events: `update:page`, `update:search`, `update:sort`, `update:selected`
 
 Slots: `bulk`, `toolbar`, `empty`
 
-Example (demo `/`):
+Example (demo `/audit-log`):
 
 ```vue
-<NuTable :columns="columns" :rows="orders.slice(0, 6)" row-key="id" :page-size="0">
-  <template #cell-customer="{ row }">
-    <div class="nu-cluster">
-      <NuAvatar :name="row.customer" :size="28" />
-      <span>{{ row.customer }}</span>
-    </div>
-  </template>
-  <template #cell-status="{ row }">
-    <NuBadge :color="statusColor[row.status as Order['status']]" dot>{{ row.status }}</NuBadge>
-  </template>
+<NuTable :columns="columns" :rows="rows" row-key="id" :page-size="10" exportable="audit-log.csv" dense>
+  <template #cell-at="{ row }"><button type="button" class="audit-link nu-tabular" @click="open = row as Entry">{{ row.at }}</button></template>
+  <template #cell-actor="{ row }"><span class="nu-cluster" style="flex-wrap: nowrap; --nu-gap: 6px"><NuAvatar :name="row.actor" :size="22" />{{ row.actor }}</span></template>
+  <template #cell-action="{ row }"><NuBadge :color="actionColor[(row as Entry).action]">{{ row.action }}</NuBadge></template>
+  <template #cell-ip="{ row }"><code>{{ row.ip }}</code></template>
 </NuTable>
 ```
 
@@ -544,19 +545,20 @@ Label/value pairs (definition list) in 1–3 columns, with per-item slots. Each 
 | `items`* | `NuDescriptionItem[]` |  | Items to render. |
 | `columns` | `1 \| 2 \| 3 \| undefined` | `1` |  |
 
-Example (demo `/profile`):
+Example (demo `/audit-log`):
 
 ```vue
 <NuDescriptions
+  v-if="open"
   :items="[
-    { label: 'Email', value: form.email },
-    { label: 'Location', value: form.city },
-    { label: 'Joined', value: '12 March 2024' },
-    { label: 'Role', key: 'role' },
+    { label: 'When', value: open.at },
+    { label: 'User', value: open.actor },
+    { label: 'Action', value: open.action },
+    { label: 'Target', value: open.target },
+    { label: 'IP address', value: open.ip },
+    { label: 'User agent', value: 'Mozilla/5.0 (Macintosh) Chrome/131' },
   ]"
->
-  <template #role><NuBadge>Administrator</NuBadge></template>
-</NuDescriptions>
+/>
 ```
 
 ## NuCalendar
@@ -741,6 +743,39 @@ Example (demo `/widgets`):
 
 ```vue
 <NuTodoList v-model="todos" addable />
+```
+
+## NuPopover
+
+Click-to-open panel anchored to a trigger, for rich content such as quick forms or details.
+
+| Prop | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `placement` | `"bottom-start" \| "bottom-end" \| "top-start" \| "top-end" \| undefined` | `"bottom-start"` |  |
+| `width` | `string \| undefined` | `"280px"` | Width (CSS length). |
+| `title` | `string \| undefined` |  | Title text. |
+| `modelValue` | `boolean \| undefined` | `false` | Bound value (use v-model). |
+
+Events: `update:modelValue`
+
+Slots: `trigger`, `default`
+
+Example (demo `/ui/more-inputs`):
+
+```vue
+<NuPopover title="Filter orders">
+  <template #trigger><NuButton variant="outline" color="secondary" :icon="Filter">Filters</NuButton></template>
+  <template #default="{ close }">
+    <div class="nu-stack" style="--nu-gap: 10px">
+      <NuSelect v-model="status" label="Status" :options="[{ label: 'Any', value: 'any' }, { label: 'Paid', value: 'paid' }, { label: 'Pending', value: 'pending' }]" />
+      <NuCheckbox v-model="onlyMine" label="Only my orders" />
+      <div class="nu-cluster" style="justify-content: flex-end">
+        <NuButton size="sm" variant="ghost" color="secondary" @click="close()">Cancel</NuButton>
+        <NuButton size="sm" @click="close()">Apply</NuButton>
+      </div>
+    </div>
+  </template>
+</NuPopover>
 ```
 
 ## NuAlert
@@ -940,20 +975,22 @@ Events: `update:modelValue`
 
 Slots: `header`, `default`, `footer`
 
-Example (demo `/users`):
+Example (demo `/audit-log`):
 
 ```vue
-<NuDrawer v-model="drawer" :title="editing ? 'Edit user' : 'Add user'">
-  <form id="user-form" class="nu-stack" style="--nu-gap: 10px" novalidate @submit.prevent="save">
-    <NuInput v-model="form.name" label="Full name" required autocomplete="name" />
-    <NuInput v-model="form.email" label="Email" type="email" required autocomplete="email" :error="error" />
-    <NuSelect v-model="form.role" label="Role" :options="roleOptions" />
-    <NuSwitch v-model="form.active" label="Active" />
-  </form>
-  <template #footer="{ close }">
-    <NuButton variant="ghost" color="secondary" @click="close">Cancel</NuButton>
-    <NuButton type="submit" form="user-form">{{ editing ? 'Save changes' : 'Add user' }}</NuButton>
-  </template>
+<NuDrawer :model-value="!!open" :title="`Event #${open?.id}`" @update:model-value="!$event && (open = null)">
+  <NuDescriptions
+    v-if="open"
+    :items="[
+      { label: 'When', value: open.at },
+      { label: 'User', value: open.actor },
+      { label: 'Action', value: open.action },
+      { label: 'Target', value: open.target },
+      { label: 'IP address', value: open.ip },
+      { label: 'User agent', value: 'Mozilla/5.0 (Macintosh) Chrome/131' },
+    ]"
+  />
+  <pre v-if="open" class="code" style="margin-top: 12px">{{ JSON.stringify({ id: open.id, action: open.action, target: open.target, changes: open.action === 'update' ? { status: ['Pending', 'Paid'] } : undefined }, null, 2) }}</pre>
 </NuDrawer>
 ```
 
@@ -1104,6 +1141,74 @@ Example (demo `/billing`):
 <NuInput label="Name on card" required autocomplete="cc-name" />
 ```
 
+## NuNumberInput
+
+Number field with −/+ steppers, arrow-key stepping, min/max clamping and prefix/suffix text.
+
+| Prop | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `label` | `string \| undefined` |  | Visible label (also the accessible name). |
+| `hint` | `string \| undefined` |  | Help text under the control. |
+| `error` | `string \| undefined` |  | Error message; marks the control invalid. |
+| `min` | `number \| undefined` |  | Minimum value. |
+| `max` | `number \| undefined` |  | Maximum value. |
+| `step` | `number \| undefined` | `1` | Step between values. |
+| `disabled` | `boolean \| undefined` |  | Disable the control. |
+| `prefix` | `string \| undefined` |  |  |
+| `suffix` | `string \| undefined` |  |  |
+| `precision` | `number \| undefined` |  |  |
+| `modelValue` | `number \| null \| undefined` | `null` | Bound value (use v-model). |
+
+Events: `update:modelValue`, `blur`
+
+Example (demo `/ui/more-inputs`):
+
+```vue
+<NuNumberInput v-model="qty" label="Quantity" :min="1" :max="99" />
+```
+
+## NuPinInput
+
+One-time code / PIN boxes with auto-advance, Backspace, paste-to-fill and a `complete` event.
+
+| Prop | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `length` | `number \| undefined` | `6` |  |
+| `label` | `string \| undefined` |  | Visible label (also the accessible name). |
+| `error` | `string \| undefined` |  | Error message; marks the control invalid. |
+| `disabled` | `boolean \| undefined` |  | Disable the control. |
+| `masked` | `boolean \| undefined` |  |  |
+| `numeric` | `boolean \| undefined` | `true` |  |
+| `modelValue` | `string \| undefined` | `""` | Bound value (use v-model). |
+
+Events: `update:modelValue`, `complete`
+
+Example (demo `/auth/two-factor`):
+
+```vue
+<NuPinInput v-model="code" label="Verification code" :error="error" @complete="verify" @update:model-value="error = ''" />
+```
+
+## NuColorPicker
+
+Color swatches plus a native picker and hex field; v-model is #rrggbb.
+
+| Prop | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `label` | `string \| undefined` |  | Visible label (also the accessible name). |
+| `hint` | `string \| undefined` |  | Help text under the control. |
+| `swatches` | `string[] \| undefined` | `["#4f46e5", "#2563eb", "#0891b2", "#0d9488", "#16a34a", "#ca8a04", "#ea580c", "#dc2626", "#db2777", "#7c3aed", "#525252", "#171717"]` |  |
+| `disabled` | `boolean \| undefined` |  | Disable the control. |
+| `modelValue` | `string \| undefined` | `"#4f46e5"` | Bound value (use v-model). |
+
+Events: `update:modelValue`
+
+Example (demo `/ui/more-inputs`):
+
+```vue
+<NuColorPicker v-model="color" label="Brand color" hint="Pick a swatch, use the native picker, or type a hex value." />
+```
+
 ## NuTextarea
 
 Multi-line text input with label, hint and error.
@@ -1171,10 +1276,10 @@ Searchable select, single or multiple, keyboard friendly, clearable.
 
 Events: `update:modelValue`, `blur`
 
-Example (demo `/apps/mailbox/compose`):
+Example (demo `/audit-log`):
 
 ```vue
-<NuCombobox v-bind="form.field('to')" :options="people" multiple label="To" placeholder="Choose recipients" search-placeholder="Search contacts" />
+<NuCombobox v-model="who" multiple clearable placeholder="All users" :options="actors.map((a) => ({ label: a, value: a }))" aria-label="Filter by user" />
 ```
 
 ## NuDatePicker
@@ -1196,10 +1301,10 @@ Date input with a calendar popover; single date or `range`.
 
 Events: `update:modelValue`, `blur`
 
-Example (demo `/forms/advanced`):
+Example (demo `/audit-log`):
 
 ```vue
-<NuDatePicker v-model="day" label="Date" clearable />
+<NuDatePicker v-model="range" range clearable placeholder="Any date" aria-label="Filter by date" />
 ```
 
 ## NuEditor
@@ -1282,10 +1387,10 @@ Events: `update:modelValue`
 
 Slots: `default`
 
-Example (demo `/profile`):
+Example (demo `/notifications`):
 
 ```vue
-<NuSwitch v-model="prefs.mentions" label="Email me when someone mentions me" />
+<NuSwitch v-model="prefs.mentions" label="Mentions and replies" />
 ```
 
 ## NuRadioGroup
@@ -1501,6 +1606,24 @@ Example (demo `/dashboard-2`):
 <NuGeoMap :features="shapes" :values="visitors" :exclude="['Antarctica']" :format="(v) => `${v.toLocaleString()} sessions`" label="World map of sessions by country; top countries listed beside it" />
 ```
 
+## NuHeatmap
+
+Calendar heatmap (a cell per day, weeks as columns) for activity or contributions.
+
+| Prop | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `values`* | `Record<string, number>` |  |  |
+| `end` | `string \| undefined` |  |  |
+| `weeks` | `number \| undefined` | `26` |  |
+| `label` | `string \| undefined` | `"Activity"` | Visible label (also the accessible name). |
+| `unit` | `string \| undefined` | `"events"` |  |
+
+Example (demo `/audit-log`):
+
+```vue
+<NuHeatmap :values="heat" unit="events" label="Audit events" />
+```
+
 ## NuAvatar
 
 Avatar image or initials with optional status dot.
@@ -1530,10 +1653,10 @@ Overlapping avatars with a "+N" counter.
 | `max` | `number \| undefined` | `4` | Maximum value. |
 | `size` | `number \| undefined` | `30` | Size: 'sm' \| 'md' \| 'lg'. |
 
-Example (demo `/tables/data`):
+Example (demo `/roles`):
 
 ```vue
-<NuAvatarGroup :names="row.team" :size="26" :max="3" />
+<NuAvatarGroup v-if="r.members.length" :names="r.members" :size="24" :max="4" />
 ```
 
 ## NuIcon

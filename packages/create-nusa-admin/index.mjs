@@ -25,7 +25,7 @@ const HELP = `Usage: create-nusa-admin [dir] [options]
 
 Options:
   --template <starter|full>  starter: shell, dashboard, users, settings, auth, 403/404
-                             full: the complete demo (60 routes)
+                             full: the complete demo (65 routes)
   --name <package-name>      package.json name (default: folder name)
   --no-ai                    skip the Claude Code skill, .mcp.json and AGENTS.md
   --install                  install dependencies after creating

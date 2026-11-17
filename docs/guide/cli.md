@@ -10,7 +10,7 @@ Options (all optional; you're asked for anything missing when running in a termi
 
 | Flag | Meaning |
 | --- | --- |
-| `--template starter \| full` | `starter`: shell, dashboard, users CRUD, sign-in, 404. `full`: the complete demo (60 routes). |
+| `--template starter \| full` | `starter`: shell, dashboard, users CRUD, sign-in, 404. `full`: the complete demo (65 routes). |
 | `--name <package-name>` | `package.json` name (default: the folder name). |
 | `--no-ai` | Skip the agent skill (`.claude/skills/nusa-admin`) and `.mcp.json`. |
 | `--install` | Run `bun install` (or npm) after creating. |
