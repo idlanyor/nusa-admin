@@ -1,0 +1,17 @@
+/* Styles shared by several demo pages (page styles load lazily with their route). */
+.code { margin: 0; padding: 10px 12px; overflow-x: auto; border-radius: var(--nu-radius-sm); background: var(--nu-surface-2); font-size: 12.5px; line-height: 1.6; }
+.section-title { margin-top: 4px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--nu-text-muted); }
+.st { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.st th { padding: 7px 14px; border-bottom: 1px solid var(--nu-border); text-align: left; font-weight: 600; white-space: nowrap; }
+.st td { padding: 8px 14px; border-bottom: 1px solid var(--nu-border); vertical-align: middle; }
+.st tbody tr:last-child td { border-bottom: 0; }
+.st--bordered :is(th, td) { border: 1px solid var(--nu-border); }
+.st--bordered { border-style: hidden; }
+.st--striped tbody tr:nth-child(odd) td { background: var(--nu-surface-2); }
+.st--condensed :is(th, td) { padding: 4px 12px; }
+.st--hover tbody tr:hover td { background: color-mix(in srgb, var(--nu-primary) 6%, transparent); }
+.product-thumb { width: 40px; height: 40px; border-radius: var(--nu-radius-sm); object-fit: cover; }
+.simple-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+.simple-table th { padding: 7px 14px; background: var(--nu-surface-2); color: var(--nu-text-muted); font-size: 12px; font-weight: 600; text-align: left; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+.simple-table td { padding: 8px 14px; border-top: 1px solid var(--nu-border); white-space: nowrap; }
+.simple-table .num { text-align: right; font-variant-numeric: tabular-nums; }

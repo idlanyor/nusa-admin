@@ -1,0 +1,44 @@
+/* Shared by NuInput / NuTextarea / NuSelect / NuCheckbox / NuSwitch */
+.nu-field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.nu-field__label { font-size: 13px; font-weight: 600; }
+.nu-field__required { color: var(--nu-danger); }
+.nu-field__hint { font-size: 12.5px; color: var(--nu-text-muted); }
+.nu-field__error { font-size: 12.5px; color: var(--nu-danger); }
+
+.nu-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--nu-border);
+  border-radius: var(--nu-radius-sm);
+  background: var(--nu-surface);
+  transition: border-color var(--nu-transition), box-shadow var(--nu-transition);
+}
+.nu-control:hover { border-color: color-mix(in srgb, var(--nu-text) 30%, var(--nu-border)); }
+.nu-control:focus-within {
+  border-color: var(--nu-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nu-primary) 18%, transparent);
+}
+.nu-control.is-invalid { border-color: var(--nu-danger); }
+.nu-control.is-invalid:focus-within { box-shadow: 0 0 0 3px color-mix(in srgb, var(--nu-danger) 18%, transparent); }
+.nu-control.is-disabled { opacity: 0.6; background: var(--nu-surface-2); }
+.nu-control--sm { min-height: 28px; padding: 0 8px; font-size: 13px; }
+.nu-control--lg { min-height: 38px; font-size: 14.5px; }
+.nu-control__input {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  padding: 6px 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--nu-text);
+}
+.nu-control__input::placeholder { color: color-mix(in srgb, var(--nu-text-muted) 75%, transparent); }
+.nu-control__affix { display: inline-flex; align-items: center; color: var(--nu-text-muted); flex: none; }
+.nu-control__affix svg { width: 16px; height: 16px; }
+select.nu-control__input { appearance: none; cursor: pointer; padding-right: 4px; }
+select.nu-control__input option { background: var(--nu-surface); color: var(--nu-text); }
+textarea.nu-control__input { resize: vertical; padding: 7px 0; line-height: 1.5; }

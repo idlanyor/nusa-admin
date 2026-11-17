@@ -1,0 +1,33 @@
+{
+  "name": "nusa-admin",
+  "version": "0.1.0",
+  "description": "Reusable admin template kit for Vue 3 + Vite",
+  "type": "module",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/nusa-admin.js",
+  "module": "./dist/nusa-admin.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/nusa-admin.js"
+    },
+    "./style.css": "./dist/nusa-admin.css"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "build": "vite build && vue-tsc -p tsconfig.build.json",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json",
+    "test": "bunx --bun vitest run",
+    "test:watch": "bunx --bun vitest"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0",
+    "vue-router": "^4.4.0"
+  }
+}

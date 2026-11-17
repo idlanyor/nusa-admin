@@ -1,0 +1,123 @@
+/* ==========================================================================
+   Nusa Admin — design tokens
+   Override any of these on :root (or a wrapper) to re-skin the whole kit.
+   ========================================================================== */
+:root {
+  color-scheme: light;
+
+  /* Brand + status */
+  --nu-primary: #4f46e5;
+  --nu-secondary: #64748b;
+  --nu-success: #15803d;
+  --nu-warning: #b45309;
+  --nu-danger: #dc2626;
+  --nu-info: #0e7490;
+  --nu-on-color: #ffffff;
+
+  /* Surfaces + ink */
+  --nu-bg: #f3f5f9;
+  --nu-surface: #ffffff;
+  --nu-surface-2: #f7f8fb;
+  --nu-border: #e2e7ef;
+  --nu-text: #1c2434;
+  --nu-text-muted: #64708a;
+  --nu-backdrop: rgba(15, 23, 42, 0.5);
+
+  /* Shape + depth */
+  --nu-radius: 6px;
+  --nu-radius-sm: 4px;
+  --nu-shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
+  --nu-shadow: 0 1px 3px rgba(16, 24, 40, 0.07), 0 6px 16px -6px rgba(16, 24, 40, 0.1);
+  --nu-shadow-lg: 0 12px 40px -8px rgba(16, 24, 40, 0.28);
+
+  /* Type */
+  --nu-font: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --nu-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --nu-font-size: 14px;
+
+  /* Layout */
+  --nu-sidebar-width: 240px;
+  --nu-sidebar-mini-width: 60px;
+  --nu-navbar-height: 52px;
+  --nu-content-padding: 16px;
+  --nu-transition: 0.2s ease;
+
+  /* Sidebar (dark variant is the default, AdminLTE-style) */
+  --nu-sidebar-bg: #171717;
+  --nu-sidebar-border: rgba(255, 255, 255, 0.07);
+  --nu-sidebar-text: #a3a3a3;
+  --nu-sidebar-text-strong: #ffffff;
+  --nu-sidebar-muted: #737373;
+  --nu-sidebar-hover: rgba(255, 255, 255, 0.07);
+  --nu-sidebar-active-bg: var(--nu-primary);
+  --nu-sidebar-active-text: #ffffff;
+
+  /* Chart series (categorical, fixed order) — kept apart from status colors */
+  --nu-chart-1: #2a78d6;
+  --nu-chart-2: #eb6834;
+  --nu-chart-3: #1baf7a;
+  --nu-chart-4: #eda100;
+  --nu-chart-5: #e87ba4;
+  --nu-chart-6: #008300;
+  --nu-chart-7: #6250d6;
+  --nu-chart-8: #e34948;
+  --nu-chart-grid: #e6e9f0;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --nu-primary: #818cf8;
+  --nu-secondary: #94a3b8;
+  --nu-success: #4ade80;
+  --nu-warning: #fbbf24;
+  --nu-danger: #f87171;
+  --nu-info: #22d3ee;
+  --nu-on-color: #0a0a0a;
+
+  --nu-bg: #0a0a0a;
+  --nu-surface: #171717;
+  --nu-surface-2: #1f1f1f;
+  --nu-border: #2a2a2a;
+  --nu-text: #fafafa;
+  --nu-text-muted: #a1a1a1;
+  --nu-backdrop: rgba(0, 0, 0, 0.6);
+
+  --nu-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --nu-shadow: 0 1px 3px rgba(0, 0, 0, 0.35), 0 6px 16px -6px rgba(0, 0, 0, 0.45);
+  --nu-shadow-lg: 0 12px 40px -8px rgba(0, 0, 0, 0.7);
+
+  --nu-sidebar-bg: #0f0f0f;
+  --nu-sidebar-border: #262626;
+  --nu-sidebar-active-text: #0a0a0a;
+
+  --nu-chart-1: #3987e5;
+  --nu-chart-2: #d95926;
+  --nu-chart-3: #199e70;
+  --nu-chart-4: #c98500;
+  --nu-chart-5: #d55181;
+  --nu-chart-6: #0ca30c;
+  --nu-chart-7: #9085e9;
+  --nu-chart-8: #e66767;
+  --nu-chart-grid: #2a2a2a;
+}
+
+/* Light sidebar variant: <NuLayout sidebar-variant="light"> */
+.nu-sidebar--light {
+  --nu-sidebar-bg: var(--nu-surface);
+  --nu-sidebar-border: var(--nu-border);
+  --nu-sidebar-text: var(--nu-text-muted);
+  --nu-sidebar-text-strong: var(--nu-text);
+  --nu-sidebar-muted: var(--nu-text-muted);
+  --nu-sidebar-hover: color-mix(in srgb, var(--nu-text) 6%, transparent);
+  --nu-sidebar-active-bg: color-mix(in srgb, var(--nu-primary) 12%, transparent);
+  --nu-sidebar-active-text: var(--nu-primary);
+}
+
+/* Color context: a component adds `nu-c-<color>` and reads var(--nu-c). */
+.nu-c-primary { --nu-c: var(--nu-primary); }
+.nu-c-secondary { --nu-c: var(--nu-secondary); }
+.nu-c-success { --nu-c: var(--nu-success); }
+.nu-c-warning { --nu-c: var(--nu-warning); }
+.nu-c-danger { --nu-c: var(--nu-danger); }
+.nu-c-info { --nu-c: var(--nu-info); }
