@@ -10,7 +10,8 @@
     "url": "https://roynaldi.website"
   },
   "files": [
-    "dist"
+    "dist",
+    "brand"
   ],
   "main": "./dist/nusa-admin.js",
   "module": "./dist/nusa-admin.js",
@@ -34,5 +35,19 @@
   "peerDependencies": {
     "vue": "^3.5.0",
     "vue-router": "^4.4.0"
-  }
+  },
+  "keywords": [
+    "vue",
+    "vue3",
+    "vite",
+    "admin",
+    "admin-template",
+    "dashboard",
+    "adminlte",
+    "components",
+    "ui-kit",
+    "dark-mode",
+    "rtl",
+    "i18n"
+  ]
 }
