@@ -1,6 +1,6 @@
 {
   "name": "nusa-admin-mcp",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "MCP server that teaches AI assistants the Nusa Admin components, guides and page recipes",
   "type": "module",
   "license": "MIT",

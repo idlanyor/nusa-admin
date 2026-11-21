@@ -12,13 +12,13 @@ const ui = join(root, 'packages/ui')
 const demo = join(root, 'apps/demo/src')
 
 const GROUPS: Record<string, string[]> = {
-  Layout: ['NuLayout', 'NuSidebar', 'NuSidebarMenuItem', 'NuTopNav', 'NuNavbar', 'NuPageHeader', 'NuBreadcrumb', 'NuCustomizer', 'NuCommandPalette', 'NuAuthLayout', 'NuErrorPage', 'NuRouteProgress'],
-  Content: ['NuCard', 'NuStatCard', 'NuSmallBox', 'NuInfoBox', 'NuUserCard', 'NuTimeline', 'NuTreeView', 'NuTable', 'NuPagination', 'NuList', 'NuListItem', 'NuDescriptions', 'NuCalendar', 'NuAccordion', 'NuTabs', 'NuSteps', 'NuDivider', 'NuCallout', 'NuRibbon'],
+  Layout: ['NuLayout', 'NuSidebar', 'NuBottomNav', 'NuSidebarMenuItem', 'NuTopNav', 'NuNavbar', 'NuPageHeader', 'NuBreadcrumb', 'NuCustomizer', 'NuCommandPalette', 'NuAuthLayout', 'NuErrorPage', 'NuRouteProgress'],
+  Content: ['NuCard', 'NuStatCard', 'NuSmallBox', 'NuInfoBox', 'NuUserCard', 'NuTimeline', 'NuTreeView', 'NuTable', 'NuLogViewer', 'NuSecretField', 'NuPagination', 'NuList', 'NuListItem', 'NuDescriptions', 'NuCalendar', 'NuAccordion', 'NuTabs', 'NuSteps', 'NuDivider', 'NuCallout', 'NuRibbon'],
   Apps: ['NuDirectChat', 'NuTodoList'],
-  Feedback: ['NuPopover', 'NuAlert', 'NuBadge', 'NuProgress', 'NuProgressRing', 'NuSpinner', 'NuSkeleton', 'NuEmpty', 'NuTooltip', 'NuModal', 'NuDrawer', 'NuToastHost'],
+  Feedback: ['NuPopover', 'NuConfirmHost', 'NuBanner', 'NuAlert', 'NuBadge', 'NuProgress', 'NuProgressRing', 'NuSpinner', 'NuSkeleton', 'NuEmpty', 'NuTooltip', 'NuModal', 'NuDrawer', 'NuToastHost'],
   Actions: ['NuButton', 'NuIconButton', 'NuDropdown', 'NuDropdownItem', 'NuSegmented'],
   Forms: ['NuInput', 'NuNumberInput', 'NuPinInput', 'NuColorPicker', 'NuTextarea', 'NuSelect', 'NuCombobox', 'NuDatePicker', 'NuEditor', 'NuCodeEditor', 'NuCheckbox', 'NuSwitch', 'NuRadioGroup', 'NuSlider', 'NuTagInput', 'NuTransfer', 'NuFileUpload', 'NuRating'],
-  Charts: ['NuChart', 'NuDonut', 'NuSparkline', 'NuGeoMap', 'NuHeatmap'],
+  Charts: ['NuChart', 'NuDonut', 'NuSparkline', 'NuGeoMap', 'NuHeatmap', 'NuGauge'],
   Misc: ['NuAvatar', 'NuAvatarGroup', 'NuIcon', 'NuLogo'],
 }
 
@@ -99,6 +99,12 @@ const DESCRIPTIONS: Record<string, string> = {
   NuTreeView: 'Expandable tree (folders, categories, org charts) with full keyboard support; v-model is the selected id.',
   NuColorPicker: 'Color swatches plus a native picker and hex field; v-model is #rrggbb.',
   NuHeatmap: 'Calendar heatmap (a cell per day, weeks as columns) for activity or contributions.',
+  NuBottomNav: 'Mobile bottom navigation: a few tabs plus a Menu sheet with the full menu. NuLayout adds it with the `bottom-nav` prop.',
+  NuConfirmHost: 'Renders dialogs opened with useConfirm(). NuLayout already includes one.',
+  NuBanner: 'Announcement strip that can be dismissed; with an `id` it stays dismissed in this browser.',
+  NuSecretField: 'Read-only token, password or connection string with reveal and copy buttons.',
+  NuLogViewer: 'Console-style log output with level colors, line filter, wrap and follow-tail.',
+  NuGauge: 'Semicircle usage meter (CPU, memory, disk, quota) that turns warning/danger past thresholds.',
   NuLogo: 'The Nusa Admin mark (three islands forming an N), as a brand-colored tile or a bare mark in the current text color.',
 }
 
@@ -302,6 +308,7 @@ const composables = [
   { name: 'useForm', signature: 'useForm(initial, schema): { values, errors, touched, submitting, isValid, validate(), validateField(name), reset(next?), field(name), handleSubmit(fn) }', description: 'Form state and validation. `v-bind="form.field(\'email\')"` wires value, update, blur validation and error into any Nu* input.' },
   { name: 'rules', signature: 'rules.required(msg?) | email(msg?) | minLength(n, msg?) | maxLength(n, msg?) | min(n, msg?) | max(n, msg?) | pattern(re, msg?) | sameAs(field, msg?)', description: 'Built-in validation rules; any (value, values) => true | message also works.' },
   { name: 'useLocale', signature: "useLocale(): { locale, setLocale(code), setDefaultLocale(code), addMessages(code, messages), t(key, params?) }", description: "Language of built-in text (en, id, or added), saved in localStorage (nu-locale)." },
+  { name: 'useConfirm', signature: 'useConfirm(): { confirm(options | title): Promise<boolean> } — options: { title, message?, confirmLabel?, cancelLabel?, danger?, color?, typeToConfirm? }', description: 'Promise-based confirm dialog from anywhere (`if (await confirm({ title, danger: true })) …`). Needs one NuConfirmHost, which NuLayout includes.' },
   { name: 'useOverlay', signature: 'useOverlay(open: Ref<boolean>, panel: Ref<HTMLElement | null>, { onEscape? })', description: 'Focus trap, scroll lock, Escape handling and focus restore for custom dialogs.' },
   { name: 'filterMenu', signature: 'filterMenu(menu, (item) => boolean): NuMenuItem[]', description: 'Hide menu items (e.g. by item.meta.roles), dropping emptied groups and headers.' },
   { name: 'toCsv / downloadText', signature: 'toCsv(rows, columns): string; downloadText(filename, text, type?)', description: 'CSV from table columns (labels + format) and a browser download helper.' },

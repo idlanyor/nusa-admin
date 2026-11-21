@@ -52,6 +52,14 @@ Language of built-in text (en, id, or added), saved in localStorage (nu-locale).
 useLocale(): { locale, setLocale(code), setDefaultLocale(code), addMessages(code, messages), t(key, params?) }
 ```
 
+### useConfirm
+
+Promise-based confirm dialog from anywhere (`if (await confirm({ title, danger: true })) …`). Needs one NuConfirmHost, which NuLayout includes.
+
+```ts
+useConfirm(): { confirm(options | title): Promise<boolean> } — options: { title, message?, confirmLabel?, cancelLabel?, danger?, color?, typeToConfirm? }
+```
+
 ### useOverlay
 
 Focus trap, scroll lock, Escape handling and focus restore for custom dialogs.

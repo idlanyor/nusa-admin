@@ -94,3 +94,39 @@ test('input masks format as you type', async ({ page }) => {
   await phone.pressSequentially('81234567890')
   await expect(phone).toHaveValue('+62 812-3456-7890')
 })
+
+test('support ticket: reply as staff marks it answered', async ({ page }) => {
+  await page.goto('/support/tickets/1038')
+  await page.getByRole('textbox', { name: 'Reply' }).fill('Thanks Eka, we can reproduce it on Safari and are fixing it.')
+  await page.getByRole('button', { name: /^Send/ }).click()
+  await expect(page.locator('.thread li').last()).toContainText('we can reproduce it on Safari')
+  await expect(page.locator('.nu-page-header')).toContainText('Answered')
+})
+
+test('API token revoke asks for typed confirmation', async ({ page }) => {
+  await page.goto('/account/api-tokens')
+  await page.getByRole('button', { name: 'Revoke Old script' }).click()
+  const dialog = page.getByRole('dialog', { name: 'Revoke “Old script”?' })
+  const revoke = dialog.getByRole('button', { name: 'Revoke token' })
+  await expect(revoke).toBeDisabled()
+  await dialog.getByRole('textbox').fill('Old script')
+  await revoke.click()
+  await expect(dialog).toBeHidden()
+  await expect(page.getByText('Old script', { exact: true })).toHaveCount(0)
+})
+
+test.describe('mobile bottom nav', () => {
+  test.skip(({ isMobile }) => !isMobile, 'mobile only')
+
+  test('tabs navigate and the menu sheet reaches every page', async ({ page }) => {
+    await page.goto('/')
+    const nav = page.getByRole('navigation', { name: 'Main' }).filter({ has: page.locator('.nu-bottomnav__tab') })
+    await nav.getByRole('link', { name: 'Support tickets' }).click()
+    await expect(page).toHaveURL(/\/support\/tickets$/)
+    await nav.getByRole('button', { name: 'Menu' }).click()
+    const sheet = page.getByRole('dialog', { name: 'Menu' })
+    await sheet.getByRole('link', { name: 'Server monitor' }).click()
+    await expect(page).toHaveURL(/\/monitoring$/)
+    await expect(sheet).toBeHidden()
+  })
+})

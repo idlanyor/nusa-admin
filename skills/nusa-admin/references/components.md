@@ -4,13 +4,13 @@ Generated from the kit source by `bun run meta` — do not edit by hand. `*` mar
 
 ## Contents
 
-- **Layout:** [NuLayout](#nulayout), [NuSidebar](#nusidebar), [NuSidebarMenuItem](#nusidebarmenuitem), [NuTopNav](#nutopnav), [NuNavbar](#nunavbar), [NuPageHeader](#nupageheader), [NuBreadcrumb](#nubreadcrumb), [NuCustomizer](#nucustomizer), [NuCommandPalette](#nucommandpalette), [NuAuthLayout](#nuauthlayout), [NuErrorPage](#nuerrorpage), [NuRouteProgress](#nurouteprogress)
-- **Content:** [NuCard](#nucard), [NuStatCard](#nustatcard), [NuSmallBox](#nusmallbox), [NuInfoBox](#nuinfobox), [NuUserCard](#nuusercard), [NuTimeline](#nutimeline), [NuTreeView](#nutreeview), [NuTable](#nutable), [NuPagination](#nupagination), [NuList](#nulist), [NuListItem](#nulistitem), [NuDescriptions](#nudescriptions), [NuCalendar](#nucalendar), [NuAccordion](#nuaccordion), [NuTabs](#nutabs), [NuSteps](#nusteps), [NuDivider](#nudivider), [NuCallout](#nucallout), [NuRibbon](#nuribbon)
+- **Layout:** [NuLayout](#nulayout), [NuSidebar](#nusidebar), [NuBottomNav](#nubottomnav), [NuSidebarMenuItem](#nusidebarmenuitem), [NuTopNav](#nutopnav), [NuNavbar](#nunavbar), [NuPageHeader](#nupageheader), [NuBreadcrumb](#nubreadcrumb), [NuCustomizer](#nucustomizer), [NuCommandPalette](#nucommandpalette), [NuAuthLayout](#nuauthlayout), [NuErrorPage](#nuerrorpage), [NuRouteProgress](#nurouteprogress)
+- **Content:** [NuCard](#nucard), [NuStatCard](#nustatcard), [NuSmallBox](#nusmallbox), [NuInfoBox](#nuinfobox), [NuUserCard](#nuusercard), [NuTimeline](#nutimeline), [NuTreeView](#nutreeview), [NuTable](#nutable), [NuLogViewer](#nulogviewer), [NuSecretField](#nusecretfield), [NuPagination](#nupagination), [NuList](#nulist), [NuListItem](#nulistitem), [NuDescriptions](#nudescriptions), [NuCalendar](#nucalendar), [NuAccordion](#nuaccordion), [NuTabs](#nutabs), [NuSteps](#nusteps), [NuDivider](#nudivider), [NuCallout](#nucallout), [NuRibbon](#nuribbon)
 - **Apps:** [NuDirectChat](#nudirectchat), [NuTodoList](#nutodolist)
-- **Feedback:** [NuPopover](#nupopover), [NuAlert](#nualert), [NuBadge](#nubadge), [NuProgress](#nuprogress), [NuProgressRing](#nuprogressring), [NuSpinner](#nuspinner), [NuSkeleton](#nuskeleton), [NuEmpty](#nuempty), [NuTooltip](#nutooltip), [NuModal](#numodal), [NuDrawer](#nudrawer), [NuToastHost](#nutoasthost)
+- **Feedback:** [NuPopover](#nupopover), [NuConfirmHost](#nuconfirmhost), [NuBanner](#nubanner), [NuAlert](#nualert), [NuBadge](#nubadge), [NuProgress](#nuprogress), [NuProgressRing](#nuprogressring), [NuSpinner](#nuspinner), [NuSkeleton](#nuskeleton), [NuEmpty](#nuempty), [NuTooltip](#nutooltip), [NuModal](#numodal), [NuDrawer](#nudrawer), [NuToastHost](#nutoasthost)
 - **Actions:** [NuButton](#nubutton), [NuIconButton](#nuiconbutton), [NuDropdown](#nudropdown), [NuDropdownItem](#nudropdownitem), [NuSegmented](#nusegmented)
 - **Forms:** [NuInput](#nuinput), [NuNumberInput](#nunumberinput), [NuPinInput](#nupininput), [NuColorPicker](#nucolorpicker), [NuTextarea](#nutextarea), [NuSelect](#nuselect), [NuCombobox](#nucombobox), [NuDatePicker](#nudatepicker), [NuEditor](#nueditor), [NuCodeEditor](#nucodeeditor), [NuCheckbox](#nucheckbox), [NuSwitch](#nuswitch), [NuRadioGroup](#nuradiogroup), [NuSlider](#nuslider), [NuTagInput](#nutaginput), [NuTransfer](#nutransfer), [NuFileUpload](#nufileupload), [NuRating](#nurating)
-- **Charts:** [NuChart](#nuchart), [NuDonut](#nudonut), [NuSparkline](#nusparkline), [NuGeoMap](#nugeomap), [NuHeatmap](#nuheatmap)
+- **Charts:** [NuChart](#nuchart), [NuDonut](#nudonut), [NuSparkline](#nusparkline), [NuGeoMap](#nugeomap), [NuHeatmap](#nuheatmap), [NuGauge](#nugauge)
 - **Misc:** [NuAvatar](#nuavatar), [NuAvatarGroup](#nuavatargroup), [NuIcon](#nuicon), [NuLogo](#nulogo)
 
 ## NuLayout
@@ -34,6 +34,7 @@ App shell: sidebar (or top nav), navbar, content and footer, with every AdminLTE
 | `themeToggle` | `boolean \| undefined` | `true` |  |
 | `fullscreenToggle` | `boolean \| undefined` |  |  |
 | `customizer` | `boolean \| undefined` |  | Show the floating theme customizer button. |
+| `bottomNav` | `boolean \| string[] \| undefined` |  | Mobile bottom navigation built from `menu`; pass `true` or the paths to show as tabs. |
 
 Slots: `brand`, `sidebar-top`, `sidebar-footer`, `navbar-start`, `navbar-end`, `navbar-user`, `default`, `footer`
 
@@ -67,6 +68,15 @@ Example:
 <!-- Usually rendered by NuLayout; standalone: -->
 <NuSidebar :menu="menu" variant="light" searchable />
 ```
+
+## NuBottomNav
+
+Mobile bottom navigation: a few tabs plus a Menu sheet with the full menu. NuLayout adds it with the `bottom-nav` prop.
+
+| Prop | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `menu`* | `NuMenuItem[]` |  | Menu definition (NuMenuItem[]); the same array drives sidebar, top nav and command palette. |
+| `primary` | `string[] \| undefined` |  |  |
 
 ## NuSidebarMenuItem
 
@@ -457,6 +467,44 @@ Example (demo `/audit-log`):
 </NuTable>
 ```
 
+## NuLogViewer
+
+Console-style log output with level colors, line filter, wrap and follow-tail.
+
+| Prop | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `lines`* | `(string \| NuLogLine)[]` |  |  |
+| `height` | `string \| undefined` | `"320px"` |  |
+| `title` | `string \| undefined` |  | Title text. |
+| `searchable` | `boolean \| undefined` | `true` | Show a search box. |
+| `wrap` | `boolean \| undefined` |  |  |
+
+Example (demo `/monitoring`):
+
+```vue
+<NuLogViewer :lines="logs" :title="`${host} — /var/log/app.log`" height="280px" />
+```
+
+## NuSecretField
+
+Read-only token, password or connection string with reveal and copy buttons.
+
+| Prop | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `value`* | `string` |  | Current value. |
+| `label` | `string \| undefined` |  | Visible label (also the accessible name). |
+| `masked` | `boolean \| undefined` | `true` |  |
+| `copyable` | `boolean \| undefined` | `true` |  |
+| `mono` | `boolean \| undefined` | `true` |  |
+
+Events: `copy`
+
+Example (demo `/developers/webhooks`):
+
+```vue
+<NuSecretField value="whsec_6Y2k9fQ1aZ8Lm4Rt0Vx3" />
+```
+
 ## NuPagination
 
 Page buttons with ellipses; v-model is the page number.
@@ -652,10 +700,10 @@ Step indicator for wizards; v-model is the current step index.
 
 Events: `update:modelValue`
 
-Example (demo `/forms/wizard`):
+Example (demo `/account/security`):
 
 ```vue
-<NuSteps :model-value="step" :steps="steps" style="flex: 1" />
+<NuSteps :model-value="step" :steps="[{ title: 'Scan' }, { title: 'Verify' }, { title: 'Backup codes' }]" style="margin-bottom: 14px" />
 ```
 
 ## NuDivider
@@ -778,6 +826,33 @@ Example (demo `/ui/more-inputs`):
 </NuPopover>
 ```
 
+## NuConfirmHost
+
+Renders dialogs opened with useConfirm(). NuLayout already includes one.
+
+## NuBanner
+
+Announcement strip that can be dismissed; with an `id` it stays dismissed in this browser.
+
+| Prop | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `id` | `string \| undefined` |  |  |
+| `color` | `NuColor \| undefined` | `"primary"` | Theme color: 'primary' \| 'secondary' \| 'success' \| 'warning' \| 'danger' \| 'info'. |
+| `icon` | `Component \| undefined` |  | Icon component (any Vue component, e.g. from lucide-vue-next). |
+| `dismissible` | `boolean \| undefined` |  |  |
+| `variant` | `"solid" \| "soft" \| undefined` | `"solid"` | Visual style. |
+
+Slots: `default`, `actions`
+
+Example:
+
+```vue
+<NuBanner id="release-0.1.3" color="primary" variant="soft" :icon="Sparkles" dismissible class="shell-banner">
+  New in 0.1.3: support tickets, API tokens, security center, wallet, webhooks, email and server monitor.
+  <RouterLink to="/support/tickets">Take a look</RouterLink>
+</NuBanner>
+```
+
 ## NuAlert
 
 Inline alert with icon, title and optional dismiss.
@@ -792,10 +867,10 @@ Events: `dismiss`
 
 Slots: `icon`, `default`
 
-Example (demo `/auth/forgot-password`):
+Example (demo `/account/api-tokens`):
 
 ```vue
-<NuAlert v-if="sent" color="success" title="Check your inbox">If an account exists for {{ email }}, a reset link is on its way.</NuAlert>
+<NuAlert color="warning" title="Copy it now">You won’t be able to see this token again.</NuAlert>
 ```
 
 ## NuBadge
@@ -831,10 +906,10 @@ Horizontal progress bar with optional label and value.
 | `showValue` | `boolean \| undefined` |  |  |
 | `labelHidden` | `boolean \| undefined` |  |  |
 
-Example (demo `/`):
+Example (demo `/billing/coupons`):
 
 ```vue
-<NuProgress v-for="g in goals" :key="g.label" :label="g.label" :value="g.value" :color="g.color" show-value />
+<NuProgress v-if="row.limit" :value="row.uses" :max="row.limit" :height="5" :label="`${row.uses} / ${row.limit}`" show-value />
 ```
 
 ## NuProgressRing
@@ -1108,10 +1183,10 @@ Segmented control (radio group styled as buttons).
 
 Events: `update:modelValue`
 
-Example (demo `/dashboard-3`):
+Example (demo `/billing/coupons`):
 
 ```vue
-<NuSegmented v-model="range" size="sm" label="Range" :options="[{ label: 'Week', value: 'week' }, { label: 'Month', value: 'month' }]" />
+<NuSegmented v-model="filter" size="sm" label="State" :options="['all', 'Active', 'Scheduled', 'Expired', 'Disabled'].map((s) => ({ label: s === 'all' ? 'All' : s, value: s }))" />
 ```
 
 ## NuInput
@@ -1161,10 +1236,10 @@ Number field with −/+ steppers, arrow-key stepping, min/max clamping and prefi
 
 Events: `update:modelValue`, `blur`
 
-Example (demo `/ui/more-inputs`):
+Example (demo `/billing/coupons`):
 
 ```vue
-<NuNumberInput v-model="qty" label="Quantity" :min="1" :max="99" />
+<NuNumberInput v-bind="form.field('value')" :label="form.values.type === 'percent' ? 'Percent off' : 'Amount off'" :suffix="form.values.type === 'percent' ? '%' : undefined" :prefix="form.values.type === 'fixed' ? 'Rp' : undefined" :min="1" :step="form.values.type === 'percent' ? 5 : 5000" />
 ```
 
 ## NuPinInput
@@ -1183,10 +1258,10 @@ One-time code / PIN boxes with auto-advance, Backspace, paste-to-fill and a `com
 
 Events: `update:modelValue`, `complete`
 
-Example (demo `/auth/two-factor`):
+Example (demo `/account/security`):
 
 ```vue
-<NuPinInput v-model="code" label="Verification code" :error="error" @complete="verify" @update:model-value="error = ''" />
+<NuPinInput v-model="code" label="Code" :error="codeError" @complete="verify" @update:model-value="codeError = ''" />
 ```
 
 ## NuColorPicker
@@ -1387,10 +1462,10 @@ Events: `update:modelValue`
 
 Slots: `default`
 
-Example (demo `/notifications`):
+Example (demo `/billing/coupons`):
 
 ```vue
-<NuSwitch v-model="prefs.mentions" label="Mentions and replies" />
+<NuSwitch v-model="form.values.newOnly" label="New customers only" />
 ```
 
 ## NuRadioGroup
@@ -1624,6 +1699,27 @@ Example (demo `/audit-log`):
 <NuHeatmap :values="heat" unit="events" label="Audit events" />
 ```
 
+## NuGauge
+
+Semicircle usage meter (CPU, memory, disk, quota) that turns warning/danger past thresholds.
+
+| Prop | Type | Default | Notes |
+| --- | --- | --- | --- |
+| `value`* | `number` |  | Current value. |
+| `max` | `number \| undefined` | `100` | Maximum value. |
+| `label` | `string \| undefined` |  | Visible label (also the accessible name). |
+| `unit` | `string \| undefined` | `"%"` |  |
+| `size` | `number \| undefined` | `140` | Size: 'sm' \| 'md' \| 'lg'. |
+| `warn` | `number \| undefined` | `70` |  |
+| `danger` | `number \| undefined` | `90` |  |
+| `detail` | `string \| undefined` |  |  |
+
+Example (demo `/monitoring`):
+
+```vue
+<NuGauge :value="cpu" label="CPU" :detail="`load ${load.join(' · ')}`" />
+```
+
 ## NuAvatar
 
 Avatar image or initials with optional status dot.
@@ -1665,7 +1761,7 @@ The small built-in icon set the kit uses internally.
 
 | Prop | Type | Default | Notes |
 | --- | --- | --- | --- |
-| `name`* | `"menu" \| "sort" \| "search" \| "refresh" \| "info" \| "chevron-down" \| "chevron-up" \| "chevron-right" \| "chevron-left" \| "x" \| "sun" \| "moon" \| "check" \| "minus" \| "arrow-up" \| "arrow-down" \| "alert" \| "check-circle" \| "x-circle" \| "star" \| "upload" \| "file" \| "inbox" \| "plus" \| "maximize" \| "minimize" \| "download" \| "arrow-right" \| "arrow-left" \| "grip" \| "calendar" \| "trash"` |  | Name (used for initials, alt text or labels). |
+| `name`* | `"menu" \| "sort" \| "search" \| "refresh" \| "info" \| "copy" \| "chevron-down" \| "chevron-up" \| "chevron-right" \| "chevron-left" \| "x" \| "sun" \| "moon" \| "check" \| "minus" \| "arrow-up" \| "arrow-down" \| "alert" \| "check-circle" \| "x-circle" \| "star" \| "upload" \| "file" \| "inbox" \| "plus" \| "maximize" \| "minimize" \| "download" \| "arrow-right" \| "arrow-left" \| "eye" \| "eye-off" \| "grip" \| "calendar" \| "trash"` |  | Name (used for initials, alt text or labels). |
 | `size` | `string \| number \| undefined` | `18` | Size: 'sm' \| 'md' \| 'lg'. |
 
 Example:

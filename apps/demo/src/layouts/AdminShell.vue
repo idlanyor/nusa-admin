@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { Bell, CreditCard, Languages, Lock, LogOut, MessageSquare, Moon, PanelRight, Plus, Search, Settings, User } from 'lucide-vue-next'
+import { Sparkles, Bell, CreditCard, Languages, Lock, LogOut, MessageSquare, Moon, PanelRight, Plus, Search, Settings, User } from 'lucide-vue-next'
 import {
-  NuAvatar, NuBadge, NuButton, NuCommandPalette, NuCustomizer, NuDropdown, NuDropdownItem, NuIconButton, NuLayout, filterMenu, t, useLocale, useTheme,
+  NuAvatar, NuBadge, NuBanner, NuButton, NuCommandPalette, NuCustomizer, NuDropdown, NuDropdownItem, NuIconButton, NuLayout, filterMenu, t, useLocale, useTheme,
   type NuCommand,
 } from 'nusa-admin'
 import { roleLabel, useAuth } from '../auth'
@@ -69,6 +69,7 @@ const notifications = [
     :fixed-sidebar="meta.fixedSidebar"
     :fixed-footer="meta.fixedFooter"
     :rtl="meta.rtl"
+    :bottom-nav="['/', '/apps/mailbox', '/support/tickets', '/notifications']"
   >
     <template #sidebar-top>
       <RouterLink class="shell-userpanel" to="/profile">
@@ -149,6 +150,10 @@ const notifications = [
       <NuIconButton :icon="PanelRight" label="Control panel" @click="controlPanel = true" />
     </template>
 
+    <NuBanner id="release-0.1.3" color="primary" variant="soft" :icon="Sparkles" dismissible class="shell-banner">
+      New in 0.1.3: support tickets, API tokens, security center, wallet, webhooks, email and server monitor.
+      <RouterLink to="/support/tickets">Take a look</RouterLink>
+    </NuBanner>
     <RouterView />
 
     <template #footer>
@@ -168,6 +173,7 @@ const notifications = [
 </template>
 
 <style>
+.shell-banner { margin-bottom: 14px; }
 .shell-search {
   display: flex;
   align-items: center;

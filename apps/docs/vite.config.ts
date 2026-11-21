@@ -17,7 +17,7 @@ function llmsTxt(): Plugin {
     const index = [
       '# Nusa Admin',
       '',
-      '> Vue 3 + Vite admin template kit: app shell, 77 Nu* components, SVG charts, light/dark themes, design tokens, i18n and RTL. Package: `nusa-admin`.',
+      '> Vue 3 + Vite admin template kit: app shell, 83 Nu* components, SVG charts, light/dark themes, design tokens, i18n and RTL. Package: `nusa-admin`.',
       '',
       '## Guides',
       ...guides.map((g) => `- [${title(g.body)}](${base}guide/${g.slug}): ${g.body.split('\n').find((l) => l && !l.startsWith('#')) ?? ''}`),

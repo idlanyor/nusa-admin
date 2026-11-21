@@ -1,4 +1,5 @@
 import {
+  Activity, KeyRound, LifeBuoy, Send, Webhook,
   Bell, FolderOpen, History, ShieldCheck,
   AppWindow, CalendarDays, CircleHelp, Contact, CreditCard, File, FileText, FolderKanban, Images, KanbanSquare,
   LayoutDashboard, LayoutGrid, LayoutTemplate, Layers, Lock, Mail, MessagesSquare, Puzzle, ReceiptText, Search,
@@ -95,7 +96,12 @@ export const menu: NuMenuItem[] = [
   { label: 'Contacts', icon: Contact, to: '/contacts' },
   { label: 'Profile', icon: UserRound, to: '/profile' },
   { label: 'E-commerce', icon: ShoppingBag, to: '/ecommerce' },
-  { label: 'Billing', icon: CreditCard, to: '/billing', meta: { roles: ['admin'] } },
+  { label: 'Billing', icon: CreditCard, children: [
+    { label: 'Overview', to: '/billing', meta: { roles: ['admin'] } },
+    { label: 'Wallet & top-up', to: '/billing/wallet' },
+    { label: 'Coupons', to: '/billing/coupons', meta: { roles: ['admin'] } },
+  ] },
+  { label: 'Support tickets', icon: LifeBuoy, to: '/support/tickets', badge: 2, badgeColor: 'info' },
   { label: 'Invoice', icon: ReceiptText, to: '/invoice' },
   { label: 'Pricing', icon: Tags, to: '/pricing' },
   { label: 'Search results', icon: Search, to: '/search?q=project' },
@@ -131,6 +137,15 @@ export const menu: NuMenuItem[] = [
       { label: 'Maintenance', to: '/errors/maintenance' },
     ],
   },
+
+  { label: 'Operations', header: true },
+  { label: 'Server monitor', icon: Activity, to: '/monitoring', meta: { roles: ['admin'] } },
+  { label: 'Webhooks', icon: Webhook, to: '/developers/webhooks', meta: { roles: ['admin'] } },
+  { label: 'Email', icon: Send, to: '/email', meta: { roles: ['admin'] } },
+
+  { label: 'Account', header: true },
+  { label: 'Security', icon: Lock, to: '/account/security' },
+  { label: 'API tokens', icon: KeyRound, to: '/account/api-tokens' },
 
   { label: 'Misc', header: true },
   { label: 'Settings', icon: Settings, to: '/settings', meta: { roles: ['admin'] } },

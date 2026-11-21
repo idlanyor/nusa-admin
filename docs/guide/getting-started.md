@@ -1,6 +1,6 @@
 # Getting started
 
-Nusa Admin is a Vue 3 admin template kit: one layout shell, 77 components, SVG charts, light/dark themes and design tokens — no CSS framework, no jQuery.
+Nusa Admin is a Vue 3 admin template kit: one layout shell, 83 components, SVG charts, light/dark themes and design tokens — no CSS framework, no jQuery.
 
 ## Create a project
 
@@ -11,7 +11,7 @@ bun install
 bun run dev
 ```
 
-The CLI asks for a template: **starter** (shell, dashboard, a CRUD page, sign-in, 404) or **full** (the complete demo with 65 routes). It also adds an AI skill and an MCP config so coding assistants know the kit.
+The CLI asks for a template: **starter** (shell, dashboard, a CRUD page, sign-in, 404) or **full** (the complete demo with 74 routes). It also adds an AI skill and an MCP config so coding assistants know the kit.
 
 ## Add to an existing app
 

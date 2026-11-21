@@ -7,7 +7,7 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "bun --filter demo dev",
+    "dev": "bun --filter demo dev --host",
     "build": "bun run meta && bun run build:lib && bun run build:demo && bun run build:docs && bun run build:mcp",
     "build:lib": "bun --filter nusa-admin build",
     "build:demo": "bun --filter demo build",

@@ -88,6 +88,4 @@ const heat = activity(182, 11)
 <style>
 .audit-filters { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; width: 100%; }
 @media (max-width: 800px) { .audit-filters { grid-template-columns: 1fr; } }
-.audit-link { padding: 0; border: 0; background: none; color: var(--nu-primary); cursor: pointer; }
-.audit-link:hover { text-decoration: underline; }
 </style>

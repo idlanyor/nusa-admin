@@ -10,7 +10,7 @@ npm create nusa-admin@latest my-admin
 
 | Option | Meaning |
 | --- | --- |
-| `--template starter \| full` | `starter`: shell, dashboard, users CRUD, settings, auth and error pages. `full`: the complete demo (65 routes). |
+| `--template starter \| full` | `starter`: shell, dashboard, users CRUD, settings, auth and error pages. `full`: the complete demo (74 routes). |
 | `--name <package-name>` | `package.json` name (default: the folder name) |
 | `--no-ai` | Skip the Claude Code skill, `.mcp.json` and `AGENTS.md` |
 | `--install` | Install dependencies after creating |

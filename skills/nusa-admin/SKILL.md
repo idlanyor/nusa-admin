@@ -5,7 +5,7 @@ description: Build and edit admin/dashboard UIs with the Nusa Admin Vue 3 kit (`
 
 # Nusa Admin
 
-Nusa Admin is a Vue 3 + Vite admin template kit: an app shell (`NuLayout`), 77 `Nu*` components, SVG charts, light/dark themes and CSS design tokens. No CSS framework and no jQuery — styling comes from the kit's tokens and a few utility classes.
+Nusa Admin is a Vue 3 + Vite admin template kit: an app shell (`NuLayout`), 83 `Nu*` components, SVG charts, light/dark themes and CSS design tokens. No CSS framework and no jQuery — styling comes from the kit's tokens and a few utility classes.
 
 Building with the kit's own pieces keeps pages consistent with the rest of the app (density, dark mode, RTL, accessibility, translations), so reach for a `Nu*` component before writing custom markup or CSS.
 
@@ -57,13 +57,15 @@ Common page shapes:
 - **`color` props take the six names**: `primary`, `secondary`, `success`, `warning`, `danger`, `info`. Status meaning: success = done/paid, warning = pending, danger = failed/destructive, secondary = neutral/inactive.
 - **Logical CSS properties** in custom styles (`margin-inline-start`, `padding-inline`, `inset-inline-end`, `text-align: start`) so RTL keeps working.
 - **Icons** are any Vue component passed as a prop (`:icon="Plus"` from `lucide-vue-next`). Icon-only buttons need an accessible name: `<NuButton :icon="Trash2" square aria-label="Delete" />` or `<NuIconButton :icon="Bell" label="Notifications" />`.
-- **Feedback:** `useToast().success('Saved.')` after actions; `NuModal` (with `size="sm"`) to confirm destructive ones; `NuEmpty` for empty states; `NuCard :loading` or `NuSkeleton` while loading.
+- **Feedback:** `useToast().success('Saved.')` after actions; `await useConfirm().confirm({ title, danger: true })` before destructive ones (add `typeToConfirm` for irreversible ones); `NuEmpty` for empty states; `NuCard :loading` or `NuSkeleton` while loading.
 - **Charts:** `NuChart` (line/area/bar) and `NuDonut` pick theme series colors automatically — don't pass colors unless a series must be a specific meaning. Keep one y-axis per chart.
 - **Text:** sentence case for titles and buttons ("New customer", not "New Customer"). The kit's built-in strings are translated via `useLocale()`; don't hard-code replacements for them.
 - **Styles in pages:** a page's `<style>` block only loads with that route. Put classes shared by several pages in a global stylesheet instead of relying on another page's CSS.
 
 ## Layout and theme changes
 
+- Mobile: `<NuLayout bottom-nav>` (or `:bottom-nav="['/', '/orders']"` to pick tabs) adds a bottom tab bar with a full-menu sheet.
+- Secrets (tokens, passwords, IPs) go in `NuSecretField`; logs in `NuLogViewer`; usage meters in `NuGauge`.
 - Layout options are `NuLayout` props: `layout="top-nav"`, `boxed`, `fixed-footer`, `:fixed-navbar="false"`, `:fixed-sidebar="false"`, `rtl`, `sidebar-search`, `fullscreen-toggle`, `sidebar-variant="light"`. Unset props follow the saved `useLayout()` state.
 - App defaults go in `createNusaAdmin({ primary, theme, layout: {...}, locale, sidebarVariant })`.
 - Re-skin by overriding tokens on `:root` (and `:root[data-theme='dark']`), e.g. `--nu-primary`, `--nu-radius`, `--nu-font`, `--nu-sidebar-width`. See `references/api.md` for the full token list.

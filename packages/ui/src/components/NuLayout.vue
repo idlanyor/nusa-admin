@@ -8,6 +8,8 @@ import NuLogo from './NuLogo.vue'
 import NuNavbar from './NuNavbar.vue'
 import NuSidebar from './NuSidebar.vue'
 import NuToastHost from './NuToastHost.vue'
+import NuConfirmHost from './NuConfirmHost.vue'
+import NuBottomNav from './NuBottomNav.vue'
 import NuTopNav from './NuTopNav.vue'
 
 /**
@@ -37,6 +39,8 @@ const props = withDefaults(
     fullscreenToggle?: boolean
     /** Show the floating theme customizer button. */
     customizer?: boolean
+    /** Mobile bottom navigation built from `menu`; pass `true` or the paths to show as tabs. */
+    bottomNav?: boolean | string[]
   }>(),
   {
     brand: 'Nusa Admin',
@@ -80,6 +84,7 @@ watch(() => route.fullPath, closeMobile)
       'is-static-navbar': !fixedNavbar,
       'is-static-sidebar': !fixedSidebar,
       'is-fixed-footer': fixedFooter,
+      'has-bottom-nav': !!bottomNav,
     }"
   >
     <NuSidebar class="nu-layout__sidebar" :menu="menu" :variant="variant" :searchable="sidebarSearch">
@@ -126,8 +131,10 @@ watch(() => route.fullPath, closeMobile)
       <footer v-if="$slots.footer" class="nu-layout__footer"><slot name="footer" /></footer>
     </div>
 
+    <NuBottomNav v-if="bottomNav" :menu="menu" :primary="Array.isArray(bottomNav) ? bottomNav : undefined" />
     <NuCustomizer v-if="customizer" />
     <NuToastHost />
+    <NuConfirmHost />
   </div>
 </template>
 
@@ -219,5 +226,7 @@ body:has(.nu-layout.is-boxed) { background: color-mix(in srgb, var(--nu-bg) 82%,
   }
   .nu-layout__content { padding: 12px; }
   .nu-layout__topnav { display: none; }
+  .nu-layout.has-bottom-nav .nu-layout__main { padding-bottom: calc(56px + env(safe-area-inset-bottom)); }
+  .nu-layout.has-bottom-nav .nu-customizer__fab { bottom: calc(68px + env(safe-area-inset-bottom)); }
 }
 </style>

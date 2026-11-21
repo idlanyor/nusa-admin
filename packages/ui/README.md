@@ -2,7 +2,7 @@
 
 # nusa-admin
 
-A Vue 3 admin template kit: one layout shell (sidebar, top nav, boxed, fixed/scrolling parts, RTL), 77 `Nu*` components, dependency-free SVG charts, light/dark themes, design tokens, i18n (English, Indonesian) and form validation. No CSS framework, no jQuery.
+A Vue 3 admin template kit: one layout shell (sidebar, top nav, boxed, fixed/scrolling parts, RTL), 83 `Nu*` components, dependency-free SVG charts, light/dark themes, design tokens, i18n (English, Indonesian) and form validation. No CSS framework, no jQuery.
 
 ## Start a new app
 
