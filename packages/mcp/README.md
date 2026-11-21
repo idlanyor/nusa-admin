@@ -25,6 +25,14 @@ Any MCP client: run `npx -y nusa-admin-mcp` as a stdio server. Requires Node 18+
 
 Guides and component docs are also exposed as resources (`nusa-admin://guide/<slug>`, `nusa-admin://component/<Name>`).
 
+## AI skill
+
+```bash
+npx skills add idlanyor/nusa-admin
+```
+
+Installs the Nusa Admin agent skill (components, page recipes, conventions) for Claude Code, Cursor, Codex and other agents.
+
 ## License
 
 MIT © 2026 Roynaldi (Antidonasi Creative) — https://roynaldi.website

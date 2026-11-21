@@ -6,7 +6,16 @@ Nusa Admin ships two things that teach coding assistants how to use it correctly
 
 `skills/nusa-admin/` is a Claude Code skill: `SKILL.md` (conventions, page recipes, do/don't) plus a generated component reference. Projects created with `create-nusa-admin` get it at `.claude/skills/nusa-admin/`, so Claude Code loads it whenever you work on admin pages.
 
-To add it to an existing project, copy the folder into `.claude/skills/`.
+To add it to an existing project, use the [skills](https://github.com/vercel-labs/skills) CLI:
+
+```bash
+npx skills add idlanyor/nusa-admin              # pick agents interactively
+npx skills add idlanyor/nusa-admin -a claude-code -y
+npx skills add idlanyor/nusa-admin -g           # for every project (user level)
+```
+
+It works with Claude Code, Cursor, Codex and the other agents the CLI supports, and records the source in
+`skills-lock.json` so `npx skills update` pulls new versions. Copying `skills/nusa-admin` into `.claude/skills/` by hand works too.
 
 ## MCP server
 

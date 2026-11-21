@@ -55,7 +55,7 @@ include the Claude Code skill, `.mcp.json` and `AGENTS.md` unless you pass `--no
 ## AI assistants
 
 - **Skill:** `skills/nusa-admin` (also linked at `.claude/skills/nusa-admin` in this repo) teaches Claude Code the
-  components, page recipes and conventions.
+  components, page recipes and conventions. Install it in any project with `npx skills add idlanyor/nusa-admin`.
 - **MCP server:** `packages/mcp` — tools `list_components`, `get_component`, `search`, `get_guide`, `get_tokens`,
   `scaffold_page` (list/form/detail/dashboard pages that type-check against the kit). This repo's `.mcp.json` runs it
   from source; generated apps run the published `nusa-admin-mcp`.

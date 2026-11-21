@@ -42,6 +42,14 @@ createApp(App).use(router).use(createNusaAdmin({ primary: '#0d9488' })).mount('#
 
 Projects created with `create-nusa-admin` include a Claude Code skill and an MCP config. The MCP server is published as [`nusa-admin-mcp`](https://www.npmjs.com/package/nusa-admin-mcp).
 
+## AI skill
+
+```bash
+npx skills add idlanyor/nusa-admin
+```
+
+Installs the Nusa Admin agent skill (components, page recipes, conventions) for Claude Code, Cursor, Codex and other agents.
+
 ## License
 
 MIT © 2026 Roynaldi (Antidonasi Creative) — https://roynaldi.website
